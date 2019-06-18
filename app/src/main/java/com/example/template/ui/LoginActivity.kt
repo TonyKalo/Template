@@ -44,6 +44,10 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
             Log.d("TAG",it.name+it.id)
         }
 
+        dataManager.getApi().getCurrencies().
+
+
+
 
 
     }
