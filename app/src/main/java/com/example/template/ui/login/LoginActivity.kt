@@ -15,7 +15,7 @@ import com.example.template.di.module.ActivityModule
 import com.example.template.TemplateApp
 import com.example.template.data.db.model.Users
 import com.example.template.di.components.ActivityComponent
-import com.example.template.di.components.DaggerActivityComponent
+
 import com.example.template.ui.LoginViewModel
 import com.example.template.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,17 +24,12 @@ import javax.inject.Inject
 
 class LoginActivity :  BaseActivity<LoginViewModel>() {
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.template.R.layout.activity_main)
 
         activityComponent.inject(this)
         var loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-
-
 
         tv_hello.setOnClickListener { view -> loginViewModel.isLoading.value=true
         Log.e("TAG","click")}

@@ -12,6 +12,8 @@ import com.example.template.data.db.AppDatabase
 import com.example.template.data.network.ApiHelper
 import com.example.template.data.network.AppApiHelper
 import com.example.template.data.network.ApiService
+import com.example.template.data.sp.AppPreferenceHelper
+import com.example.template.data.sp.PreferenceHelper
 import com.example.template.utils.BASE_URL
 import com.example.template.utils.CONNECT_TIMEOUT_SECONDS
 import com.example.template.utils.READ_TIMEOUT_SECONDS
@@ -31,7 +33,7 @@ import javax.xml.datatype.DatatypeConstants.SECONDS
 @Module
 class AppModule(private var application: Application) {
 
-    @Singleton
+    @AppContext
     @Provides
     fun provideAppContext(): Context {
         return application
@@ -61,6 +63,11 @@ class AppModule(private var application: Application) {
         return appApiHelper
     }
 
+    @Provides
+    @Singleton
+    fun provideSPHelper(appPreferenceHelper: AppPreferenceHelper): PreferenceHelper {
+        return appPreferenceHelper
+    }
 
     @Provides
     fun provideClient(): OkHttpClient {
