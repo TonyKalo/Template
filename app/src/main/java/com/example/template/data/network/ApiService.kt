@@ -5,9 +5,9 @@ import io.reactivex.Single
 import retrofit2.http.GET
 
 
-abstract class ApiService {
+interface ApiService {
 
     @GET("")
-    abstract fun getCurrency() : Single<Currency>
+    fun getCurrency() : Single<Currency>
 
 }

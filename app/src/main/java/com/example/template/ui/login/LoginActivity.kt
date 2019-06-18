@@ -1,9 +1,11 @@
-package com.example.template.ui
+package com.example.template.ui.login
 
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.template.R
 import com.example.template.data.AppDataManager
 import com.example.template.data.DataManager
@@ -14,36 +16,28 @@ import com.example.template.TemplateApp
 import com.example.template.data.db.model.Users
 import com.example.template.di.components.ActivityComponent
 import com.example.template.di.components.DaggerActivityComponent
+import com.example.template.ui.LoginViewModel
+import com.example.template.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 
-class LoginActivity : AppCompatActivity(), LoginNavigator {
+class LoginActivity :  BaseActivity<LoginViewModel>() {
 
 
 
-    @Inject
-    lateinit var dataManager:DataManager
-
-    lateinit var activityComponent:ActivityComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.template.R.layout.activity_main)
 
-
-        activityComponent = DaggerActivityComponent.builder()
-            .activityModule(ActivityModule(this))
-            .appComponent((application as TemplateApp).getAppComponent())
-            .build()
         activityComponent.inject(this)
-
-//        dataManager.getDb().getUsersDao().insertUser(Users(0,"Marko","Martic"))
-
+        var loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
 
 
-
-
+        tv_hello.setOnClickListener { view -> loginViewModel.isLoading.value=true
+        Log.e("TAG","click")}
 
 
 

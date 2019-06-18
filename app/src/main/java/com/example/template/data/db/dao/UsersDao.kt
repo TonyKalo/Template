@@ -25,7 +25,4 @@ interface UsersDao{
     @Query("DELETE FROM users")
     fun deleteAllUsers():Completable
 
-
-
-
 }
