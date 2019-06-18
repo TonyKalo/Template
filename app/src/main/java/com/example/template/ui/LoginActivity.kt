@@ -37,14 +37,11 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
             .build()
         activityComponent.inject(this)
 
-        dataManager.getDb().getUsersDao().insertUser(Users(0,"Marko","Martic"))
+//        dataManager.getDb().getUsersDao().insertUser(Users(0,"Marko","Martic"))
 
-        dataManager.getDb().getUsersDao().getAllUsers().forEach {
 
-            Log.d("TAG",it.name+it.id)
-        }
 
-        dataManager.getApi().getCurrencies().
+
 
 
 
