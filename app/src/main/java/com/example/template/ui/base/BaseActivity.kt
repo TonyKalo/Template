@@ -5,35 +5,41 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.template.TemplateApp
 import com.example.template.di.components.ActivityComponent
 import com.example.template.di.components.DaggerActivityComponent
 import com.example.template.di.module.ActivityModule
-import com.example.template.ui.LoginViewModel
-import android.icu.lang.UCharacter.GraphemeClusterBreak.V
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import androidx.lifecycle.ViewModelProvider
+import javax.inject.Inject
 
 
+abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
 
-open class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
+
 
     lateinit var activityComponent: ActivityComponent
-    private val baseViewModel: V? = null
+    private var baseViewModel: V? = null
     lateinit var progressDialog:ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Log.e("TAG","created base")
         activityComponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))
             .appComponent((application as TemplateApp).getAppComponent())
             .build()
 
+        this.baseViewModel = baseViewModel
+        if (baseViewModel == null) getViewModel() else baseViewModel
 
         baseViewModel?.isLoading?.observe(this, Observer { isShowing ->
-            Log.e("TAG",isShowing.toString())
+
             if (isShowing) showProgress() else hideProgress()})
     }
+
+    abstract fun getViewModel(): V
 
 
     fun showProgress(){
