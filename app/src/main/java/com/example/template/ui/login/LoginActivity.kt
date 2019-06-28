@@ -13,19 +13,12 @@ import javax.inject.Inject
 
 class LoginActivity :  BaseActivity<LoginViewModel>() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
 
     lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.example.template.R.layout.activity_main)
-
-        Log.e("TAG","created login")
-        activityComponent.inject(this)
-
 
 
         tv_hello.setOnClickListener { view -> loginViewModel.test()
@@ -36,7 +29,7 @@ class LoginActivity :  BaseActivity<LoginViewModel>() {
     }
 
     override fun getViewModel(): LoginViewModel {
-        Log.e("TAG","get view model login")
+        activityComponent.inject(this)
         loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
         return loginViewModel
     }

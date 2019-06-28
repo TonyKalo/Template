@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
 
-
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var activityComponent: ActivityComponent
     private var baseViewModel: V? = null
@@ -25,14 +26,14 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("TAG","created base")
+
         activityComponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))
             .appComponent((application as TemplateApp).getAppComponent())
             .build()
 
-        this.baseViewModel = baseViewModel
-        if (baseViewModel == null) getViewModel() else baseViewModel
+        baseViewModel = getViewModel()
+
 
         baseViewModel?.isLoading?.observe(this, Observer { isShowing ->
 
@@ -43,7 +44,6 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
 
 
     fun showProgress(){
-        Log.e("TAG","show")
         progressDialog= ProgressDialog(this)
         progressDialog.setTitle("Loading")
         progressDialog.show()
