@@ -1,30 +1,28 @@
 package com.example.template.ui.login
 
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import com.example.template.ui.LoginFragment
+import com.example.template.R
 
 import com.example.template.ui.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
 
 
 class LoginActivity :  BaseActivity<LoginViewModel>() {
+
 
 
     lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.template.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
 
-
-        tv_hello.setOnClickListener { view -> loginViewModel.test()
-        Log.e("TAG","click")}
-
-
+        val host = NavHostFragment.create(R.navigation.navigation_graph)
 
     }
 
@@ -33,4 +31,10 @@ class LoginActivity :  BaseActivity<LoginViewModel>() {
         loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
         return loginViewModel
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.nav_host_fragment).navigateUp()
+    }
+
+
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/bottomNavFragmentOne"
+            android:icon="@drawable/ic_home"
+            android:title="Frag1"/>
+    <item
+            android:id="@+id/bottomNavFragmentTwo"
+            android:icon="@drawable/ic_info"
+            android:title="Frag2"/>
+
+</menu>
