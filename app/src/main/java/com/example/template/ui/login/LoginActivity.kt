@@ -22,7 +22,7 @@ class LoginActivity :  BaseActivity<LoginViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val host = NavHostFragment.create(R.navigation.navigation_graph)
+       findNavController(R.id.fhMain)
 
     }
 
@@ -33,7 +33,7 @@ class LoginActivity :  BaseActivity<LoginViewModel>() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.nav_host_fragment).navigateUp()
+        return findNavController(R.id.fhMain).navigateUp()
     }
 
 

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/bottom_navigation"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/bottom_navigation"
             app:startDestination="@id/oneFragment">
 
-    <fragment android:id="@+id/oneFragment" android:name="com.example.template.ui.OneFragment" android:label="fragment_one"
+    <fragment android:id="@+id/oneFragment"
+              android:name="com.example.template.ui.OneFragment"
               tools:layout="@layout/fragment_one"/>
-    <fragment android:id="@+id/twoFragment" android:name="com.example.template.ui.TwoFragment" android:label="fragment_two"
+
+    <fragment android:id="@+id/twoFragment"
+              android:name="com.example.template.ui.TwoFragment"
               tools:layout="@layout/fragment_two"/>
 </navigation>
