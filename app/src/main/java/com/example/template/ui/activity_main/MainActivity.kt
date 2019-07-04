@@ -1,22 +1,20 @@
-package com.example.template.ui.login
+package com.example.template.ui.activity_main
 
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import com.example.template.ui.LoginFragment
 import com.example.template.R
 
 import com.example.template.ui.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class LoginActivity :  BaseActivity<LoginViewModel>() {
+class MainActivity :  BaseActivity<MainViewModel>() {
 
 
 
-    lateinit var loginViewModel: LoginViewModel
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +24,17 @@ class LoginActivity :  BaseActivity<LoginViewModel>() {
 
     }
 
-    override fun getViewModel(): LoginViewModel {
+    override fun getViewModel(): MainViewModel {
         activityComponent.inject(this)
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
-        return loginViewModel
+        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        return mainViewModel
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.fhMain).navigateUp()
     }
+
+
 
 
 }

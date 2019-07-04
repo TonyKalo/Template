@@ -7,5 +7,9 @@ open class BaseViewModel : ViewModel() {
 
    val isLoading = MutableLiveData<Boolean>()
 
+   fun setLoading(isLoading:Boolean){
+      this.isLoading.value=isLoading
+   }
+
 
 }

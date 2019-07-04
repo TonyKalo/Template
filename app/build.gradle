@@ -40,7 +40,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    //android arch
+    //Live Data
     implementation "androidx.lifecycle:lifecycle-extensions:$live_data_version"
 
     //Dagger 2

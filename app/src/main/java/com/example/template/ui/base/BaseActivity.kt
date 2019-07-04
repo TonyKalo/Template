@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import javax.inject.Inject
 
 
-abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
+abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterface {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -22,6 +22,8 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
     lateinit var activityComponent: ActivityComponent
     private var baseViewModel: V? = null
     lateinit var progressDialog:ProgressDialog
+
+    var test: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,23 +35,29 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity() {
             .build()
 
         baseViewModel = getViewModel()
+        observeAll(baseViewModel!!)
 
-
-        baseViewModel?.isLoading?.observe(this, Observer { isShowing ->
-
-            if (isShowing) showProgress() else hideProgress()})
     }
 
     abstract fun getViewModel(): V
 
+     fun observeAll(viewModel:BaseViewModel){
 
-    fun showProgress(){
+         viewModel.isLoading.observe(this, Observer { isShowing ->
+             if (isShowing) showProgress() else hideProgress()})
+    }
+
+    /**
+     * All override methods must be implemented in BaseFragment
+     */
+
+    override fun showProgress(){
         progressDialog= ProgressDialog(this)
         progressDialog.setTitle("Loading")
         progressDialog.show()
     }
 
-    fun hideProgress(){
+    override fun hideProgress(){
         progressDialog.dismiss()
 
     }
