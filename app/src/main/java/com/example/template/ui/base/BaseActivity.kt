@@ -11,6 +11,7 @@ import com.example.template.di.components.DaggerActivityComponent
 import com.example.template.di.module.ActivityModule
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.lifecycle.ViewModelProvider
+import com.example.template.ui.base.dialogs.ProgressDialogMain
 import javax.inject.Inject
 
 
@@ -18,10 +19,12 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var progressDialog: ProgressDialogMain
 
     lateinit var activityComponent: ActivityComponent
     private var baseViewModel: V? = null
-    lateinit var progressDialog:ProgressDialog
+
 
     var test: String? = null
 
@@ -52,13 +55,11 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
      */
 
     override fun showProgress(){
-        progressDialog= ProgressDialog(this)
-        progressDialog.setTitle("Loading")
-        progressDialog.show()
+
+        progressDialog.show(supportFragmentManager,"")
     }
 
     override fun hideProgress(){
-        progressDialog.dismiss()
-
+        if(progressDialog.dialog.isShowing) progressDialog.dismiss()
     }
 }
