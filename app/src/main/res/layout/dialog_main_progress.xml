@@ -9,11 +9,13 @@
             android:id="@+id/pd_dialog_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyle" android:indeterminateTint="@color/progressMain"/>
+            style="?android:attr/progressBarStyle"
+            android:indeterminateTint="@color/progressAccent"/>
     <TextView
             android:id="@+id/tvLoadingMsg"
-            android:text="@string/dialog_msg"
+            android:text="Loading..."
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="start|center_vertical" android:paddingStart="24dp"/>
+            android:gravity="start|center_vertical"
+            android:paddingStart="24dp" android:textColor="@color/txtGrey"/>
 </LinearLayout>

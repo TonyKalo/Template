@@ -5,8 +5,24 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#B8B8B8</color>
 
+    //background
+    <color name="backgroundMainDark">@color/colorBlack</color>
+    <color name="backgroundMainLight">@color/colorWhite</color>
+    <color name="backgroundMain">@color/colorPrimary</color>
+    <color name="backgroundGray">@color/colorGrey</color>
+
+
+    //text
+    <color name="txtMainDark">@color/colorBlack</color>
+    <color name="txtMainLight">@color/colorWhite</color>
+    <color name="txtMain">@color/colorPrimary</color>
+    <color name="txtGrey">@color/colorGrey</color>
 
     //progress
-    <color name="progressMain">@color/colorAccent</color>
+    <color name="progressMain">@color/colorPrimary</color>
+    <color name="progressAccent">@color/colorAccent</color>
 </resources>

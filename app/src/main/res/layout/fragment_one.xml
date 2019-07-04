@@ -5,11 +5,13 @@
               android:layout_height="match_parent"
               tools:context=".ui.OneFragment" android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
-                                       android:layout_height="wrap_content"
-                                       android:background="@color/colorPrimary"
-                                       app:title="Frag1"
-                                       app:titleTextColor="@android:color/background_light" android:id="@+id/toolbar">
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:title="Frag1"
+            app:titleTextColor="@android:color/background_light" >
 
     </androidx.appcompat.widget.Toolbar>
     <ImageView

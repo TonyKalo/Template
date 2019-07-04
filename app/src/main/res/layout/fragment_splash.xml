@@ -5,10 +5,10 @@
              android:layout_height="match_parent"
              tools:context=".ui.splash.SplashFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
             android:id="@+id/tvLoading"
-            android:text="@string/tv_laoding"
+            android:text="Loading..."
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -18,13 +18,14 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/txtMainDark"
             android:textStyle="bold"/>
     <ProgressBar
             android:id="@+id/pbSplashMain"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="@color/progressAccent"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp"
