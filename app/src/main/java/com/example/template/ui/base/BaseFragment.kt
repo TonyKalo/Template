@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.template.di.components.ActivityComponent
+import com.example.template.ui.base.callbacks.PermissionCallback
 import javax.inject.Inject
 
 abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
@@ -52,7 +53,7 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
         activity.showSnackbar(msg)
     }
 
-
-
-
+    override fun requestPermission(permissions: Array<String>) {
+        activity.requestPermission(permissions)
+    }
 }

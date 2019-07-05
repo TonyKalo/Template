@@ -19,12 +19,13 @@ import android.R.id.message
 import android.content.Context
 import android.view.MotionEvent
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
 import android.widget.EditText
-
-
+import androidx.core.app.ActivityCompat
+import com.example.template.ui.base.callbacks.PermissionCallback
 
 
 abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterface {
@@ -36,9 +37,8 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     lateinit var activityComponent: ActivityComponent
     private var baseViewModel: V? = null
+    val PERMISSION_REEQUEST_CODE = 101
 
-
-    var test: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +59,22 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
      fun observeAll(viewModel:BaseViewModel){
          observeLoading(viewModel)
          observeErrorHandler(viewModel)
+         observePermissions(viewModel)
     }
 
-    fun observeLoading(viewModel:BaseViewModel){
+    private fun observeLoading(viewModel:BaseViewModel){
         viewModel.isLoading.observe(this, Observer { isShowing -> if (isShowing) showProgress() else hideProgress()})
     }
 
-    fun observeErrorHandler(viewModel:BaseViewModel){
+    private fun observeErrorHandler(viewModel:BaseViewModel){
         viewModel.handleErrorString.observe(this, Observer { error-> showSnackbar(error)
 
+        })
+    }
+
+    private fun observePermissions(viewModel:BaseViewModel){
+        viewModel.permissionsRequest.observe(this, Observer {
+            requestPermission(it)
         })
     }
 
@@ -86,6 +93,40 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     override fun showSnackbar(msg: String) {
         Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun requestPermission(permissions: Array<String>) {
+
+        ActivityCompat.requestPermissions(this,permissions,PERMISSION_REEQUEST_CODE)
+
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+
+        if (requestCode==PERMISSION_REEQUEST_CODE){
+            var permissionsGranted: Boolean=true
+
+//            grantResults.forEach {
+//                if(it!=PackageManager.PERMISSION_GRANTED){
+//                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions.get(it))) {
+//                        showSnackbar("errrrrrroooorrrrr")
+//                        permissionsGranted=false
+//                        baseViewModel?.permissionCallback?.onFail()
+//                        return
+//                    }
+//
+//                }
+//            }
+
+            if (permissionsGranted)  baseViewModel?.permissionCallback?.onSuccess()
+
+
+
+
+
+        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
