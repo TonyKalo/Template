@@ -44,6 +44,10 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
         activity.hideProgress()
     }
 
+    override fun showSnackbar(msg: String) {
+        activity.showSnackbar(msg)
+    }
+
 
 
 

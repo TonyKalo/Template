@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Template</string>
 
-
+    //Error strings
+    <string name="err_no_net">No Internet Connection</string>
+    <string name="err_unauthorised">Unauthorised</string>
+    <string name="err_forbidden">Forbidden</string>
+    <string name="err_internal_server">Internal Server Error</string>
+    <string name="err_bad_request">Bad Request</string>
+    <string name="err_not_responding">Something Went Wrong API is not responding properly!</string>
 
 </resources>

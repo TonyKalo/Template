@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class AppApiHelper @Inject constructor( private val service:ApiService):ApiHelper{
 
 
-    override fun getCurrencies(): Single<Currency> {
+    override fun getCurrencies(): Single<ArrayList<Currency>> {
         return service.getCurrency()
     }
 

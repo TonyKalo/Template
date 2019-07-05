@@ -1,7 +1,7 @@
 package com.example.template.utils
 
 
- val BASE_URL = "http://api.hnb.hr/tecajn/v1/"
+ val BASE_URL = "http://api.hnb.hr/"
 
 
 

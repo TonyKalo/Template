@@ -7,7 +7,7 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("")
-    fun getCurrency() : Single<Currency>
+    @GET("tecajn/v1/")
+    fun getCurrency() : Single<ArrayList<Currency>>
 
 }
