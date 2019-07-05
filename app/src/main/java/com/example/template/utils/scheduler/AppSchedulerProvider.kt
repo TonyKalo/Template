@@ -1,4 +1,4 @@
-package com.example.template.utils
+package com.example.template.utils.scheduler
 
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers

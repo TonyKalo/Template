@@ -1,13 +1,10 @@
 package com.example.template.di.module
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import com.example.template.di.qualifiers.ActivityContext
-import com.example.template.di.qualifiers.AppContext
-import com.example.template.di.scopes.PerActivity
-import com.example.template.utils.AppSchedulerProvider
-import com.example.template.utils.SchedulerProvider
+import com.example.template.utils.scheduler.AppSchedulerProvider
+import com.example.template.utils.scheduler.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -23,7 +20,7 @@ fun provideActivityContext():Context{
 }
 
 @Provides
-fun provideSchedulerProvider():SchedulerProvider{
+fun provideSchedulerProvider(): SchedulerProvider {
     return AppSchedulerProvider()
 }
 
