@@ -10,6 +10,7 @@ import com.example.template.utils.AppSchedulerProvider
 import com.example.template.utils.SchedulerProvider
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 
 
 @Module
@@ -26,5 +27,9 @@ fun provideSchedulerProvider():SchedulerProvider{
     return AppSchedulerProvider()
 }
 
+    @Provides
+    fun provideCompositeDisposable (): CompositeDisposable{
+        return CompositeDisposable()
+    }
 
 }
