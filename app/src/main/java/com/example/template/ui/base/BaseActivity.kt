@@ -16,6 +16,13 @@ import com.example.template.ui.base.dialogs.ProgressDialogMain
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import android.R.id.message
+import android.content.Context
+import android.view.MotionEvent
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.graphics.Rect
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
+import android.widget.EditText
 
 
 
@@ -79,5 +86,24 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     override fun showSnackbar(msg: String) {
         Snackbar.make(findViewById(android.R.id.content), msg, Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+
+        if (ev?.getAction() === MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(ev.getRawX().toInt(), ev.getRawY().toInt())) {
+                    v.isFocusableInTouchMode=false
+                    v.clearFocus()
+                    v.isFocusableInTouchMode=true
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }
