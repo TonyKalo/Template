@@ -1,6 +1,7 @@
 package com.example.template.ui.base
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.template.R
@@ -27,6 +28,7 @@ open class BaseViewModel @Inject constructor(@AppContext val appContext:Context,
    val handleErrorString= MutableLiveData<String>()
 
     fun handleError(e: Throwable){
+        Log.e("TAG",e.localizedMessage)
         if(!isNetworkConnected(appContext)){
             handleErrorString.value=appContext.getString(R.string.err_no_net)
         }else if(e is HttpException){
