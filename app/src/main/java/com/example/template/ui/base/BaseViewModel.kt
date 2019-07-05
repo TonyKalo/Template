@@ -2,8 +2,12 @@ package com.example.template.ui.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.template.data.DataManager
+import com.example.template.utils.SchedulerProvider
+import javax.inject.Inject
 
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel @Inject constructor(val dataManager:DataManager, val schedulerProvider: SchedulerProvider) : ViewModel() {
+
 
    val isLoading = MutableLiveData<Boolean>()
 

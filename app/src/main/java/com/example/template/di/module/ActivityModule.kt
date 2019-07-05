@@ -6,6 +6,8 @@ import android.content.Context
 import com.example.template.di.qualifiers.ActivityContext
 import com.example.template.di.qualifiers.AppContext
 import com.example.template.di.scopes.PerActivity
+import com.example.template.utils.AppSchedulerProvider
+import com.example.template.utils.SchedulerProvider
 import dagger.Module
 import dagger.Provides
 
@@ -15,8 +17,14 @@ class ActivityModule(private var activity:Activity) {
 
 @ActivityContext
 @Provides
-fun provideAppContext():Context{
+fun provideActivityContext():Context{
     return activity
 }
+
+@Provides
+fun provideSchedulerProvider():SchedulerProvider{
+    return AppSchedulerProvider()
+}
+
 
 }
