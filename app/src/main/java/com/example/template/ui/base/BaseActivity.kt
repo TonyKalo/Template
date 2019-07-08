@@ -1,6 +1,5 @@
 package com.example.template.ui.base
 
-import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +25,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.widget.EditText
 import androidx.core.app.ActivityCompat
 import com.example.template.ui.base.callbacks.PermissionCallback
+import com.example.template.ui.base.dialogs.PermissionDialog
 
 
 abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterface {
@@ -34,6 +34,8 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     lateinit var progressDialog: ProgressDialogMain
+    @Inject
+    lateinit var permissionDialog: PermissionDialog
 
     lateinit var activityComponent: ActivityComponent
     private var baseViewModel: V? = null
@@ -74,7 +76,10 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     private fun observePermissions(viewModel:BaseViewModel){
         viewModel.permissionsRequest.observe(this, Observer {
-            requestPermission(it)
+            permissionDialog.permissCallback=it.permissionCallback
+            permissionDialog.dialogHandler=it.handleDialog
+            permissionDialog.permissions=it.permissions
+            permissionDialog.show(supportFragmentManager,"permissDialog")
         })
     }
 
@@ -97,37 +102,11 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     override fun requestPermission(permissions: Array<String>) {
 
-        ActivityCompat.requestPermissions(this,permissions,PERMISSION_REEQUEST_CODE)
+
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-
-        if (requestCode==PERMISSION_REEQUEST_CODE){
-            var permissionsGranted: Boolean=true
-
-//            grantResults.forEach {
-//                if(it!=PackageManager.PERMISSION_GRANTED){
-//                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions.get(it))) {
-//                        showSnackbar("errrrrrroooorrrrr")
-//                        permissionsGranted=false
-//                        baseViewModel?.permissionCallback?.onFail()
-//                        return
-//                    }
-//
-//                }
-//            }
-
-            if (permissionsGranted)  baseViewModel?.permissionCallback?.onSuccess()
-
-
-
-
-
-        }
-    }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
 

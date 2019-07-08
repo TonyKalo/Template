@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.ui.activity_main.MainViewModel
 import com.example.template.ui.base.BaseFragment
+import com.example.template.ui.base.dialogs.PermissionDialog
 import kotlinx.android.synthetic.main.fragment_login.*
 import java.util.*
 
@@ -41,9 +42,8 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         findNavController().popBackStack()
 
-
-
         btnLogin.setOnClickListener {
+
             loginViewModel.sample2()
             //            if(etPIN.text.toString().trim().equals("12345678")) findNavController().navigate(R.id.mainFragment) else Toast.makeText(activity,"Wrong PIN",Toast.LENGTH_SHORT).show()
         }
