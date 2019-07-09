@@ -173,9 +173,9 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
             permissTxt =permissTxt.replace("_"," ")
 
             if (permiss.indexOf("STORAGE")>-1 && listOfPermissions.indexOf("STORAGE")<0) {
-                listOfPermissions += "\n\u25cf  STORAGE"
+                listOfPermissions += "\n\u25cf  ${getString(R.string.tv_storage)}"
             }else if(permiss.indexOf("SMS")>-1 && listOfPermissions.indexOf("SMS")<0) {
-                listOfPermissions += "\n\u25cf  SMS"
+                listOfPermissions += "\n\u25cf  ${getString(R.string.tv_sms)}"
             }else{
                 listOfPermissions += "\n\u25cf  $permissTxt"
             }

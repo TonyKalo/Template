@@ -17,5 +17,7 @@
     <string name="btn_retry">Retry</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_app_settings">App Settings</string>
+    <string name="tv_storage">STORAGE</string>
+    <string name="tv_sms">SMS</string>
 
 </resources>
