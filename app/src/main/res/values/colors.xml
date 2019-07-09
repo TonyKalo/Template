@@ -25,4 +25,15 @@
     //progress
     <color name="progressMain">@color/colorPrimary</color>
     <color name="progressAccent">@color/colorAccent</color>
+
+
+    //dialog
+    //dialog main theme
+
+    <color name="dialog_title_main">@color/colorPrimaryDark</color>
+    <color name="dialog_message_main">@color/txtMainDark</color>
+    <color name="dialog_widgets_main">@color/colorPrimary</color>
+    <color name="dialog_buttons_main">@color/colorPrimary</color>
+    <color name="dialog_background_main">@color/backgroundMainLight</color>
+
 </resources>

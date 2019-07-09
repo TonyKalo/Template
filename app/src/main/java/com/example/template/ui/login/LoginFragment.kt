@@ -44,9 +44,9 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         findNavController().popBackStack()
 
         btnLogin.setOnClickListener {
+                loginViewModel.sample2()
 
-
-                  if(etPIN.text.toString().trim().equals("12345678")) findNavController().navigate(R.id.mainFragment) else Toast.makeText(activity,"Wrong PIN",Toast.LENGTH_SHORT).show()
+//                  if(etPIN.text.toString().trim().equals("12345678")) findNavController().navigate(R.id.mainFragment) else Toast.makeText(activity,"Wrong PIN",Toast.LENGTH_SHORT).show()
         }
 
     }

@@ -122,7 +122,7 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
 
     private fun openRetryDialog() {
 
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(context,R.style.Main_Dialog_Theme)
             .setTitle(getString(R.string.title_permiss_decline))
             .setMessage(createDialogMsg())
             .setCancelable(false)
@@ -140,7 +140,7 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
     }
 
     private fun openAppSettingsDialog() {
-        AlertDialog.Builder(context)
+        AlertDialog.Builder(context,R.style.Main_Dialog_Theme)
             .setTitle(getString(R.string.title_permiss_required))
             .setMessage(createDialogMsg())
             .setCancelable(false)

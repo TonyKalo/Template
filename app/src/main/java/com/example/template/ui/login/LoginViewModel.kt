@@ -31,24 +31,24 @@ class LoginViewModel @Inject constructor(@AppContext appContext: Context, dataMa
 //    }
 
 
-//
-//    fun sample2 () {
-//
-//        val permissions = arrayOf(
-//            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-//            , android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
-//        )
-//
-//        checkAndRequestPermissions(permissions, true,object : PermissionCallback {
-//            override fun onSuccess() {
-//
-//            }
-//
-//            override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
-//
-//            }
-//
-//        })
-//
-//    }
+
+    fun sample2 () {
+
+        val permissions = arrayOf(
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
+        )
+
+        checkAndRequestPermissions(permissions, true,object : PermissionCallback {
+            override fun onSuccess() {
+
+            }
+
+            override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
+
+            }
+
+        })
+
+    }
 }
