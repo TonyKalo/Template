@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Template</string>
 
     //Error strings
     <string name="err_no_net">No Internet Connection</string>
@@ -8,5 +7,15 @@
     <string name="err_internal_server">Internal Server Error</string>
     <string name="err_bad_request">Bad Request</string>
     <string name="err_not_responding">Something Went Wrong API is not responding properly!</string>
+
+    //dialogs
+    <string name="title_permiss_decline">Permissions Declined</string>
+    <string name="title_permiss_required">Permissions Required</string>
+    <string name="msg_allow_access">In order to use this option, you must allow access to:</string>
+
+    //btn
+    <string name="btn_retry">Retry</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_app_settings">App Settings</string>
 
 </resources>

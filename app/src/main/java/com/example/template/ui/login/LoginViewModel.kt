@@ -30,30 +30,25 @@ class LoginViewModel @Inject constructor(@AppContext appContext: Context, dataMa
 //            }))
 //    }
 
-    fun sample2 () {
 
-
-        val permissions = arrayOf(
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            , android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
-        )
-
-        checkAndRequestPermissions(permissions, true,object : PermissionCallback {
-            override fun onSuccess() {
-               Log.e("TAG","success")
-            }
-
-            override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
-               deniedPermiss.forEach {
-                   Log.e("TAG","denied:"+it)
-               }
-
-                needExternalPermiss.forEach {
-                    Log.e("TAG","external:"+it)
-                }
-            }
-
-        })
-
-    }
+//
+//    fun sample2 () {
+//
+//        val permissions = arrayOf(
+//            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+//            , android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
+//        )
+//
+//        checkAndRequestPermissions(permissions, true,object : PermissionCallback {
+//            override fun onSuccess() {
+//
+//            }
+//
+//            override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
+//
+//            }
+//
+//        })
+//
+//    }
 }

@@ -15,6 +15,7 @@ import com.example.template.ui.base.dialogs.ProgressDialogMain
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import android.R.id.message
+import android.app.AlertDialog
 import android.content.Context
 import android.view.MotionEvent
 import android.content.Context.INPUT_METHOD_SERVICE
@@ -44,7 +45,6 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         activityComponent = DaggerActivityComponent.builder()
             .activityModule(ActivityModule(this))
@@ -76,6 +76,7 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
 
     private fun observePermissions(viewModel:BaseViewModel){
         viewModel.permissionsRequest.observe(this, Observer {
+            Log.e("TAG","permiss" +permissionDialog)
             permissionDialog.permissCallback=it.permissionCallback
             permissionDialog.dialogHandler=it.handleDialog
             permissionDialog.permissions=it.permissions

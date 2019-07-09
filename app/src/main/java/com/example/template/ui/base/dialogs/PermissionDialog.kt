@@ -11,8 +11,10 @@ import android.provider.Settings
 import android.util.Log
 import androidx.core.content.PermissionChecker.checkSelfPermission
 import androidx.fragment.app.DialogFragment
+import com.example.template.R
 import com.example.template.ui.base.callbacks.PermissionCallback
 import javax.inject.Inject
+
 
 class PermissionDialog @Inject constructor() : DialogFragment() {
 
@@ -29,7 +31,6 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
         super.onCreate(savedInstanceState)
         checkPermissions()
     }
-
 
     private fun checkPermissions() {
         var permissionsToCheck: ArrayList<String> = ArrayList()
@@ -48,13 +49,11 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
                         permissionsToCheck.add(permission)
                     }
                 }
-
                 if (permissionGranted) {
                     permissCallback?.onSuccess()
                     dismiss()
                 } else {
-                    requestPermiss(permissionsToCheck.toTypedArray())
-                }
+                    requestPermiss(permissionsToCheck.toTypedArray()) }
 
             } else {
                 permissCallback?.onSuccess()
@@ -64,7 +63,6 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
 
 
     private fun requestPermiss(permissions: Array<String>) {
-
         requestPermissions(permissions, PERMISSION_REQUEST_CODE)
 
     }
@@ -72,9 +70,7 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-
         if (requestCode == PERMISSION_REQUEST_CODE) {
-
             val permissDenied = ArrayList<String>()
 
             for (i in 0..permissions.size - 1) {
@@ -126,18 +122,17 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
 
     private fun openRetryDialog() {
 
-
         AlertDialog.Builder(context)
-            .setTitle("Permissions Declined")
+            .setTitle(getString(R.string.title_permiss_decline))
             .setMessage(createDialogMsg())
             .setCancelable(false)
-            .setPositiveButton("Retry"){dialog, which ->
+            .setPositiveButton(getString(R.string.btn_retry)){ dialog, which ->
                 val permissToRequest:ArrayList<String> = ArrayList()
                 permissToRequest.addAll(externalPermissNeed)
                 permissToRequest.addAll(onPermissDenied)
                 requestPermiss(permissToRequest.toTypedArray())
             }
-            .setNegativeButton("Cancel"){dialog, which ->
+            .setNegativeButton(getString(R.string.btn_cancel)){ dialog, which ->
                 permissCallback?.onFail(onPermissDenied.toTypedArray(),externalPermissNeed.toTypedArray())
                 dismiss()
                 this.dismiss()
@@ -146,10 +141,10 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
 
     private fun openAppSettingsDialog() {
         AlertDialog.Builder(context)
-            .setTitle("Permissions Required")
+            .setTitle(getString(R.string.title_permiss_required))
             .setMessage(createDialogMsg())
             .setCancelable(false)
-            .setPositiveButton("App Settings"){dialog, which ->
+            .setPositiveButton(getString(R.string.btn_app_settings)){ dialog, which ->
                val intent = Intent()
                 intent.action= Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                 val uri = Uri.fromParts("package",context?.applicationContext?.packageName,null)
@@ -158,7 +153,7 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
                 permissCallback?.onFail(onPermissDenied.toTypedArray(),externalPermissNeed.toTypedArray())
                 dismiss()
             }
-            .setNegativeButton("Cancel"){dialog, which ->
+            .setNegativeButton(R.string.btn_cancel){dialog, which ->
                 permissCallback?.onFail(onPermissDenied.toTypedArray(),externalPermissNeed.toTypedArray())
                 dismiss()
             }.create().show()
@@ -166,7 +161,7 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
 
 
     private fun createDialogMsg(): String {
-        val msg = "In order to use this option, you must allow access to:"
+        val msg = getString(R.string.msg_allow_access)
         var listOfPermissions = ""
         val deniedPermiss:ArrayList<String> = ArrayList()
         deniedPermiss.addAll(externalPermissNeed)
@@ -190,13 +185,4 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
 
     }
 
-    override fun onAttach(activity: Activity?) {
-        super.onAttach(activity)
-        Log.d("TAG","On attach")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d("TAG","On detach")
-    }
 }

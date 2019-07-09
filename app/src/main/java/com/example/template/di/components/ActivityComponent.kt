@@ -14,6 +14,7 @@ import dagger.Component
 interface ActivityComponent {
 
     fun inject(activity: MainActivity)
+
     fun inject(fragment: LoginFragment)
     fun inject(fragment: SplashFragment)
 

@@ -40,12 +40,13 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         findNavController().popBackStack()
 
         btnLogin.setOnClickListener {
 
-            loginViewModel.sample2()
-            //            if(etPIN.text.toString().trim().equals("12345678")) findNavController().navigate(R.id.mainFragment) else Toast.makeText(activity,"Wrong PIN",Toast.LENGTH_SHORT).show()
+
+                  if(etPIN.text.toString().trim().equals("12345678")) findNavController().navigate(R.id.mainFragment) else Toast.makeText(activity,"Wrong PIN",Toast.LENGTH_SHORT).show()
         }
 
     }
