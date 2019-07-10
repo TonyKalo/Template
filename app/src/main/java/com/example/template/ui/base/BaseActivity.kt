@@ -31,6 +31,7 @@ import com.example.template.ui.base.dialogs.PermissionDialog
 
 abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterface {
 
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
@@ -59,23 +60,28 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
     abstract fun getViewModel(): V
 
      fun observeAll(viewModel:BaseViewModel){
-         observeLoading(viewModel)
+         observeLoadingNonCancelable(viewModel)
+         observeLoadingCancelable(viewModel)
          observeErrorHandler(viewModel)
          observePermissions(viewModel)
     }
 
-    private fun observeLoading(viewModel:BaseViewModel){
-        viewModel.isLoading.observe(this, Observer { isShowing -> if (isShowing) showProgress() else hideProgress()})
+    private fun observeLoadingNonCancelable(viewModel:BaseViewModel){
+        viewModel.getIsNonCancelableLoading().observe(this, Observer { isShowing -> if (isShowing) showNonCancelableProgress() else hideProgress()})
+    }
+
+    private fun observeLoadingCancelable(viewModel:BaseViewModel){
+        viewModel.getIsCancelableLoading().observe(this, Observer { isShowing -> if (isShowing) showCancelableProgress() else hideProgress()})
     }
 
     private fun observeErrorHandler(viewModel:BaseViewModel){
-        viewModel.handleErrorString.observe(this, Observer { error-> showSnackbar(error)
+        viewModel.getErrorHandler().observe(this, Observer { error-> showSnackbar(error)
 
         })
     }
 
     private fun observePermissions(viewModel:BaseViewModel){
-        viewModel.permissionsRequest.observe(this, Observer {
+        viewModel.getPermissRequest().observe(this, Observer {
             Log.e("TAG","permiss" +permissionDialog)
             permissionDialog.permissCallback=it.permissionCallback
             permissionDialog.dialogHandler=it.handleDialog
@@ -88,10 +94,17 @@ abstract class BaseActivity<V:BaseViewModel>: AppCompatActivity(),BaseViewInterf
      * All override methods must be implemented in BaseFragment
      */
 
-    override fun showProgress(){
-
+    override fun showNonCancelableProgress(){
+        progressDialog.isCancelable=false
         progressDialog.show(supportFragmentManager,"")
     }
+
+    override fun showCancelableProgress() {
+        progressDialog.isCancelable=true
+        progressDialog.show(supportFragmentManager,"")
+    }
+
+
 
     override fun hideProgress(){
         if(progressDialog.dialog.isShowing) progressDialog.dismiss()

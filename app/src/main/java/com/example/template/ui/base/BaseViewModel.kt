@@ -26,10 +26,34 @@ open class BaseViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    val isLoading = MutableLiveData<Boolean>()
-    val handleErrorString = MutableLiveData<String>()
-    val permissionsRequest = MutableLiveData<PermissionModel>()
+    private val isCancelableLoading = MutableLiveData<Boolean>()
+    private val isNonCancelableLoading = MutableLiveData<Boolean>()
+    private val handleErrorString = MutableLiveData<String>()
+    private val permissionsRequest = MutableLiveData<PermissionModel>()
 
+    fun showNonCancelableProgress(show:Boolean){
+        isNonCancelableLoading.value=show
+    }
+
+    fun showCancelableProgress(show:Boolean){
+        isCancelableLoading.value=show
+    }
+
+    fun getPermissRequest():MutableLiveData<PermissionModel>{
+        return permissionsRequest
+    }
+
+    fun getErrorHandler():MutableLiveData<String>{
+        return handleErrorString
+    }
+
+    fun getIsCancelableLoading():MutableLiveData<Boolean>{
+        return isCancelableLoading
+    }
+
+    fun getIsNonCancelableLoading():MutableLiveData<Boolean> {
+        return isNonCancelableLoading
+    }
 
 
     fun handleError(e: Throwable) {

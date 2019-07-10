@@ -6,15 +6,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.DialogFragment
 import com.example.template.R
+import kotlinx.android.synthetic.main.dialog_main_progress.*
 import javax.inject.Inject
 
 
 class ProgressDialogMain @Inject constructor() : DialogFragment() {
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        return inflater.inflate(R.layout.dialog_main_progress, container, false)
-//
-//    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = Dialog(activity)

@@ -29,11 +29,6 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
@@ -44,8 +39,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         findNavController().popBackStack()
 
         btnLogin.setOnClickListener {
-                loginViewModel.sample2()
-
+                showCancelableProgress()
 //                  if(etPIN.text.toString().trim().equals("12345678")) findNavController().navigate(R.id.mainFragment) else Toast.makeText(activity,"Wrong PIN",Toast.LENGTH_SHORT).show()
         }
 

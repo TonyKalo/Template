@@ -27,16 +27,11 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        splashViewModel.loadData()
-        splashViewModel.navigateToNextScreen.observe(this, Observer { if(it) navigateToLogin() })
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        splashViewModel.loadData()
+        splashViewModel.navigateToNextScreen.observe(viewLifecycleOwner, Observer { if(it) navigateToLogin() })
         return inflater.inflate(R.layout.fragment_splash, container, false)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

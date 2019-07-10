@@ -11,7 +11,4 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable) {
 
-    fun test(){
-        isLoading.value=true
-    }
 }

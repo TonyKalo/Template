@@ -14,9 +14,9 @@ import com.example.template.di.components.ActivityComponent
 import com.example.template.ui.base.callbacks.PermissionCallback
 import javax.inject.Inject
 
-abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
+ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
 
-    @Inject
+     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var activity: BaseActivity<*>
@@ -41,9 +41,13 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
     abstract fun getViewModel(): V
 
 
-    override fun showProgress() {
-       activity.showProgress()
-    }
+     override fun showCancelableProgress() {
+         activity.showCancelableProgress()
+     }
+
+     override fun showNonCancelableProgress() {
+         activity.showNonCancelableProgress()
+     }
 
     override fun hideProgress() {
         activity.hideProgress()
