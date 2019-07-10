@@ -26,10 +26,16 @@
     <color name="progressMain">@color/colorPrimary</color>
     <color name="progressAccent">@color/colorAccent</color>
 
+    //button
+    //main
+    <color name="btn_main">@color/colorPrimary</color>
+    <color name="btn_main_click">@color/colorPrimaryDark</color>
+    <color name="btn_main_disable">@color/backgroundGray</color>
+    <color name="btn_main_txt">@color/txtMainLight</color>
+
 
     //dialog
     //dialog main theme
-
     <color name="dialog_title_main">@color/colorPrimaryDark</color>
     <color name="dialog_message_main">@color/txtMainDark</color>
     <color name="dialog_widgets_main">@color/colorPrimary</color>
