@@ -3,6 +3,7 @@ package com.example.template.ui.login
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.template.data.DataManager
 import com.example.template.di.qualifiers.AppContext
 import com.example.template.ui.base.BaseViewModel
@@ -14,6 +15,12 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable) {
+
+    private val toNextScreen= MutableLiveData<Boolean>()
+
+    fun getNavigateToNextScreen(): MutableLiveData<Boolean>{
+       return toNextScreen
+    }
 
 //        fun sample (){
 //
@@ -31,8 +38,11 @@ class LoginViewModel @Inject constructor(@AppContext appContext: Context, dataMa
 //    }
 
 
+    fun onLoginClick(pin:String){
+        checkPermission(pin)
+    }
 
-    fun sample2 () {
+    fun checkPermission (pin:String) {
 
         val permissions = arrayOf(
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -41,6 +51,7 @@ class LoginViewModel @Inject constructor(@AppContext appContext: Context, dataMa
 
         checkAndRequestPermissions(permissions, true,object : PermissionCallback {
             override fun onSuccess() {
+                if (pin.equals("12345678"))  toNextScreen.value=true else handleErrorString("Wrong Pin")
 
             }
 

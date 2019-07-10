@@ -55,7 +55,9 @@ open class BaseViewModel @Inject constructor(
         return isNonCancelableLoading
     }
 
-
+    fun handleErrorString(msg: String) {
+        handleErrorString.value=msg
+    }
     fun handleError(e: Throwable) {
         Log.e("TAG", e.localizedMessage)
         if (!isNetworkConnected(appContext)) {
