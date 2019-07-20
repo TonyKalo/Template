@@ -1,7 +1,5 @@
-package com.example.template.ui
+package com.example.template.ui.main_screen.picture_fragment
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,8 +8,8 @@ import android.view.ViewGroup
 import com.example.template.R
 
 
+class TwoFragment : Fragment() {
 
-class OneFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +20,10 @@ class OneFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_one, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_picture, container, false)
     }
+
 
 
 }

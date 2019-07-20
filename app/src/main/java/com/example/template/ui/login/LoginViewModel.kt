@@ -39,27 +39,29 @@ class LoginViewModel @Inject constructor(@AppContext appContext: Context, dataMa
 
 
     fun onLoginClick(pin:String){
-        checkPermission(pin)
+        if(pin.length<1) handleErrorString("Please enter any the pin ")else toNextScreen.value=true
     }
 
-    fun checkPermission (pin:String) {
 
-        val permissions = arrayOf(
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            , android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
-        )
-
-        checkAndRequestPermissions(permissions, true,object : PermissionCallback {
-            override fun onSuccess() {
-                if (pin.equals("12345678"))  toNextScreen.value=true else handleErrorString("Wrong Pin")
-
-            }
-
-            override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
-
-            }
-
-        })
-
-    }
+    //  sample for check permissions
+//    fun checkPermission (pin:String) {
+//
+//        val permissions = arrayOf(
+//            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+//            , android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
+//        )
+//
+//        checkAndRequestPermissions(permissions, true,object : PermissionCallback {
+//            override fun onSuccess() {
+//                if (pin.equals("12345678"))  toNextScreen.value=true else handleErrorString("Wrong Pin")
+//
+//            }
+//
+//            override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
+//
+//            }
+//
+//        })
+//
+//    }
 }

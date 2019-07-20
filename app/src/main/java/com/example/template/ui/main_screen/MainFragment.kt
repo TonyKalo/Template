@@ -1,4 +1,4 @@
-package com.example.template.ui
+package com.example.template.ui.main_screen
 
 import android.content.Context
 import android.net.Uri

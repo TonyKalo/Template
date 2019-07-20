@@ -3,13 +3,13 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/bottom_navigation"
-            app:startDestination="@id/oneFragment">
+            app:startDestination="@id/permissionFragment">
 
-    <fragment android:id="@+id/oneFragment"
-              android:name="com.example.template.ui.OneFragment"
-              tools:layout="@layout/fragment_one"/>
+    <fragment android:id="@+id/permissionFragment"
+              android:name="com.example.template.ui.main_screen.permission_fragment.PermissionFragment"
+              tools:layout="@layout/fragment_permission"/>
 
-    <fragment android:id="@+id/twoFragment"
-              android:name="com.example.template.ui.TwoFragment"
-              tools:layout="@layout/fragment_two"/>
+    <fragment android:id="@+id/pictureFragment"
+              android:name="com.example.template.ui.main_screen.picture_fragment.TwoFragment"
+              tools:layout="@layout/fragment_picture"/>
 </navigation>
