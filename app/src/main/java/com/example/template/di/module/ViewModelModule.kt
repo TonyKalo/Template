@@ -6,6 +6,7 @@ import com.example.template.di.DaggerViewModelFactory
 import com.example.template.di.scopes.ViewModelKey
 import com.example.template.ui.activity_main.MainViewModel
 import com.example.template.ui.login.LoginViewModel
+import com.example.template.ui.main_screen.permission_fragment.PermissionViewModel
 import com.example.template.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
@@ -27,6 +28,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SplashViewModel::class)
     abstract fun bindSplashViewModel(splashViewModel: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PermissionViewModel::class)
+    abstract fun bindPermissionViewModel(permissionViewModel: PermissionViewModel): ViewModel
 
 
     @Binds

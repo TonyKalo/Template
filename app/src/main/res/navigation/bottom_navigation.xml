@@ -10,6 +10,6 @@
               tools:layout="@layout/fragment_permission"/>
 
     <fragment android:id="@+id/pictureFragment"
-              android:name="com.example.template.ui.main_screen.picture_fragment.TwoFragment"
+              android:name="com.example.template.ui.main_screen.picture_fragment.PictureFragment"
               tools:layout="@layout/fragment_picture"/>
 </navigation>

@@ -32,22 +32,28 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-        btnLogin.setOnClickListener {
-              loginViewModel.onLoginClick(etPIN.text.toString())
-
-        }
-
-       loginViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer {
-           if(it)navigateToMainScreen()
-       })
-
-
+         setClickListeners()
+         setObservers()
 
     }
 
-    fun navigateToMainScreen(){
+
+    private fun setObservers(){
+     navigateToNextScreenObserver()
+    }
+
+    private fun navigateToNextScreenObserver(){
+        loginViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer {
+            if(it)navigateToMainScreen()
+        })
+    }
+    private fun setClickListeners(){
+        btnLogin.setOnClickListener {
+            loginViewModel.onLoginClick(etPIN.text.toString())
+        }
+    }
+
+    private fun navigateToMainScreen(){
         findNavController().popBackStack()
         findNavController().navigate(R.id.mainFragment)
     }

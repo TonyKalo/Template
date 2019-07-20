@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.template.R
 
 
-class TwoFragment : Fragment() {
+class PictureFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
