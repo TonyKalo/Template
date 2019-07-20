@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/permissionFragment"
+            android:icon="@drawable/ic_permiss"
+            android:title="Permission"/>
+    <item
+            android:id="@+id/pictureFragment"
+            android:icon="@drawable/ic_picture"
+            android:title="Picture"/>
+
+</menu>

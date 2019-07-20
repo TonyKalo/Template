@@ -14,16 +14,15 @@ import io.reactivex.Single
 interface UsersDao{
 
     @Query("SELECT * FROM users")
-    fun getAllUsers(): Array<Users>
+    fun getAllUsers(): Single<List<Users>>
 
     @Insert
-    fun insertUser(users:Users)
+    fun insertUser(users:Users):Completable
 
     @Delete
-    fun deleteUser(user:Users)
+    fun deleteUser(user:Users):Completable
 
     @Query("DELETE FROM users")
-    fun deleteAllUsers()
-
+    fun deleteAllUsers():Completable
 
 }
