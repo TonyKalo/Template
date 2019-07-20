@@ -7,6 +7,7 @@ import com.example.template.di.scopes.ViewModelKey
 import com.example.template.ui.activity_main.MainViewModel
 import com.example.template.ui.login.LoginViewModel
 import com.example.template.ui.main_screen.permission_fragment.PermissionViewModel
+import com.example.template.ui.main_screen.picture_fragment.PictureViewModel
 import com.example.template.ui.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
@@ -33,6 +34,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PermissionViewModel::class)
     abstract fun bindPermissionViewModel(permissionViewModel: PermissionViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PictureViewModel::class)
+    abstract fun bindPictureViewModel(pictureViewModel: PictureViewModel): ViewModel
 
 
     @Binds
