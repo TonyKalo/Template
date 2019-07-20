@@ -1,6 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGrey">#B8B8B8</color>
+
+    //background
+    <color name="backgroundMainDark">@color/colorBlack</color>
+    <color name="backgroundMainLight">@color/colorWhite</color>
+    <color name="backgroundMain">@color/colorPrimary</color>
+    <color name="backgroundGray">@color/colorGrey</color>
+
+
+    //text
+    <color name="txtMainDark">@color/colorBlack</color>
+    <color name="txtMainLight">@color/colorWhite</color>
+    <color name="txtMain">@color/colorPrimary</color>
+    <color name="txtGrey">@color/colorGrey</color>
+
+    //progress
+    <color name="progressMain">@color/colorPrimary</color>
+    <color name="progressAccent">@color/colorAccent</color>
+
+    //button
+    //main
+    <color name="btn_main">@color/colorPrimary</color>
+    <color name="btn_main_click">@color/colorPrimaryDark</color>
+    <color name="btn_main_disable">@color/backgroundGray</color>
+    <color name="btn_main_txt">@color/txtMainLight</color>
+    //main transparent
+    <color name="btn_main_transparent">@color/colorPrimary</color>
+    <color name="btn_main_transparent_transparent">@color/colorTransparent</color>
+    <color name="btn_main_click_transparent">@color/colorPrimaryDark</color>
+    <color name="btn_main_disable_transparent">@color/backgroundGray</color>
+    <color name="btn_main_txt_transparent">@color/colorPrimary</color>
+
+
+    //dialog
+    //dialog main theme
+    <color name="dialog_title_main">@color/colorPrimaryDark</color>
+    <color name="dialog_message_main">@color/txtMainDark</color>
+    <color name="dialog_widgets_main">@color/colorPrimary</color>
+    <color name="dialog_buttons_main">@color/colorPrimary</color>
+    <color name="dialog_background_main">@color/backgroundMainLight</color>
+
 </resources>

@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+
+    <!-- AlertDialogStyle-->
+//--------------------------------------------------------------------------------------------------
+    <!--main theme-->
+    <style name="Main_Dialog_Theme" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/dialog_widgets_main</item>
+        <item name="android:textColor">@color/dialog_title_main</item>
+        <item name="android:buttonBarButtonStyle">@style/ButtonStyle</item>
+        <item name="android:textColorPrimary">@color/dialog_message_main</item>
+        <item name="android:background">@color/dialog_background_main</item>
+
+    </style>
+
+    <!--Alert Dialog Button Style-->
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/dialog_buttons_main</item>
+    </style>
+
 </resources>
