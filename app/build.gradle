@@ -68,5 +68,6 @@ dependencies {
     //Navigation Component
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_fragment_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_fragment_version"
+    implementation project(path: ':DxLoadingButton')
 
 }

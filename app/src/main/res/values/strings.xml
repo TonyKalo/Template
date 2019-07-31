@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">Template</string>
 
     //Error strings
     <string name="err_no_net">No Internet Connection</string>
