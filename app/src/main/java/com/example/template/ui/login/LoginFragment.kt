@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.cyberslabs.customalertdialog.CustomAlertDialog
 import com.example.template.R
 import com.example.template.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -49,7 +50,9 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
     private fun setClickListeners(){
         btnLogin.setOnClickListener {
-            loginViewModel.onLoginClick(etPIN.text.toString())
+//            loginViewModel.checkPermission(etPIN.text.toString())
+            var dialog = CustomAlertDialog()
+            dialog.show(fragmentManager,"aaa")
         }
     }
 

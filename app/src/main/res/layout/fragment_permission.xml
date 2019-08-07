@@ -21,7 +21,7 @@
             android:id="@+id/btnPermission"
             android:layout_marginTop="200dp"
             android:background="@drawable/btn_main_big_transparetn"
-            android:textColor="@color/btn_main_txt_transparent"
+            android:textColor="@color/btn_transparent_txt"
             android:layout_gravity="center_horizontal" android:padding="16dp"/>
 
 

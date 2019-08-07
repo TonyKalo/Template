@@ -3,9 +3,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
        android:shape="rectangle" android:padding="10dp">
 
-    <stroke android:width="@dimen/btn_main_transparent_outline"
-            android:color="@drawable/btn_main_transparent_color_selector" />
+    <stroke android:width="@dimen/btn_dialog_transparent_outline"
+            android:color="@drawable/btn_transparent_color_selector" />
     <solid android:color="@color/btn_transparent_transparent"/>
-    <corners android:radius="@dimen/btn_radius_main"/>
+    <corners android:radius="@dimen/btn_radius"/>
 
 </shape>
