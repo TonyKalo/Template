@@ -3,9 +3,9 @@
 
     <dimen name="main_padding">16dp</dimen>
 
-    <dimen name="et_main">16sp</dimen>
+    <dimen name="tv_title_dialog">18sp</dimen>
     <dimen name="tv_main">14sp</dimen>
 
-    <dimen name="btn_main_transparent_outline">6dp</dimen>
-    <dimen name="btn_radius_main">16dp</dimen>
+    <dimen name="btn_dialog_transparent_outline">2dp</dimen>
+    <dimen name="btn_radius">6dp</dimen>
 </resources>

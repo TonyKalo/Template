@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- CustomAlertDialogStyle-->
+    //--------------------------------------------------------------------------------------------------
+
+    <style name="DialogCustomAlertStyle" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">94%</item>
+        <item name="android:windowMinWidthMinor">94%</item>
+    </style>
+
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/llMainLayout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+
+              android:background="@drawable/dialog_background"
+              android:paddingLeft="@dimen/main_padding"
+              android:paddingRight="@dimen/main_padding"
+              android:paddingTop="20dp"
+              android:paddingBottom="24dp">
+
+    <TextView
+            android:text="Permission Denied!"
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="@dimen/tv_title_dialog"
+            android:textColor="@color/txtMain"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvMsg"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/tv_main"
+            android:textColor="@color/txtMainDark"
+            android:text="try dty  rtd yrthfdg ytfh dfgh d dfgh dfgh dfgh dfg h"/>
+
+    <LinearLayout
+            android:id="@+id/llButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:layout_marginTop="20dp">
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ok"
+                    android:background="@drawable/dialog_btn_transparetn"
+                    android:minHeight="0dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:textIsSelectable="false"
+                    android:layout_marginEnd="4dp"
+                    android:textColor="@drawable/btn_transparent_color_selector"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GO TO APP SETIngs"
+                    android:background="@drawable/dialog_btn_transparetn"
+                    android:minHeight="0dp"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="4dp"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@drawable/btn_transparent_color_selector"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -31,7 +31,6 @@ class PermissionDialog @Inject constructor() : DialogFragment() {
         super.onCreate(savedInstanceState)
         checkPermissions()
     }
-
     private fun checkPermissions() {
         var permissionsToCheck: ArrayList<String> = ArrayList()
 

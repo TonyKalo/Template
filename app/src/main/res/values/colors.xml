@@ -32,12 +32,12 @@
     <color name="btn_main_click">@color/colorPrimaryDark</color>
     <color name="btn_main_disable">@color/backgroundGray</color>
     <color name="btn_main_txt">@color/txtMainLight</color>
-    //main transparent
-    <color name="btn_main_transparent">@color/colorPrimary</color>
-    <color name="btn_main_transparent_transparent">@color/colorTransparent</color>
-    <color name="btn_main_click_transparent">@color/colorPrimaryDark</color>
-    <color name="btn_main_disable_transparent">@color/backgroundGray</color>
-    <color name="btn_main_txt_transparent">@color/colorPrimary</color>
+    // transparent
+    <color name="btn_transparent">@color/colorPrimary</color>
+    <color name="btn_transparent_transparent">@color/colorTransparent</color>
+    <color name="btn_transparent_click">@color/colorPrimaryDark</color>
+    <color name="btn_transparent_disable">@color/backgroundGray</color>
+    <color name="btn_transparent_txt">@color/colorPrimary</color>
 
 
     //dialog

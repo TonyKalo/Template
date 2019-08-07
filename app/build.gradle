@@ -25,7 +25,7 @@ dependencies {
     def dagger_version = "2.23.1"
     def retrofit_version = "2.5.0"
     def room_version = "2.1.0"
-    def nav_fragment_version = "1.0.0-alpha06"
+    def nav_fragment_version = "1.0.0"
     def live_data_version = "2.0.0"
     def rxkotlin_version = "2.3.0"
     def rxjava_version = "2.2.10"
@@ -68,6 +68,9 @@ dependencies {
     //Navigation Component
     implementation "android.arch.navigation:navigation-fragment-ktx:$nav_fragment_version"
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_fragment_version"
+
+    //Internal Libraries
     implementation project(path: ':DxLoadingButton')
+    implementation project(path: ':CustomAlertDialog')
 
 }

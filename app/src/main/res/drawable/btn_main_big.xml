@@ -4,6 +4,6 @@
        android:padding="10dp">
 
     <solid android:color="@drawable/btn_main_big_color_selector"/>
-    <corners android:radius="16dp"/>
+    <corners android:radius="@dimen/btn_radius_main"/>
 
 </shape>
