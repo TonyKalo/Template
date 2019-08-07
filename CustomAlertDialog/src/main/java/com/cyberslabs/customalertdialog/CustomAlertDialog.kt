@@ -1,9 +1,11 @@
 package com.cyberslabs.customalertdialog
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +14,16 @@ import kotlinx.android.synthetic.main.dialog_alert_custom.*
 
 class CustomAlertDialog : DialogFragment() {
 
+
     private var title:String? = null
     private var msg:String? = null
+    private var inCenter = false
     private var icon:Drawable? = null
     private var positiveBtnText: String?=null
+    private var positiveBtnInFocus =true
     private var positiveBtnListener: OnButtonClickListener?=null
     private var negativeBtnText: String?=null
+    private var negativeBtnInFocus =true
     private var negativeBtnListener: OnButtonClickListener?=null
 
     fun setTitle(title:String){
@@ -26,6 +32,11 @@ class CustomAlertDialog : DialogFragment() {
 
     fun setMessage(msg:String){
         this.msg=msg
+    }
+
+    fun setMessage(msg:String,inCenter:Boolean){
+        this.msg=msg
+        this.inCenter=inCenter
     }
 
     fun setIcon(icon:Drawable){
@@ -39,6 +50,18 @@ class CustomAlertDialog : DialogFragment() {
 
     fun setNegativeButton(btnText:String,onButtonClickListener: OnButtonClickListener){
         negativeBtnText=btnText
+        negativeBtnListener=onButtonClickListener
+    }
+
+    fun setPositiveButton(btnText:String,inFocus:Boolean,onButtonClickListener: OnButtonClickListener){
+        positiveBtnText=btnText
+        positiveBtnInFocus=inFocus
+        positiveBtnListener=onButtonClickListener
+    }
+
+    fun setNegativeButton(btnText:String,inFocus:Boolean,onButtonClickListener: OnButtonClickListener){
+        negativeBtnText=btnText
+        negativeBtnInFocus=inFocus
         negativeBtnListener=onButtonClickListener
     }
 
@@ -75,6 +98,7 @@ class CustomAlertDialog : DialogFragment() {
 
     private fun setMsgLayout(){
         if(msg!=null) tvMsg.text = msg else tvMsg.visibility=View.GONE
+        if(inCenter)tvMsg.gravity=Gravity.CENTER
     }
 
     private fun setButtonLayout(){
@@ -90,14 +114,24 @@ class CustomAlertDialog : DialogFragment() {
 
     }
 
+    @SuppressLint("ResourceType")
     private fun setupPositiveButton(){
+        if(!positiveBtnInFocus){
+            btnPositive.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
+            btnPositive.setTextColor(resources.getColorStateList(R.drawable.btn_transparent_out_focus_color_selector))
+        }
         btnPositive.text=positiveBtnText
         btnPositive.setOnClickListener{
             positiveBtnListener?.onClick()
         }
     }
 
+    @SuppressLint("ResourceType")
     private fun setupNegativeButton(){
+        if(!negativeBtnInFocus){
+            btnNegative.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
+            btnNegative.setTextColor(resources.getColorStateList(R.drawable.btn_transparent_out_focus_color_selector))
+        }
         btnNegative.text=negativeBtnText
         btnNegative.setOnClickListener{
             negativeBtnListener?.onClick()

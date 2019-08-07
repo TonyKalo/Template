@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:color="@color/btn_transparent_disable"
+    <item android:color="@color/btn_transparent_out_focus_disable"
           android:state_enabled="false" />
     <item
-            android:color="@color/btn_transparent_click"
+            android:color="@color/btn_transparent_out_focus_click"
             android:state_pressed="true"/>
     <item
-            android:color="@color/btn_transparent"
+            android:color="@color/btn_transparent_out_focus"
     />
 
 </selector>
