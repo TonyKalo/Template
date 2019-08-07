@@ -61,7 +61,7 @@
                 android:gravity="center">
 
             <Button
-                    android:id="@+id/button"
+                    android:id="@+id/btnNegative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ok"
@@ -84,7 +84,7 @@
                 android:gravity="center">
 
             <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/btnPositive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="GO TO APP SETIngs"

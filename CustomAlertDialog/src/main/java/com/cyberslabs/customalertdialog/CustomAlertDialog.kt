@@ -15,6 +15,10 @@ class CustomAlertDialog : DialogFragment() {
     private var title:String? = null
     private var msg:String? = null
     private var icon:Drawable? = null
+    private var positiveBtnText: String?=null
+    private var positiveBtnListener: OnButtonClickListener?=null
+    private var negativeBtnText: String?=null
+    private var negativeBtnListener: OnButtonClickListener?=null
 
     fun setTitle(title:String){
         this.title=title
@@ -26,6 +30,16 @@ class CustomAlertDialog : DialogFragment() {
 
     fun setIcon(icon:Drawable){
         this.icon=icon
+    }
+
+    fun setPositiveButton(btnText:String,onButtonClickListener: OnButtonClickListener){
+        positiveBtnText=btnText
+        positiveBtnListener=onButtonClickListener
+    }
+
+    fun setNegativeButton(btnText:String,onButtonClickListener: OnButtonClickListener){
+        negativeBtnText=btnText
+        negativeBtnListener=onButtonClickListener
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +62,7 @@ class CustomAlertDialog : DialogFragment() {
         setIconLayout()
         setTitleLayout()
         setMsgLayout()
+        setButtonLayout()
     }
 
     private fun setIconLayout(){
@@ -60,5 +75,32 @@ class CustomAlertDialog : DialogFragment() {
 
     private fun setMsgLayout(){
         if(msg!=null) tvMsg.text = msg else tvMsg.visibility=View.GONE
+    }
+
+    private fun setButtonLayout(){
+        if (positiveBtnText==null&&negativeBtnText==null){
+            llButtonLayout.visibility=View.GONE
+        }else{
+            if(positiveBtnText != null && negativeBtnText==null) btnNegative.visibility=View.INVISIBLE
+            if(positiveBtnText == null && negativeBtnText!=null) btnPositive.visibility=View.INVISIBLE
+            if(positiveBtnText!=null) setupPositiveButton()
+            if(negativeBtnText!=null) setupNegativeButton()
+        }
+
+
+    }
+
+    private fun setupPositiveButton(){
+        btnPositive.text=positiveBtnText
+        btnPositive.setOnClickListener{
+            positiveBtnListener?.onClick()
+        }
+    }
+
+    private fun setupNegativeButton(){
+        btnNegative.text=negativeBtnText
+        btnNegative.setOnClickListener{
+            negativeBtnListener?.onClick()
+        }
     }
 }
