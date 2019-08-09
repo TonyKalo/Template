@@ -1,1 +1,1 @@
-include ':app', ':CustomAlertDialog', ':DxLoadingButton'
+include ':app', ':CustomWidgets'

@@ -8,8 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/CustomAlertDialog" />
-            <option value="$PROJECT_DIR$/DxLoadingButton" />
+            <option value="$PROJECT_DIR$/CustomWidgets" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

@@ -70,7 +70,6 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$nav_fragment_version"
 
     //Internal Libraries
-    implementation project(path: ':DxLoadingButton')
-    implementation project(path: ':CustomAlertDialog')
+    implementation project(path: ':CustomWidgets')
 
 }
