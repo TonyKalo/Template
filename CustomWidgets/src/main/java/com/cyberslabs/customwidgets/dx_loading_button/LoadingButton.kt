@@ -22,9 +22,9 @@ enum class AnimationType{
 
 @Suppress("unused")
 class LoadingButton @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyle: Int = 0) : View(context, attrs, defStyle){
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0) : View(context, attrs, defStyle){
 
     companion object {
         private const val STATE_BUTTON = 0
@@ -40,6 +40,8 @@ class LoadingButton @JvmOverloads constructor(
 
         private const val DEFAULT_COLOR = Color.BLUE
         private const val DEFAULT_TEXT_COLOR = Color.WHITE
+
+        private var animationInProgress=false
 
     }
 
@@ -96,7 +98,7 @@ class LoadingButton @JvmOverloads constructor(
             mTextPaint.textSize = value * mDensity
             mTextWidth = mTextPaint.measureText(mText)
             invalidate()
-       }
+        }
 
     var cornerRadius
         get() = mButtonCorner
@@ -242,8 +244,8 @@ class LoadingButton @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(
-                measureDimension((DEFAULT_WIDTH * mDensity).toInt(), widthMeasureSpec),
-                measureDimension((DEFAULT_HEIGHT * mDensity).toInt(), heightMeasureSpec))
+            measureDimension((DEFAULT_WIDTH * mDensity).toInt(), widthMeasureSpec),
+            measureDimension((DEFAULT_HEIGHT * mDensity).toInt(), heightMeasureSpec))
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -460,16 +462,18 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun measureDimension(defaultSize: Int, measureSpec: Int) =
-            when (MeasureSpec.getMode(measureSpec)) {
-                MeasureSpec.EXACTLY -> MeasureSpec.getSize(measureSpec)
-                MeasureSpec.AT_MOST -> min(defaultSize, MeasureSpec.getSize(measureSpec))
-                MeasureSpec.UNSPECIFIED -> defaultSize
-                else -> defaultSize
-            }
+        when (MeasureSpec.getMode(measureSpec)) {
+            MeasureSpec.EXACTLY -> MeasureSpec.getSize(measureSpec)
+            MeasureSpec.AT_MOST -> min(defaultSize, MeasureSpec.getSize(measureSpec))
+            MeasureSpec.UNSPECIFIED -> defaultSize
+            else -> defaultSize
+        }
 
     private fun updateButtonColor() {
-        mPaint.color = if(isEnabled) mColorPrimary else mDisabledBgColor
-        mTextPaint.color = if(isEnabled) mTextColor else mDisabledTextColor
+        if(!animationInProgress) {
+            mPaint.color = if (isEnabled) mColorPrimary else mDisabledBgColor
+            mTextPaint.color = if (isEnabled) mTextColor else mDisabledTextColor
+        }
         if(backgroundShader != null){
             if(isEnabled) mPaint.shader = backgroundShader else mPaint.shader = null
         }
@@ -480,80 +484,83 @@ class LoadingButton @JvmOverloads constructor(
     private fun playRippleAnimation(isTouchDown: Boolean) {
 
         ValueAnimator.ofFloat(
-                if (isTouchDown) 0f else (width ).toFloat(),
-                if (isTouchDown) (width).toFloat() else width.toFloat())
-                .apply {
-                    duration = 240
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener {
-                        mPaint.color= rippleColor
-                        invalidate()
-                    }
-                    if(!isTouchDown) doOnEnd {
-                        performClick()
-                        mPaint.color= mColorPrimary
-                        mTouchX = 0f
-                        mTouchY = 0f
-                        mRippleRadius = 0f
-                        invalidate()
-                    }
-                }.start()
+            if (isTouchDown) 0f else (width ).toFloat(),
+            if (isTouchDown) (width).toFloat() else width.toFloat())
+            .apply {
+                duration = 240
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener {
+                    mPaint.color= rippleColor
+                    invalidate()
+                }
+                if(!isTouchDown) doOnEnd {
+                    performClick()
+                    mPaint.color= mColorPrimary
+                    mTouchX = 0f
+                    mTouchY = 0f
+                    mRippleRadius = 0f
+                    invalidate()
+                }
+            }.start()
 
 
     }
 
     private fun playStartAnimation(isReverse: Boolean) {
+        isEnabled=false
+        animationInProgress=true
         val viewHeight = max(height, mMinHeight.toInt())
         val animator = ValueAnimator.ofInt(
-                if (isReverse) width / 2 - viewHeight / 2 else 0,
-                if (isReverse) 0 else width / 2 - viewHeight / 2)
-                .apply {
-                    duration = 400
-                    interpolator = AccelerateDecelerateInterpolator()
-                    startDelay = 100
-                    addUpdateListener { valueAnimator ->
-                        mScaleWidth = valueAnimator.animatedValue as Int
+            if (isReverse) width / 2 - viewHeight / 2 else 0,
+            if (isReverse) 0 else width / 2 - viewHeight / 2)
+            .apply {
+                duration = 400
+                interpolator = AccelerateDecelerateInterpolator()
+                startDelay = 100
+                addUpdateListener { valueAnimator ->
+                    mScaleWidth = valueAnimator.animatedValue as Int
+                    invalidate()
+                }
+                doOnEnd {
+                    if(isReverse)animationInProgress=false
+                    if(isReverse)isEnabled=true else isEnabled=false
+                    mCurrentState = if (isReverse) STATE_BUTTON else STATE_ANIMATION_STEP2
+                    if (mCurrentState == STATE_BUTTON) {
+
                         invalidate()
                     }
-                    doOnEnd {
-                        mCurrentState = if (isReverse) STATE_BUTTON else STATE_ANIMATION_STEP2
-                        if (mCurrentState == STATE_BUTTON) {
-
-                            invalidate()
-                        }
-                    }
                 }
+            }
 
         val animator2 = ValueAnimator.ofInt(if (isReverse) mRadius else 0, if (isReverse) 0 else mRadius)
-                .apply {
-                    duration = 240
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        mScaleHeight = valueAnimator.animatedValue as Int
-                        invalidate()
-                    }
-                    doOnEnd {
-                        mCurrentState = if (isReverse) STATE_ANIMATION_STEP1 else STATE_ANIMATION_LOADING
-                        if (!isReverse) updateButtonColor()
-                    }
+            .apply {
+                duration = 240
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    mScaleHeight = valueAnimator.animatedValue as Int
+                    invalidate()
                 }
+                doOnEnd {
+                    mCurrentState = if (isReverse) STATE_ANIMATION_STEP1 else STATE_ANIMATION_LOADING
+                    if (!isReverse) updateButtonColor()
+                }
+            }
 
         val loadingAnimator = ValueAnimator.ofInt(30, 300)
-                .apply {
-                    duration = 1000
-                    repeatCount = ValueAnimator.INFINITE
-                    repeatMode = ValueAnimator.REVERSE
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        mAngle = valueAnimator.animatedValue as Int
-                        invalidate()
-                    }
+            .apply {
+                duration = 1000
+                repeatCount = ValueAnimator.INFINITE
+                repeatMode = ValueAnimator.REVERSE
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    mAngle = valueAnimator.animatedValue as Int
+                    invalidate()
                 }
+            }
 
         mLoadingAnimatorSet?.cancel()
         mLoadingAnimatorSet = AnimatorSet()
         mLoadingAnimatorSet!!.doOnEnd {
-            isEnabled = true
             updateButtonColor()
         }
         if (isReverse) {
@@ -568,70 +575,70 @@ class LoadingButton @JvmOverloads constructor(
     private fun playSuccessAnimation() {
         createSuccessPath()
         val animator = ValueAnimator.ofInt(360 - mAngle, 360)
-                .apply {
-                    duration = 240
-                    interpolator = DecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        mEndAngle = valueAnimator.animatedValue as Int
-                        invalidate()
-                    }
-                    doOnEnd { mCurrentState = STATE_ANIMATION_SUCCESS }
+            .apply {
+                duration = 240
+                interpolator = DecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    mEndAngle = valueAnimator.animatedValue as Int
+                    invalidate()
                 }
+                doOnEnd { mCurrentState = STATE_ANIMATION_SUCCESS }
+            }
 
         val successAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
-                .apply {
-                    duration = 500
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        val value = valueAnimator.animatedValue as Float
-                        val pathEffect = DashPathEffect(mSuccessPathIntervals, mSuccessPathLength - mSuccessPathLength * value)
-                        mPathEffectPaint.pathEffect = pathEffect
-                        invalidate()
-                    }
+            .apply {
+                duration = 500
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    val value = valueAnimator.animatedValue as Float
+                    val pathEffect = DashPathEffect(mSuccessPathIntervals, mSuccessPathLength - mSuccessPathLength * value)
+                    mPathEffectPaint.pathEffect = pathEffect
+                    invalidate()
                 }
+            }
 
         AnimatorSet().apply {
-                    playSequentially(animator, successAnimator)
-                    doOnEnd {
-                        animationEndAction?.invoke(AnimationType.SUCCESSFUL)
-                    }
-                }.start()
+            playSequentially(animator, successAnimator)
+            doOnEnd {
+                animationEndAction?.invoke(AnimationType.SUCCESSFUL)
+            }
+        }.start()
     }
 
     private fun playFailedAnimation() {
         createFailedPath()
         val animator = ValueAnimator.ofInt(360 - mAngle, 360)
-                .apply {
-                    duration = 240
-                    interpolator = DecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        mEndAngle = valueAnimator.animatedValue as Int
-                        invalidate()
-                    }
-                    doOnEnd { mCurrentState = STATE_ANIMATION_FAILED }
+            .apply {
+                duration = 240
+                interpolator = DecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    mEndAngle = valueAnimator.animatedValue as Int
+                    invalidate()
                 }
+                doOnEnd { mCurrentState = STATE_ANIMATION_FAILED }
+            }
 
         val failedAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
-                .apply {
-                    duration = 300
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        val value = valueAnimator.animatedValue as Float
-                        mPathEffectPaint.pathEffect = DashPathEffect(mFailedPathIntervals, mFailedPathLength - mFailedPathLength * value)
-                        invalidate()
-                    }
+            .apply {
+                duration = 300
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    val value = valueAnimator.animatedValue as Float
+                    mPathEffectPaint.pathEffect = DashPathEffect(mFailedPathIntervals, mFailedPathLength - mFailedPathLength * value)
+                    invalidate()
                 }
+            }
 
         val failedAnimator2 = ValueAnimator.ofFloat(0.0f, 1.0f)
-                .apply {
-                    duration = 300
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        val value = valueAnimator.animatedValue as Float
-                        mPathEffectPaint2.pathEffect = DashPathEffect(mFailedPathIntervals, mFailedPathLength - mFailedPathLength * value)
-                        invalidate()
-                    }
+            .apply {
+                duration = 300
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    val value = valueAnimator.animatedValue as Float
+                    mPathEffectPaint2.pathEffect = DashPathEffect(mFailedPathIntervals, mFailedPathLength - mFailedPathLength * value)
+                    invalidate()
                 }
+            }
 
         AnimatorSet().apply {
             playSequentially(animator, failedAnimator, failedAnimator2)
@@ -648,60 +655,60 @@ class LoadingButton @JvmOverloads constructor(
     private fun cancel() {
         mCurrentState = STATE_STOP_LOADING
         ValueAnimator.ofInt(360 - mAngle, 360)
-                .apply {
-                    duration = 240
-                    interpolator = DecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        mEndAngle = valueAnimator.animatedValue as Int
-                        invalidate()
-                    }
-                    doOnEnd {
-                        mCurrentState = STATE_ANIMATION_STEP2
-                        playStartAnimation(true)
-                    }
-                }.start()
+            .apply {
+                duration = 240
+                interpolator = DecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    mEndAngle = valueAnimator.animatedValue as Int
+                    invalidate()
+                }
+                doOnEnd {
+                    mCurrentState = STATE_ANIMATION_STEP2
+                    playStartAnimation(true)
+                }
+            }.start()
     }
 
     private fun scaleSuccessPath() {
         val scaleMatrix = Matrix()
         val viewHeight = max(height, mMinHeight.toInt())
         ValueAnimator.ofFloat(1.0f, 0.0f)
-                .apply {
-                    duration = 300
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        val value = valueAnimator.animatedValue as Float
-                        scaleMatrix.setScale(value, value, (width / 2).toFloat(), (viewHeight / 2).toFloat())
-                        mSuccessPath!!.transform(scaleMatrix)
-                        invalidate()
-                    }
-                    doOnEnd {
-                        mCurrentState = STATE_ANIMATION_STEP2
-                        playStartAnimation(true)
-                    }
-                }.start()
+            .apply {
+                duration = 300
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    val value = valueAnimator.animatedValue as Float
+                    scaleMatrix.setScale(value, value, (width / 2).toFloat(), (viewHeight / 2).toFloat())
+                    mSuccessPath!!.transform(scaleMatrix)
+                    invalidate()
+                }
+                doOnEnd {
+                    mCurrentState = STATE_ANIMATION_STEP2
+                    playStartAnimation(true)
+                }
+            }.start()
     }
 
     private fun scaleFailedPath() {
         val scaleMatrix = Matrix()
         val viewHeight = max(height, mMinHeight.toInt())
         ValueAnimator.ofFloat(1.0f, 0.0f)
-                .apply {
-                    duration = 300
-                    interpolator = AccelerateDecelerateInterpolator()
-                    addUpdateListener { valueAnimator ->
-                        val value = valueAnimator.animatedValue as Float
-                        scaleMatrix.setScale(value, value, (width / 2).toFloat(), (viewHeight / 2).toFloat())
-                        mFailedPath!!.transform(scaleMatrix)
-                        mFailedPath2!!.transform(scaleMatrix)
-                        invalidate()
+            .apply {
+                duration = 300
+                interpolator = AccelerateDecelerateInterpolator()
+                addUpdateListener { valueAnimator ->
+                    val value = valueAnimator.animatedValue as Float
+                    scaleMatrix.setScale(value, value, (width / 2).toFloat(), (viewHeight / 2).toFloat())
+                    mFailedPath!!.transform(scaleMatrix)
+                    mFailedPath2!!.transform(scaleMatrix)
+                    invalidate()
 
-                    }
-                    doOnEnd {
-                        mCurrentState = STATE_ANIMATION_STEP2
-                        playStartAnimation(true)
-                    }
-                }.start()
+                }
+                doOnEnd {
+                    mCurrentState = STATE_ANIMATION_STEP2
+                    playStartAnimation(true)
+                }
+            }.start()
     }
 }
 
