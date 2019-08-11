@@ -32,7 +32,6 @@ class PermissionViewModel  @Inject constructor(@AppContext appContext: Context, 
             }
 
             override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {
-
             }
 
         })

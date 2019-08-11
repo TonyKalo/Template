@@ -10,13 +10,14 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.example.template.di.components.ActivityComponent
 import com.example.template.ui.base.callbacks.PermissionCallback
 import javax.inject.Inject
 
- abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
+abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
 
-     @Inject
+    @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var activity: BaseActivity<*>
@@ -34,7 +35,8 @@ import javax.inject.Inject
         super.onCreate(savedInstanceState)
         activityComponent=activity.activityComponent
         baseViewModel = getViewModel()
-        activity.observeAll(baseViewModel!!)
+        activity.setViewModel(baseViewModel!!)
+        activity.observeAll()
 
     }
 
@@ -59,5 +61,17 @@ import javax.inject.Inject
 
     override fun requestPermission(permissions: Array<String>) {
         activity.requestPermission(permissions)
+    }
+
+     override fun requestPermissionRationale(permission: String): Boolean {
+         return activity.requestPermissionRationale(permission)
+     }
+
+    override fun openRetryDialog(msg: String) {
+        return activity.openRetryDialog(msg)
+    }
+
+    override fun openAppSettingsDialog(msg: String) {
+        return activity.openAppSettingsDialog(msg)
     }
 }

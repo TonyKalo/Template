@@ -2,13 +2,10 @@ package com.example.template.ui.login
 
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.template.data.DataManager
 import com.example.template.di.qualifiers.AppContext
 import com.example.template.ui.base.BaseViewModel
-import com.example.template.ui.base.callbacks.PermissionCallback
-import com.example.template.ui.base.dialogs.PermissionDialog
 import com.example.template.utils.scheduler.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject

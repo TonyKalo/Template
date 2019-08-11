@@ -13,11 +13,16 @@
     <string name="title_permiss_decline">Permissions Declined</string>
     <string name="title_permiss_required">Permissions Required</string>
     <string name="msg_allow_access">In order to use this option, you must allow access to:</string>
+    <string name="msg_permiss_decline">Are you sure you want to deny the access?</string>
+    <string name="msg_permiss_required"><![CDATA[To allow access tap APP SETTINGS -> PERMISSIONS, and allow access.]]></string>
 
     //btn
     <string name="btn_retry">Retry</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_app_settings">App Settings</string>
+    <string name="btn_sure">I\'M SURE</string>
+
+
     <string name="tv_storage">STORAGE</string>
     <string name="tv_sms">SMS</string>
 
