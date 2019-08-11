@@ -8,7 +8,6 @@ import com.example.template.di.components.ActivityComponent
 import com.example.template.di.components.DaggerActivityComponent
 import com.example.template.di.module.ActivityModule
 import androidx.lifecycle.ViewModelProvider
-import com.example.template.ui.base.dialogs.ProgressDialogMain
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import android.content.Context
@@ -22,6 +21,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
+import com.cyberslabs.customwidgets.progress_dialog.CustomProgressDialog
 import com.example.template.R
 
 
@@ -31,7 +31,7 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
-    lateinit var progressDialog: ProgressDialogMain
+    lateinit var progressDialog: CustomProgressDialog
     @Inject
     lateinit var retryDialog: CustomAlertDialog
     @Inject

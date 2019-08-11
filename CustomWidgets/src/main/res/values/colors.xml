@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    //-----------------------------------ALERT DIALOG-----------------------------------
+
     <color name="colorPrimary">?attr/colorPrimary</color>
     <color name="colorPrimaryDark">?attr/colorPrimaryDark</color>
     <color name="colorAccent">?attr/colorAccent</color>
@@ -16,7 +16,7 @@
 
     <color name="txtMain">@color/colorPrimary</color>
     <color name="txtMainDark">@color/colorBlack</color>
-
+    //-----------------------------------ALERT DIALOG-----------------------------------
 //Button
     <color name="btn_main">@color/colorPrimary</color>
     // transparent
@@ -32,4 +32,8 @@
     <color name="btn_transparent_transparent_out_focus">@color/colorTransparent</color>
     <color name="btn_transparent_out_focus_click">@color/colorDarkGrey</color>
     <color name="btn_transparent_out_focus_txt">@color/colorPrimary</color>
+
+    //-----------------------------------PROGRESS DIALOG-----------------------------------
+
+    <color name="progress_main">@color/colorPrimary</color>
 </resources>
