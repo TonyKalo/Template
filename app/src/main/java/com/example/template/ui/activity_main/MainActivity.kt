@@ -14,7 +14,7 @@ class MainActivity :  BaseActivity<MainViewModel>() {
 
 
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var mViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +26,8 @@ class MainActivity :  BaseActivity<MainViewModel>() {
 
     override fun getViewModel(): MainViewModel {
         activityComponent.inject(this)
-        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
-        return mainViewModel
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
+        return mViewModel
     }
 
     override fun onSupportNavigateUp(): Boolean {

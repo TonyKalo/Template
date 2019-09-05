@@ -18,19 +18,19 @@ import kotlinx.android.synthetic.main.fragment_splash.*
 
 class SplashFragment : BaseFragment<SplashViewModel>() {
 
-    lateinit var splashViewModel: SplashViewModel
+    lateinit var mViewModel: SplashViewModel
 
     override fun getViewModel(): SplashViewModel {
         activityComponent.inject(this)
-        splashViewModel = ViewModelProviders.of(this, viewModelFactory).get(SplashViewModel::class.java)
-        return splashViewModel
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(SplashViewModel::class.java)
+        return mViewModel
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        splashViewModel.loadData()
-        splashViewModel.navigateToNextScreen.observe(viewLifecycleOwner, Observer { if(it) navigateToLogin() })
+        mViewModel.loadData()
+        mViewModel.navigateToNextScreen.observe(viewLifecycleOwner, Observer { if(it) navigateToLogin() })
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 

@@ -14,13 +14,13 @@ import com.example.template.ui.login.LoginViewModel
 class PictureFragment :  BaseFragment<PictureViewModel>() {
 
 
-    lateinit var viewModelPicture: PictureViewModel
+    lateinit var mViewModel: PictureViewModel
 
 
     override fun getViewModel(): PictureViewModel {
         activityComponent.inject(this)
-        viewModelPicture = ViewModelProviders.of(this, viewModelFactory).get(PictureViewModel::class.java)
-        return  viewModelPicture
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(PictureViewModel::class.java)
+        return  mViewModel
     }
 
 

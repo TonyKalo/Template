@@ -15,13 +15,13 @@ import kotlinx.android.synthetic.main.fragment_login.*
 class LoginFragment : BaseFragment<LoginViewModel>() {
 
 
-    lateinit var loginViewModel: LoginViewModel
+    lateinit var mViewModel: LoginViewModel
 
 
     override fun getViewModel(): LoginViewModel {
         activityComponent.inject(this)
-        loginViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
-        return loginViewModel
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel::class.java)
+        return mViewModel
     }
 
 
@@ -43,13 +43,13 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToNextScreenObserver(){
-        loginViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer {
+        mViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer {
             if(it)navigateToMainScreen()
         })
     }
     private fun setClickListeners(){
         btnLogin.setOnClickListener {
-            loginViewModel.onLoginClick(etPIN.text.toString())
+            mViewModel.onLoginClick(etPIN.text.toString())
         }
     }
 

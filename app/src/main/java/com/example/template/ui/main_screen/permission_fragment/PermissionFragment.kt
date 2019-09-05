@@ -17,12 +17,12 @@ import kotlinx.android.synthetic.main.fragment_permission.*
 
 class PermissionFragment : BaseFragment<PermissionViewModel>() {
 
-    lateinit var viewModelPermiss: PermissionViewModel
+    lateinit var mViewModel: PermissionViewModel
 
     override fun getViewModel(): PermissionViewModel {
         activityComponent.inject(this)
-        viewModelPermiss = ViewModelProviders.of(this, viewModelFactory).get(PermissionViewModel::class.java)
-        return viewModelPermiss
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(PermissionViewModel::class.java)
+        return mViewModel
     }
 
 
@@ -42,7 +42,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun showMsgObserver(){
-        viewModelPermiss.getMsgToShow().observe(viewLifecycleOwner, Observer { msg->
+        mViewModel.getMsgToShow().observe(viewLifecycleOwner, Observer { msg->
             showMsg(msg)
         })
     }
@@ -51,7 +51,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
 
     private fun setClickListeners(){
         btnPermission.setOnClickListener {
-            viewModelPermiss.checkPermissions()
+            mViewModel.checkPermissions()
         }
     }
 
