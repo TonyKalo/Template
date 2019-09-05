@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal" android:padding="@dimen/row_padding">
+
+    <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="@dimen/icon_row"
+            android:layout_height="@dimen/icon_row"/>
+    <TextView
+            android:id="@+id/tvItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/txtMainDark" android:textSize="@dimen/tv_main"/>
+    <CheckBox
+            android:id="@+id/cbItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:buttonTint="@color/colorPrimary"/>
+</LinearLayout>

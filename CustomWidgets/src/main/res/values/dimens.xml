@@ -2,10 +2,14 @@
 <resources>
 
     <dimen name="main_padding">16dp</dimen>
+    <dimen name="row_padding">8dp</dimen>
 
     <dimen name="tv_title_dialog">18sp</dimen>
     <dimen name="tv_main">14sp</dimen>
 
     <dimen name="btn_dialog_transparent_outline">2dp</dimen>
     <dimen name="btn_radius">6dp</dimen>
+
+    <dimen name="icon_alert">50dp</dimen>
+    <dimen name="icon_row">32dp</dimen>
 </resources>

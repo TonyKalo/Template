@@ -21,9 +21,9 @@
             android:visibility="visible">
 
         <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
                 android:id="@+id/ivIcon"
+                android:layout_width="@dimen/icon_alert"
+                android:layout_height="@dimen/icon_alert"
                 android:scaleType="fitXY"
                 tools:ignore="ContentDescription"/>
     </LinearLayout>
@@ -45,6 +45,9 @@
             android:textColor="@color/txtMainDark"
             />
 
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChoiceView"
+            android:layout_width="match_parent" android:layout_height="300dp" android:layout_marginTop="10dp"/>
     <LinearLayout
             android:id="@+id/llButtonLayout"
             android:layout_width="match_parent"

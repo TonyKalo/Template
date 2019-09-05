@@ -18,10 +18,13 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import com.cyberslabs.customwidgets.R
+import com.cyberslabs.customwidgets.alert_dialog.Adapters.MultichoiceAdapter
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSpannerClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnThreeSpannerClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTwoSpannerClickListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class CustomAlertDialog : DialogFragment() {
@@ -43,6 +46,9 @@ class CustomAlertDialog : DialogFragment() {
     private var spanTwoCallback: OnTwoSpannerClickListener? = null
     private var spannableTextThree: String? = null
     private var spanThreeCallback: OnThreeSpannerClickListener? = null
+    private var itemList:ArrayList<String>?=null
+    private var fromMultiChoice = false
+    private var fromSingleChoice = false
 
     fun setTitle(title: String) {
         this.title = title
@@ -94,16 +100,21 @@ class CustomAlertDialog : DialogFragment() {
         this.spanTwoCallback = spinnerCallback
     }
 
-    fun setSpannable(
-        textFromMsg: String,
-        textFromMsgTwo: String,
-        textFromMsgThree: String,
-        spinnerCallback: OnThreeSpannerClickListener
-    ) {
+    fun setSpannable(textFromMsg: String, textFromMsgTwo: String, textFromMsgThree: String, spinnerCallback: OnThreeSpannerClickListener) {
         this.spannableText = textFromMsg
         this.spannableTextTwo = textFromMsgTwo
         this.spannableTextThree = textFromMsgThree
         this.spanThreeCallback = spinnerCallback
+    }
+
+    fun setMultiChoiceItems(itemList:ArrayList<String>){
+        this.itemList=itemList
+        fromMultiChoice=true
+    }
+
+    fun setSingleChoiceItems(itemList:ArrayList<String>){
+        this.itemList=itemList
+        fromSingleChoice=true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,8 +139,32 @@ class CustomAlertDialog : DialogFragment() {
         setMsgLayout()
         setButtonLayout()
         setSpannables()
+        setChoiceLayout()
     }
 
+    private fun setChoiceLayout(){
+        if(fromMultiChoice&&!fromSingleChoice) setMultiChoiceLayout()
+        if(!fromMultiChoice&&fromSingleChoice) setSingleChoiceLayout()
+        if(!fromMultiChoice&&!fromSingleChoice||fromMultiChoice&&fromSingleChoice) Log.e ("CustomAlertDialog","Can't use MultiChoice and SingleChoice at same time")
+    }
+
+    private fun setMultiChoiceLayout(){
+        if(!itemList.isNullOrEmpty()){
+            Log.e ("TAG","uslo")
+            rvChoiceView.setHasFixedSize(true)
+            rvChoiceView.layoutManager= LinearLayoutManager(context)
+           var adapter = MultichoiceAdapter(itemList!!)
+            rvChoiceView.adapter=adapter
+
+
+        }else{
+            Log.e ("CustomAlertDialog","List is Empty")
+        }
+    }
+
+    private fun setSingleChoiceLayout(){
+
+    }
     private fun setIconLayout() {
         if (icon != null) ivIcon.setImageDrawable(icon) else ivIcon.visibility = View.GONE
     }
@@ -282,7 +317,6 @@ class CustomAlertDialog : DialogFragment() {
                 override fun updateDrawState(ds: TextPaint) {
                     super.updateDrawState(ds)
                     ds.isUnderlineText = true
-
                 }
             }
             makeLinks(
