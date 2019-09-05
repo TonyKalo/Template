@@ -6,7 +6,7 @@
               tools:context=".ui.main_screen.permission_fragment.PermissionFragment" android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tlb_permission_fragment"
+            android:id="@+id/tlbPermissionFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"

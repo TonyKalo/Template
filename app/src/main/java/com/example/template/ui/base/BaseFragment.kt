@@ -1,23 +1,17 @@
 package com.example.template.ui.base
 
-import android.app.ProgressDialog
 import android.content.Context
-import android.graphics.Rect
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.example.template.di.components.ActivityComponent
-import com.example.template.ui.base.callbacks.PermissionCallback
+import com.example.template.di.qualifiers.ViewModelFactory
 import javax.inject.Inject
 
 abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
 
     @Inject
+    @field:ViewModelFactory
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var activity: BaseActivity<*>

@@ -16,7 +16,7 @@
     </fragment>
 
     <fragment android:id="@+id/mainFragment"
-              android:name="com.example.template.ui.main_screen.MainFragment"
+              android:name="com.example.template.ui.main_screen.main_fragment_holder.MainFragment"
               android:label="fragment_main"
               tools:layout="@layout/fragment_main"/>
     <fragment android:id="@+id/splashFragment"
