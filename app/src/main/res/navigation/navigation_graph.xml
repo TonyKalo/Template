@@ -18,7 +18,11 @@
     <fragment android:id="@+id/mainFragment"
               android:name="com.example.template.ui.main_screen.main_fragment_holder.MainFragment"
               android:label="fragment_main"
-              tools:layout="@layout/fragment_main"/>
+              tools:layout="@layout/fragment_main">
+        <action
+                android:id="@+id/action_mainFragment_to_blankFragment"
+                app:destination="@id/blankFragment" />
+    </fragment>
     <fragment android:id="@+id/splashFragment"
               android:name="com.example.template.ui.splash.SplashFragment"
               android:label="fragment_splash"
@@ -27,4 +31,9 @@
         <action android:id="@+id/action_splashFragment_to_loginFragment" app:destination="@id/loginFragment"/>
         <action android:id="@+id/action_splashFragment_to_mainFragment" app:destination="@id/mainFragment"/>
     </fragment>
+    <fragment
+            android:id="@+id/blankFragment"
+            android:name="com.example.template.BlankFragment"
+            android:label="fragment_blank"
+            tools:layout="@layout/fragment_blank" />
 </navigation>

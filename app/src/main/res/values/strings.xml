@@ -26,4 +26,7 @@
     <string name="tv_storage">STORAGE</string>
     <string name="tv_sms">SMS</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

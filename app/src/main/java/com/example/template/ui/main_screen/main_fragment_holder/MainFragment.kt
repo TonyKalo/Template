@@ -1,8 +1,8 @@
 package com.example.template.ui.main_screen.main_fragment_holder
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
@@ -15,9 +15,11 @@ import com.example.template.R
 import com.example.template.di.qualifiers.SharedViewModelFactory
 import com.example.template.ui.base.BaseFragment
 import com.example.template.ui.main_screen.MainScreenSharedViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.MenuItem
+import androidx.annotation.NonNull
 
 
 class MainFragment : BaseFragment<MainFragmentViewModel>() {
@@ -53,12 +55,11 @@ class MainFragment : BaseFragment<MainFragmentViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupNavController()
-        sharedViewModel.getNavigateToLogin().observe(viewLifecycleOwner, Observer { if(it) navigateToLogin() })
-    }
 
-    fun setupNavController(){
         val navController = Navigation.findNavController(requireActivity(), R.id.fhMainFragment)
+
+        bnvMain.setupWithNavController(navController)
+
         var addToBackStack=false
         bnvMain.setOnNavigationItemSelectedListener(object :
             BottomNavigationView.OnNavigationItemSelectedListener {
@@ -66,18 +67,29 @@ class MainFragment : BaseFragment<MainFragmentViewModel>() {
                 if(item.itemId!=R.id.permissionFragment){
                     if(addToBackStack==false) addToBackStack=true else  navController.popBackStack()
                 }else{
-                    navController.popBackStack()
+                   navController.popBackStack()
                 }
                 navController.navigate(item.itemId)
 
-                return true
+               return true
             }
+
         })
+        sharedViewModel.getNavigateToLogin().observe(viewLifecycleOwner, Observer { if(it) navigateToTest() })
     }
 
     private fun navigateToLogin() {
         findNavController().navigate(R.id.loginFragment)
         sharedViewModel.setNavigateToLogin(false)
     }
+
+    private fun navigateToTest() {
+        findNavController().navigate(R.id.blankFragment)
+        sharedViewModel.setNavigateToLogin(false)
+    }
+
+
+
+
 
 }
