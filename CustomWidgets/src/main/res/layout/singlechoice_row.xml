@@ -4,7 +4,6 @@
         android:id="@+id/llSinglechoiceRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_on_click"
         android:clickable="true"
         android:descendantFocusability="blocksDescendants"
         android:focusable="true"

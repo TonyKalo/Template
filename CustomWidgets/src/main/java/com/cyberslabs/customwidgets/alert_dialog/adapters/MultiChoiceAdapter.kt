@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMultiChoiceClickListener
 import kotlinx.android.synthetic.main.multichoice_row.view.*
+import java.lang.Exception
 
 
 class MultiChoiceAdapter(val itemList:ArrayList<String>, val checkList:ArrayList<Boolean>, val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultiChoiceAdapter.ViewHolder>() {
@@ -34,8 +35,12 @@ class MultiChoiceAdapter(val itemList:ArrayList<String>, val checkList:ArrayList
 
         if(!iconList.isNullOrEmpty()) {
             if (iconList.size == itemList.size) {
-                holder.icon.setImageResource(iconList[position])
-                holder.icon.visibility = View.VISIBLE
+                try {
+                    holder.icon.setImageResource(iconList[position])
+                    holder.icon.visibility = View.VISIBLE
+                }catch (e: Exception){
+                    Log.e("CustomAlertDialog", "iconList value wrong")
+                }
             }else{
                 Log.e("CustomAlertDialog", "Item size and iconList size must be the same")
             }

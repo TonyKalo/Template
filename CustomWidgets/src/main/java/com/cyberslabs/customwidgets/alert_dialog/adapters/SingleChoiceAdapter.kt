@@ -11,52 +11,47 @@ import kotlinx.android.synthetic.main.multichoice_row.view.*
 import kotlinx.android.synthetic.main.multichoice_row.view.ivIcon
 import kotlinx.android.synthetic.main.multichoice_row.view.tvItem
 import kotlinx.android.synthetic.main.singlechoice_row.view.*
+import java.lang.Exception
 
 
-class SingleChoiceAdapter(val itemList:ArrayList<String>, val defaultCheck:Int, val listener: OnSingleChoiceClickListener) : RecyclerView.Adapter<SingleChoiceAdapter.ViewHolder>() {
+class SingleChoiceAdapter(val itemList:ArrayList<String>, var defaultCheck:Int, val listener: OnSingleChoiceClickListener) : RecyclerView.Adapter<SingleChoiceAdapter.ViewHolder>() {
 
     private var iconList=ArrayList<Int>()
-    private var checkList=ArrayList<Boolean>()
-
-    init {
-        createCheckList()
-    }
-
-
 
     fun setIconList(iconList:ArrayList<Int>){this.iconList=iconList}
 
 
-    fun createCheckList(){
-        itemList.forEachIndexed { index, i ->
-            Log.e("TAG",defaultCheck.toString()+" "+checkList+" ")
-            if (defaultCheck>=0&&index==defaultCheck)checkList.add(true)else checkList.add(false)
-        }
-    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.singlechoice_row,parent,false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.setText(itemList[position])
-        holder.checkRadio.isChecked=checkList[position]
+        holder.apply {
+            name.setText(itemList[position])
+            if (defaultCheck == position) checkRadio.isChecked = true else checkRadio.isChecked=false
 
-        holder.llRow.setOnClickListener{
-            itemList.forEachIndexed { index, s ->
-                if(position==index)checkList.add(true)else checkList.add(false)
+            holder.llRow.setOnClickListener {
+                defaultCheck = position
+                if (checkRadio.isChecked != true) checkRadio.isChecked=true
+                notifyDataSetChanged()
+                listener.onClick(position)
             }
-            notifyDataSetChanged()
         }
-//
-//        if(!iconList.isNullOrEmpty()) {
-//            if (iconList.size == itemList.size) {
-//                holder.icon.setImageResource(iconList[position])
-//                holder.icon.visibility = View.VISIBLE
-//            }else{
-//                Log.e("CustomAlertDialog", "Item size and iconList size must be the same")
-//            }
-//        }
+
+        if(!iconList.isNullOrEmpty()) {
+            if (iconList.size == itemList.size) {
+                try {
+                    holder.icon.setImageResource(iconList[position])
+                    holder.icon.visibility = View.VISIBLE
+                }catch (e:Exception){
+                    Log.e("CustomAlertDialog", "iconList value wrong")
+                }
+
+            }else{
+                Log.e("CustomAlertDialog", "Item size and iconList size must be the same")
+            }
+        }
 //
 //        if(!checkList.isNullOrEmpty()){
 //            if(checkList.size==itemList.size) {
