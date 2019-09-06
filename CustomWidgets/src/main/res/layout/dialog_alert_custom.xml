@@ -1,102 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/llMainLayout"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-
-              android:background="@drawable/dialog_background"
-              android:paddingLeft="@dimen/main_padding"
-              android:paddingRight="@dimen/main_padding"
-              android:paddingTop="20dp"
-              android:paddingBottom="24dp">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/llMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_background"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
     <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/llTitleHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:id="@+id/llIconLayout"
-            android:visibility="visible">
+            android:orientation="vertical">
 
-        <ImageView
-                android:id="@+id/ivIcon"
-                android:layout_width="@dimen/icon_alert"
-                android:layout_height="@dimen/icon_alert"
-                android:scaleType="fitXY"
-                tools:ignore="ContentDescription"/>
+        <FrameLayout
+                android:id="@+id/flTopMargin"
+                android:layout_width="match_parent"
+                android:layout_height="20dp">
+
+        </FrameLayout>
+
+        <LinearLayout
+                android:id="@+id/llIconLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/main_padding"
+                android:layout_marginEnd="@dimen/main_padding"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+            <ImageView
+                    android:id="@+id/ivIcon"
+                    android:layout_width="@dimen/icon_alert"
+                    android:layout_height="@dimen/icon_alert"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/main_padding"
+                android:layout_marginEnd="@dimen/main_padding"
+                android:textAlignment="center"
+                android:textColor="@color/txtMain"
+                android:textSize="@dimen/tv_title_dialog" />
+
+        <FrameLayout
+                android:id="@+id/flTitleBottomMargine"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:visibility="gone">
+
+        </FrameLayout>
+
     </LinearLayout>
 
     <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="@dimen/tv_title_dialog"
-            android:textColor="@color/txtMain"/>
-
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/tvMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_padding"
             android:layout_marginTop="10dp"
-            android:textSize="@dimen/tv_main"
             android:textColor="@color/txtMainDark"
-            />
+            android:textSize="@dimen/tv_main" />
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChoiceView"
-            android:layout_width="match_parent" android:layout_height="300dp" android:layout_marginTop="10dp"/>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="@dimen/main_padding"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/main_padding">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChoiceView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:overScrollMode="never"
+                tools:ignore="ScrollViewSize" />
+    </ScrollView>
+
     <LinearLayout
             android:id="@+id/llButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/main_padding"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="@dimen/main_padding"
             android:baselineAligned="false"
-            android:layout_marginTop="26dp">
+            android:orientation="horizontal">
 
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
             <Button
                     android:id="@+id/btnNegative"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
                     android:background="@drawable/dialog_btn_transparetn"
                     android:minHeight="0dp"
                     android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
                     android:paddingTop="8dp"
+                    android:paddingEnd="4dp"
                     android:paddingBottom="8dp"
-                    android:textIsSelectable="false"
-                    android:layout_marginEnd="4dp"
-                    android:textColor="@drawable/btn_transparent_color_selector"/>
+                    android:textColor="@drawable/btn_transparent_color_selector"
+                    android:textIsSelectable="false" />
         </LinearLayout>
 
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
             <Button
                     android:id="@+id/btnPositive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:background="@drawable/dialog_btn_transparetn"
                     android:minHeight="0dp"
                     android:paddingLeft="4dp"
                     android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
                     android:paddingRight="4dp"
-                    android:layout_marginStart="4dp"
-                    android:textColor="@drawable/btn_transparent_color_selector"/>
+                    android:paddingBottom="8dp"
+                    android:textColor="@drawable/btn_transparent_color_selector" />
         </LinearLayout>
 
     </LinearLayout>

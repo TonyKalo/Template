@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="main_padding">16dp</dimen>
-    <dimen name="row_padding">8dp</dimen>
+    <dimen name="row_padding">6dp</dimen>
 
     <dimen name="tv_title_dialog">18sp</dimen>
     <dimen name="tv_main">14sp</dimen>

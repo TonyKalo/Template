@@ -2,8 +2,8 @@ package com.cyberslabs.customwidgets.alert_dialog
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -17,14 +17,12 @@ import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.cyberslabs.customwidgets.R
-import com.cyberslabs.customwidgets.alert_dialog.Adapters.MultichoiceAdapter
-import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
-import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSpannerClickListener
-import com.cyberslabs.customwidgets.alert_dialog.listeners.OnThreeSpannerClickListener
-import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTwoSpannerClickListener
+import com.cyberslabs.customwidgets.alert_dialog.adapters.MultichoiceAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.cyberslabs.customwidgets.alert_dialog.listeners.*
 
 
 class CustomAlertDialog : DialogFragment() {
@@ -33,7 +31,7 @@ class CustomAlertDialog : DialogFragment() {
     private var title: String? = null
     private var msg: String? = null
     private var inCenter = false
-    private var icon: Drawable? = null
+    private var icon: Int? = null
     private var positiveBtnText: String? = null
     private var positiveBtnInFocus = true
     private var positiveBtnListener: OnButtonClickListener? = null
@@ -47,11 +45,22 @@ class CustomAlertDialog : DialogFragment() {
     private var spannableTextThree: String? = null
     private var spanThreeCallback: OnThreeSpannerClickListener? = null
     private var itemList:ArrayList<String>?=null
+    private var checkList:ArrayList<Boolean>?=null
+    private var iconList:ArrayList<Int>?=null
     private var fromMultiChoice = false
     private var fromSingleChoice = false
+    private var onMultiChoicelistener: OnMultiChoiceClickListener?=null
+    private var coloredTitle=false
+    private var titleColor:Int?=null
 
     fun setTitle(title: String) {
         this.title = title
+    }
+
+    fun setTitle(title: String,coloredTitle:Boolean,titleColorId:Int) {
+        this.title = title
+        this.coloredTitle=coloredTitle
+        this.titleColor=titleColorId
     }
 
     fun setMessage(msg: String) {
@@ -63,8 +72,8 @@ class CustomAlertDialog : DialogFragment() {
         this.inCenter = inCenter
     }
 
-    fun setIcon(icon: Drawable) {
-        this.icon = icon
+    fun setIcon(iconId: Int) {
+        this.icon = iconId
     }
 
     fun setPositiveButton(btnText: String, onButtonClickListener: OnButtonClickListener) {
@@ -107,10 +116,21 @@ class CustomAlertDialog : DialogFragment() {
         this.spanThreeCallback = spinnerCallback
     }
 
-    fun setMultiChoiceItems(itemList:ArrayList<String>){
+    fun setMultiChoiceItems(itemList:ArrayList<String>,checkList:ArrayList<Boolean>,listener: OnMultiChoiceClickListener){
         this.itemList=itemList
+        this.checkList=checkList
+        this.onMultiChoicelistener=listener
         fromMultiChoice=true
     }
+
+    fun setMultiChoiceItems(itemList:ArrayList<String>,checkList:ArrayList<Boolean>,iconIdList:ArrayList<Int>,listener: OnMultiChoiceClickListener){
+        this.itemList=itemList
+        this.checkList=checkList
+        this.iconList=iconIdList
+        this.onMultiChoicelistener=listener
+        fromMultiChoice=true
+    }
+
 
     fun setSingleChoiceItems(itemList:ArrayList<String>){
         this.itemList=itemList
@@ -140,6 +160,7 @@ class CustomAlertDialog : DialogFragment() {
         setButtonLayout()
         setSpannables()
         setChoiceLayout()
+        setTitleColor()
     }
 
     private fun setChoiceLayout(){
@@ -149,12 +170,15 @@ class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setMultiChoiceLayout(){
-        if(!itemList.isNullOrEmpty()){
-            Log.e ("TAG","uslo")
-            rvChoiceView.setHasFixedSize(true)
-            rvChoiceView.layoutManager= LinearLayoutManager(context)
-           var adapter = MultichoiceAdapter(itemList!!)
-            rvChoiceView.adapter=adapter
+
+        if(!itemList.isNullOrEmpty()&&!checkList.isNullOrEmpty()){
+            val adapterMulti = MultichoiceAdapter(itemList!!,checkList!!,onMultiChoicelistener!!)
+            if(!iconList.isNullOrEmpty())adapterMulti.setIconList(iconList!!)
+            rvChoiceView.apply {
+                layoutManager= LinearLayoutManager(context)
+                adapter=adapterMulti
+                setHasFixedSize(true)
+            }
 
 
         }else{
@@ -166,11 +190,25 @@ class CustomAlertDialog : DialogFragment() {
 
     }
     private fun setIconLayout() {
-        if (icon != null) ivIcon.setImageDrawable(icon) else ivIcon.visibility = View.GONE
+        if (icon != null) ivIcon.setImageResource(icon!!) else ivIcon.visibility = View.GONE
     }
 
     private fun setTitleLayout() {
-        if (title != null) tvTitle.text = title else tvTitle.visibility = View.GONE
+        if (!title.isNullOrEmpty()) tvTitle.text = title else tvTitle.visibility = View.GONE
+    }
+
+    private fun setTitleColor(){
+        if(coloredTitle) {
+            llTitleHolder.background =
+                ResourcesCompat.getDrawable(getResources(), R.drawable.title_background, null);
+            tvTitle.apply {
+                setTextColor(ContextCompat.getColor(context!!, titleColor!!))
+                textSize = 24f
+                setTypeface(null,Typeface.ITALIC)
+
+        }
+            flTitleBottomMargine.visibility=View.VISIBLE
+        }
     }
 
     private fun setMsgLayout() {
