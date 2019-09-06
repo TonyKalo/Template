@@ -20,8 +20,9 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.cyberslabs.customwidgets.R
-import com.cyberslabs.customwidgets.alert_dialog.adapters.MultichoiceAdapter
+import com.cyberslabs.customwidgets.alert_dialog.adapters.MultiChoiceAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cyberslabs.customwidgets.alert_dialog.adapters.SingleChoiceAdapter
 import com.cyberslabs.customwidgets.alert_dialog.listeners.*
 
 
@@ -50,8 +51,10 @@ class CustomAlertDialog : DialogFragment() {
     private var fromMultiChoice = false
     private var fromSingleChoice = false
     private var onMultiChoicelistener: OnMultiChoiceClickListener?=null
+    private var onSingleChoiceClickListener:OnSingleChoiceClickListener?=null
     private var coloredTitle=false
     private var titleColor:Int?=null
+    private var singleCheckedDefault=-1
 
     fun setTitle(title: String) {
         this.title = title
@@ -131,11 +134,22 @@ class CustomAlertDialog : DialogFragment() {
         fromMultiChoice=true
     }
 
-
-    fun setSingleChoiceItems(itemList:ArrayList<String>){
+    fun setSingleChoiceItems(itemList:ArrayList<String>,checkedDefault:Int,listener: OnSingleChoiceClickListener){
         this.itemList=itemList
+        this.singleCheckedDefault=checkedDefault
+        this.onSingleChoiceClickListener=listener
         fromSingleChoice=true
     }
+
+    fun setSingleChoiceItems(itemList:ArrayList<String>,iconIdList:ArrayList<Int>,checkedDefault:Int,listener: OnSingleChoiceClickListener){
+        this.itemList=itemList
+        this.iconList=iconIdList
+        this.singleCheckedDefault=checkedDefault
+        this.onSingleChoiceClickListener=listener
+        fromSingleChoice=true
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -172,22 +186,30 @@ class CustomAlertDialog : DialogFragment() {
     private fun setMultiChoiceLayout(){
 
         if(!itemList.isNullOrEmpty()&&!checkList.isNullOrEmpty()){
-            val adapterMulti = MultichoiceAdapter(itemList!!,checkList!!,onMultiChoicelistener!!)
+            val adapterMulti = MultiChoiceAdapter(itemList!!,checkList!!,onMultiChoicelistener!!)
             if(!iconList.isNullOrEmpty())adapterMulti.setIconList(iconList!!)
             rvChoiceView.apply {
                 layoutManager= LinearLayoutManager(context)
                 adapter=adapterMulti
                 setHasFixedSize(true)
             }
-
-
         }else{
             Log.e ("CustomAlertDialog","List is Empty")
         }
     }
 
     private fun setSingleChoiceLayout(){
-
+        if(!itemList.isNullOrEmpty()){
+            val adapterSingle = SingleChoiceAdapter(itemList!!,singleCheckedDefault,onSingleChoiceClickListener!!)
+            if(!iconList.isNullOrEmpty())adapterSingle.setIconList(iconList!!)
+            rvChoiceView.apply {
+                layoutManager= LinearLayoutManager(context)
+                adapter=adapterSingle
+                setHasFixedSize(true)
+            }
+        }else{
+            Log.e ("CustomAlertDialog","List is Empty")
+        }
     }
     private fun setIconLayout() {
         if (icon != null) ivIcon.setImageResource(icon!!) else ivIcon.visibility = View.GONE

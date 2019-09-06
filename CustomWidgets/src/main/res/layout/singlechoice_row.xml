@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/llSinglechoiceRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_on_click"
+        android:clickable="true"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/main_padding"
+        android:paddingTop="@dimen/row_padding"
+        android:paddingEnd="@dimen/main_padding"
+        android:paddingBottom="@dimen/row_padding">
+
+    <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="@dimen/icon_row"
+            android:layout_height="@dimen/icon_row"
+            android:layout_marginEnd="@dimen/main_padding"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+    <TextView
+            android:id="@+id/tvItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/txtMainDark"
+            android:textSize="@dimen/tv_main" />
+
+    <RadioButton
+            android:id="@+id/rbItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
+            android:clickable="false" />
+</LinearLayout>

@@ -10,7 +10,7 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMultiChoiceClickLis
 import kotlinx.android.synthetic.main.multichoice_row.view.*
 
 
-class MultichoiceAdapter(val itemList:ArrayList<String>,val checkList:ArrayList<Boolean>,val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultichoiceAdapter.ViewHolder>() {
+class MultiChoiceAdapter(val itemList:ArrayList<String>, val checkList:ArrayList<Boolean>, val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultiChoiceAdapter.ViewHolder>() {
 
 
 
