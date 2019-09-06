@@ -11,7 +11,6 @@
         <action
                 android:id="@+id/action_permissionFragment_to_pictureFragment"
                 app:destination="@id/pictureFragment"
-                app:popEnterAnim="@anim/no_anim"
                 />
     </fragment>
 
