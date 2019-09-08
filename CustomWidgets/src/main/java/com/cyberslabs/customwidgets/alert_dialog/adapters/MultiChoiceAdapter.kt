@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
+import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMaxReached
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMultiChoiceClickListener
 import kotlinx.android.synthetic.main.multichoice_row.view.*
 import java.lang.Exception
@@ -16,21 +17,38 @@ class MultiChoiceAdapter(val itemList:ArrayList<String>, val checkList:ArrayList
 
 
     private var iconList=ArrayList<Int>()
+    private var maxCheck=0
+    private var defaultCheck=0
+    private var onMaxReached:OnMaxReached?=null
 
     fun setIconList(iconList:ArrayList<Int>){this.iconList=iconList}
+    fun setMaxCheck (maxCheck:Int,defaultCheck:Int,maxListener:OnMaxReached){
+        this.maxCheck=maxCheck
+        this.defaultCheck=defaultCheck
+        this.onMaxReached=maxListener
+    }
 
+    init {
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.multichoice_row,parent,false)
         return ViewHolder(v)
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.name.setText(itemList[position])
 
-        holder.llRow.setOnClickListener{
-            holder.checkBox.performClick()
-            listener.onClick(position,holder.checkBox.isChecked)
+        if(maxCheck>0){
+            initIfMaxCheckedIsInitialized(holder, position)
+        }else {
+
+            holder.llRow.setOnClickListener {
+                holder.checkBox.performClick()
+                listener.onClick(position, holder.checkBox.isChecked)
+            }
         }
 
         if(!iconList.isNullOrEmpty()) {
@@ -54,6 +72,42 @@ class MultiChoiceAdapter(val itemList:ArrayList<String>, val checkList:ArrayList
             }
         }
 
+    }
+
+    private fun initIfMaxCheckedIsInitialized(holder: ViewHolder, position: Int){
+        holder.checkBox.isEnabled=true
+        holder.llRow.setBackgroundResource(R.color.backgroundMainLight)
+        if(maxCheck>defaultCheck){
+            holder.llRow.setOnClickListener {
+                holder.checkBox.performClick()
+                if(holder.checkBox.isChecked){
+                    defaultCheck++
+                    checkList[position]=true
+                } else {
+                    checkList[position]=false
+                    defaultCheck--
+                }
+                listener.onClick(position, holder.checkBox.isChecked)
+                if(maxCheck==defaultCheck)onMaxReached?.onMax()
+                notifyDataSetChanged()
+            }
+        }else{
+            holder.checkBox.isEnabled = holder.checkBox.isChecked
+            holder.llRow.setOnClickListener {
+                if(holder.checkBox.isChecked) {
+
+                    defaultCheck--
+                    holder.checkBox.performClick()
+                    checkList[position]=holder.checkBox.isChecked
+                    listener.onClick(position, holder.checkBox.isChecked)
+
+                }else{
+                    onMaxReached?.onMax()
+                }
+                notifyDataSetChanged()
+            }
+
+        }
     }
 
     override fun getItemCount(): Int {

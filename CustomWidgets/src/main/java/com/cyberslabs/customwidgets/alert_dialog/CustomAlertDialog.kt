@@ -52,9 +52,12 @@ class CustomAlertDialog : DialogFragment() {
     private var fromSingleChoice = false
     private var onMultiChoicelistener: OnMultiChoiceClickListener?=null
     private var onSingleChoiceClickListener:OnSingleChoiceClickListener?=null
+    private var maxListener:OnMaxReached?=null
     private var coloredTitle=false
     private var titleColor:Int?=null
     private var singleCheckedDefault=-1
+    private var maxChecked=0
+    private var defaultChecked=0
 
     fun setTitle(title: String) {
         this.title = title
@@ -134,6 +137,20 @@ class CustomAlertDialog : DialogFragment() {
         fromMultiChoice=true
     }
 
+    fun setMaxCheckedForMultichoice(maxChecked:Int,maxListener:OnMaxReached){
+       this.maxChecked=maxChecked
+        this.maxListener=maxListener
+        calculateDefaultCheckSize()
+    }
+
+    private fun calculateDefaultCheckSize(){
+        if(!checkList.isNullOrEmpty()) {
+            checkList?.forEach { if (it) defaultChecked++ }
+        }else{
+            Log.e ("CustomAlertDialog","To setMaxCheckedForMultichoice you must initialize setMultiChoiceItems")
+        }
+    }
+
     fun setSingleChoiceItems(itemList:ArrayList<String>,checkedDefault:Int,listener: OnSingleChoiceClickListener){
         this.itemList=itemList
         this.singleCheckedDefault=checkedDefault
@@ -148,8 +165,6 @@ class CustomAlertDialog : DialogFragment() {
         this.onSingleChoiceClickListener=listener
         fromSingleChoice=true
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,14 +195,19 @@ class CustomAlertDialog : DialogFragment() {
     private fun setChoiceLayout(){
         if(fromMultiChoice&&!fromSingleChoice) setMultiChoiceLayout()
         if(!fromMultiChoice&&fromSingleChoice) setSingleChoiceLayout()
-        if(!fromMultiChoice&&!fromSingleChoice||fromMultiChoice&&fromSingleChoice) Log.e ("CustomAlertDialog","Can't use MultiChoice and SingleChoice at same time")
+        if(fromMultiChoice&&fromSingleChoice) Log.e ("CustomAlertDialog","Can't use MultiChoice and SingleChoice at same time")
     }
 
     private fun setMultiChoiceLayout(){
+        scvList.visibility=View.VISIBLE
+        var setMaxCheck=false
+
+        if(maxChecked>0&&defaultChecked<maxChecked)setMaxCheck=true else Log.e ("CustomAlertDialog","MaxChecked value must be the bigger than checked values")
 
         if(!itemList.isNullOrEmpty()&&!checkList.isNullOrEmpty()){
             val adapterMulti = MultiChoiceAdapter(itemList!!,checkList!!,onMultiChoicelistener!!)
             if(!iconList.isNullOrEmpty())adapterMulti.setIconList(iconList!!)
+            if(setMaxCheck)adapterMulti.setMaxCheck(maxChecked,defaultChecked,maxListener!!)
             rvChoiceView.apply {
                 layoutManager= LinearLayoutManager(context)
                 adapter=adapterMulti
@@ -199,6 +219,7 @@ class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setSingleChoiceLayout(){
+        scvList.visibility=View.VISIBLE
         if(!itemList.isNullOrEmpty()){
             val adapterSingle = SingleChoiceAdapter(itemList!!,singleCheckedDefault,onSingleChoiceClickListener!!)
             if(!iconList.isNullOrEmpty())adapterSingle.setIconList(iconList!!)
