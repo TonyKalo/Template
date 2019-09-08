@@ -18,7 +18,7 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
     lateinit var activityComponent: ActivityComponent
     private var baseViewModel: V? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if(context is BaseActivity<*>){
             activity = context

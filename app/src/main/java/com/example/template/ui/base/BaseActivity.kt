@@ -128,7 +128,7 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
     }
 
     override fun hideProgress() {
-        if (progressDialog.dialog.isShowing) progressDialog.dismiss()
+        if (progressDialog.dialog!!.isShowing) progressDialog.dismiss()
     }
 
     override fun showSnackbar(msg: String) {

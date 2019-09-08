@@ -27,7 +27,7 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTwoSpannerClickList
 class CustomProgressDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         return inflater.inflate(R.layout.dialog_progress_custom, container, false)
     }
 
