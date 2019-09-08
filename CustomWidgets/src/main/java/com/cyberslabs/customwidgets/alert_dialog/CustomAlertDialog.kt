@@ -24,6 +24,7 @@ import com.cyberslabs.customwidgets.alert_dialog.adapters.MultiChoiceAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cyberslabs.customwidgets.alert_dialog.adapters.SingleChoiceAdapter
 import com.cyberslabs.customwidgets.alert_dialog.listeners.*
+import java.lang.Exception
 
 
 class CustomAlertDialog : DialogFragment() {
@@ -52,12 +53,15 @@ class CustomAlertDialog : DialogFragment() {
     private var fromSingleChoice = false
     private var onMultiChoicelistener: OnMultiChoiceClickListener?=null
     private var onSingleChoiceClickListener:OnSingleChoiceClickListener?=null
+    private var onTextInputListener:OnTextInputListener?=null
     private var maxListener:OnMaxReached?=null
     private var coloredTitle=false
     private var titleColor:Int?=null
     private var singleCheckedDefault=-1
     private var maxChecked=0
     private var defaultChecked=0
+    private var hint:String?=null
+    private var tilIcon:Int?=null
 
     fun setTitle(title: String) {
         this.title = title
@@ -166,6 +170,17 @@ class CustomAlertDialog : DialogFragment() {
         fromSingleChoice=true
     }
 
+    fun setTextInput(hint:String,listener: OnTextInputListener){
+        this.hint=hint
+        this.onTextInputListener=listener
+    }
+
+    fun setTextInput(hint:String,iconId: Int,listener: OnTextInputListener){
+        this.hint=hint
+        this.tilIcon=iconId
+        this.onTextInputListener=listener
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.DialogCustomAlertStyle)
@@ -190,6 +205,29 @@ class CustomAlertDialog : DialogFragment() {
         setSpannables()
         setChoiceLayout()
         setTitleColor()
+        setTextInputLayout()
+    }
+
+    private fun setTextInputLayout(){
+        if(hint!=null){
+            if (tilIcon != null){
+                ivTilIcon.visibility=View.VISIBLE
+                try {
+                    ivTilIcon.setBackgroundResource(tilIcon!!)
+                    ivTilIcon.visibility=View.VISIBLE
+
+                }catch (e:Exception){
+                    ivTilIcon.visibility=View.GONE
+                    Log.e ("CustomAlertDialog","Wrong format of picture (format: R.drawable.ic_.....")
+                }
+            }
+            if(scvList.visibility!=View.VISIBLE){
+
+                llTextInput.visibility=View.VISIBLE
+                tilInput.hint=hint
+                onTextInputListener?.getTextInputLayout(tilInput)
+            } else Log.e ("CustomAlertDialog","Can't use MultiChoice or SingleChoice with TextInput")
+        }
     }
 
     private fun setChoiceLayout(){

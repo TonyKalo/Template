@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/llMainLayout"
         android:layout_width="match_parent"
@@ -68,6 +69,38 @@
             android:textColor="@color/txtMainDark"
             android:textSize="@dimen/tv_main" />
 
+    <LinearLayout
+            android:id="@+id/llTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_padding"
+            android:layout_marginTop="@dimen/main_padding"
+            android:layout_marginEnd="@dimen/main_padding"
+            android:orientation="horizontal"
+            tools:visibility="gone">
+
+        <ImageView
+                android:id="@+id/ivTilIcon"
+                android:layout_width="@dimen/icon_row"
+                android:layout_height="@dimen/icon_row"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/row_padding"
+                android:visibility="gone" />
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                android:visibility="visible">
+
+            <EditText
+                    android:id="@+id/etInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/txtMainDark" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
     <ScrollView
             android:id="@+id/scvList"

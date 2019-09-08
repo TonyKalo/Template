@@ -16,6 +16,7 @@
 
     <color name="txtMain">@color/colorPrimary</color>
     <color name="txtMainDark">@color/colorBlack</color>
+    <color name="txtGrey">@color/colorGrey</color>
     //-----------------------------------ALERT DIALOG-----------------------------------
 //Button
     <color name="btn_main">@color/colorPrimary</color>
