@@ -224,6 +224,7 @@ class CustomAlertDialog : DialogFragment() {
             if(scvList.visibility!=View.VISIBLE){
 
                 llTextInput.visibility=View.VISIBLE
+                tilInput.visibility=View.VISIBLE
                 tilInput.hint=hint
                 onTextInputListener?.getTextInputLayout(tilInput)
             } else Log.e ("CustomAlertDialog","Can't use MultiChoice or SingleChoice with TextInput")
