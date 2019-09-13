@@ -27,7 +27,7 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.*
 import java.lang.Exception
 
 
-class CustomAlertDialog : DialogFragment() {
+open class CustomAlertDialog : DialogFragment() {
 
 
     private var title: String? = null
