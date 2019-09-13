@@ -82,7 +82,7 @@
         <ImageView
                 android:id="@+id/ivTilIcon"
                 android:layout_width="@dimen/icon_row"
-                android:layout_height="@dimen/icon_row"
+                android:layout_height="@dimen/til_main_height"
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/row_padding"
                 android:visibility="gone"
@@ -100,6 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/txtMainDark"
+                    android:layout_marginBottom="@dimen/til_editText_bottom_padding"
                     tools:ignore="Autofill,LabelFor,TextFields" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
