@@ -21,45 +21,16 @@ class SplashViewModel @Inject constructor(@AppContext appContext: Context, dataM
     var a = 0
 
 
-     fun loadData(){
-
-
-             var work = GlobalScope.launch(Dispatchers.Default) {
-
-                 val task1 = async { b() }
-                 val task2 = async { c() }
-                 val task3 = async {
-                     try { a()
-                     }catch (e:Exception){
-                         Log.e("TAG",e.localizedMessage)
-                        }
-                 }
-
-                 awaitAll(task1, task2, task3)
-
-
-             }
-
-
-            if(work.isCompleted)Log.e("TAG","complete")else Log.e("TAG","fail")
-
-
-    }
-
-    suspend fun a():Int{
-        delay(3000)
-        var b =0/0
-        return 2;
-    }
-    suspend fun b():Int{
-        delay(3000)
-
-        return 2;
-    }
-    suspend fun c():Int{
-        delay(3000)
-
-        return 2;
-    }
+     fun loadData() = GlobalScope.async (Dispatchers.Main) {
+         try {
+             val task1 = async(Dispatchers.IO) { delay(3000) }
+             val task2 = async(Dispatchers.IO) { delay(2000) }
+             val task3 = async(Dispatchers.IO) { delay(1000) }
+             awaitAll(task1, task2, task3)
+             navigateToNextScreen.value = true
+         } catch (e: Exception) {
+             handleError(e)
+         }
+     }
 
 }
