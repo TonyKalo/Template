@@ -189,7 +189,9 @@ open class CustomAlertDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return inflater.inflate(R.layout.dialog_alert_custom, container, false)
+        val view=inflater.inflate(R.layout.dialog_alert_custom, container, false)
+        view.setOnClickListener{tilInput.clearFocus()  }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
