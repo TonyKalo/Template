@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/main_padding"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/main_padding"
             android:textColor="@color/txtMainDark"
             android:textSize="@dimen/tv_main" />
 
