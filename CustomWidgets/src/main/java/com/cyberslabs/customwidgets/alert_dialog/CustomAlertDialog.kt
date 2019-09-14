@@ -1,6 +1,7 @@
 package com.cyberslabs.customwidgets.alert_dialog
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -17,6 +18,7 @@ import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.cyberslabs.customwidgets.R
@@ -190,7 +192,8 @@ open class CustomAlertDialog : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val view=inflater.inflate(R.layout.dialog_alert_custom, container, false)
-        view.setOnClickListener{tilInput.clearFocus()  }
+        //clear edit text in android 6.0.1 without click listener don't work
+        view.setOnClickListener{}
         return view
     }
 
@@ -229,6 +232,7 @@ open class CustomAlertDialog : DialogFragment() {
                 tilInput.visibility=View.VISIBLE
                 tilInput.hint=hint
                 onTextInputListener?.getTextInputLayout(tilInput)
+                tilInput.editText?.setOnFocusChangeListener { v, hasFocus -> if(!hasFocus)hidekeyboard() }
             } else Log.e ("CustomAlertDialog","Can't use MultiChoice or SingleChoice with TextInput")
         }
     }
@@ -473,5 +477,14 @@ open class CustomAlertDialog : DialogFragment() {
 
     private fun setMsgClickable() {
         tvMsg.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun hidekeyboard(){
+        try {
+            val windowToken = dialog?.window?.getDecorView()?.getRootView();
+            val inputMethodManager = dialog?.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(windowToken?.windowToken, 0);
+        } catch (e: Exception) {
+        }
     }
 }
