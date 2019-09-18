@@ -116,6 +116,20 @@ open class BaseViewModel @Inject constructor
 
     }
 
+    fun checkPermissions(permissions: Array<String>):Boolean{
+        var permissionGranted = true
+        if (Build.VERSION.SDK_INT >= 23) {
+
+            permissions.forEach { permission ->
+                if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted==true) {
+                    permissionGranted = false
+
+                }
+            }
+        }
+        return permissionGranted
+    }
+
     fun checkAndRequestPermissions(permissions: Array<String>, handleWithDialogs: Boolean, permissionCallback: PermissionCallback) {
 
         val permissionsToCheck: ArrayList<String> = ArrayList()
