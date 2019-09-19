@@ -137,7 +137,7 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
 
     override fun requestPermission(permissions: Array<String>) {
         if (Build.VERSION.SDK_INT >= 23) {
-            requestPermissions(permissions, viewModel!!.getPermissionRequestCode())
+            requestPermissions(permissions, BaseViewModel.PERMISSION_REQUEST_CODE)
         }
     }
 

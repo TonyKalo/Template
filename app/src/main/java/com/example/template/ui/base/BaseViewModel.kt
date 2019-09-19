@@ -1,5 +1,6 @@
 package com.example.template.ui.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -21,10 +22,12 @@ import javax.net.ssl.HttpsURLConnection
 
 
 open class BaseViewModel @Inject constructor
-    (@AppContext val appContext: Context, val dataManager: DataManager, val schedulerProvider: SchedulerProvider, val compositeDisposable: CompositeDisposable)
-    : ViewModel() {
+    (@AppContext val appContext: Context, val dataManager: DataManager, val schedulerProvider: SchedulerProvider, val compositeDisposable: CompositeDisposable) : ViewModel() {
 
-    private val PERMISSION_REQUEST_CODE = 101
+    companion object{
+        final val PERMISSION_REQUEST_CODE = 101
+    }
+
     private val RETRY_MSG = 1
     private val APP_SETTINGS_MSG = 2
 
@@ -44,40 +47,16 @@ open class BaseViewModel @Inject constructor
     var dialogHandler: Boolean = true
 
 
-    fun getPermissionRequest(): MutableLiveData<Array<String>> {
-        return permissionsRequest
-    }
-
-    fun getPermissionRequestRationale(): MutableLiveData<String> {
-        return permissionsRequestRationale
-    }
+    fun getPermissionRequest()=permissionsRequest
+    fun getPermissionRequestRationale()= permissionsRequestRationale
+    fun getAppSettingsRetryDialog()=openAppSettingsDialog
+    fun getRetryDialog() = openRetryDialog
+    fun getErrorHandler()=handleErrorString
+    fun getIsLoading()= isLoading
+    fun getIsLoadingNonCancelable()=isLoadingNonCancelable
 
     fun requestPermissionRationale(boolean: Boolean) {
         permissionRationale=boolean
-    }
-
-    fun getPermissionRequestCode():Int {
-        return PERMISSION_REQUEST_CODE
-    }
-
-    fun getAppSettingsRetryDialog(): MutableLiveData<String>{
-       return openAppSettingsDialog
-    }
-
-    fun getRetryDialog(): MutableLiveData<String>{
-        return  openRetryDialog
-    }
-
-    fun getErrorHandler(): MutableLiveData<String> {
-        return handleErrorString
-    }
-
-    fun getIsLoading(): MutableLiveData<Boolean> {
-        return isLoading
-    }
-
-    fun getIsLoadingNonCancelable(): MutableLiveData<Boolean> {
-        return isLoadingNonCancelable
     }
 
     fun showLoaderNonCancelable(show: Boolean) {
@@ -116,12 +95,13 @@ open class BaseViewModel @Inject constructor
 
     }
 
+    @SuppressLint("WrongConstant")
     fun checkPermissions(permissions: Array<String>):Boolean{
         var permissionGranted = true
         if (Build.VERSION.SDK_INT >= 23) {
 
             permissions.forEach { permission ->
-                if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted==true) {
+                if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted) {
                     permissionGranted = false
 
                 }
@@ -130,6 +110,7 @@ open class BaseViewModel @Inject constructor
         return permissionGranted
     }
 
+    @SuppressLint("WrongConstant")
     fun checkAndRequestPermissions(permissions: Array<String>, handleWithDialogs: Boolean, permissionCallback: PermissionCallback) {
 
         val permissionsToCheck: ArrayList<String> = ArrayList()
@@ -252,6 +233,8 @@ open class BaseViewModel @Inject constructor
                 listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_storage)}"
             }else if(permiss.indexOf("SMS")>-1 && listOfPermissions.indexOf("SMS")<0) {
                 listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_sms)}"
+            }else if(permiss.indexOf("LOCATION")>-1 && listOfPermissions.indexOf("LOCATION")<0) {
+                listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_location)}"
             }else{
                 listOfPermissions += "\n\u25cf  $permissTxt"
             }
