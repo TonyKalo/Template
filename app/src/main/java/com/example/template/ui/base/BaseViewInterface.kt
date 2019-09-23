@@ -8,7 +8,7 @@ interface BaseViewInterface{
     fun showNonCancelableProgress()
     fun showSnackbar(msg:String)
     fun requestPermission(permissions : Array<String>)
-    fun requestPermissionRationale(permission : String):Boolean
+    fun requestPermissionRationale(permission : ArrayList<String>)
     fun openAppSettingsDialog(msg:String)
     fun openRetryDialog(msg:String)
 }

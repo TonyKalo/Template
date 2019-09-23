@@ -57,9 +57,9 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
         activity.requestPermission(permissions)
     }
 
-     override fun requestPermissionRationale(permission: String): Boolean {
-         return activity.requestPermissionRationale(permission)
-     }
+    override fun requestPermissionRationale(permission : ArrayList<String>) {
+        return activity.requestPermissionRationale(permission)
+    }
 
     override fun openRetryDialog(msg: String) {
         return activity.openRetryDialog(msg)

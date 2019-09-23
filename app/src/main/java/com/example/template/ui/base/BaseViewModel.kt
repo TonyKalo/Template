@@ -35,11 +35,10 @@ open class BaseViewModel @Inject constructor
     private val isLoadingNonCancelable = MutableLiveData<Boolean>()
     private val handleErrorString = MutableLiveData<String>()
     private val permissionsRequest = MutableLiveData<Array<String>>()
-    private val permissionsRequestRationale = MutableLiveData<String>()
+    private val permissionsRequestRationale = MutableLiveData<ArrayList<String>>()
     private val openRetryDialog = MutableLiveData<String>()
     private val openAppSettingsDialog = MutableLiveData<String>()
 
-    private var permissionRationale:Boolean?=null
     private var externalPermissNeed: ArrayList<String> = ArrayList()
     private var onPermissDenied: ArrayList<String> = ArrayList()
     var permissionCallback: PermissionCallback? = null
@@ -55,9 +54,6 @@ open class BaseViewModel @Inject constructor
     fun getIsLoading()= isLoading
     fun getIsLoadingNonCancelable()=isLoadingNonCancelable
 
-    fun requestPermissionRationale(boolean: Boolean) {
-        permissionRationale=boolean
-    }
 
     fun showLoaderNonCancelable(show: Boolean) {
         isLoadingNonCancelable.value = show
@@ -157,27 +153,7 @@ open class BaseViewModel @Inject constructor
             }
 
             if (permissDenied.isNotEmpty()) {
-                onPermissDenied.clear()
-                externalPermissNeed.clear()
-
-                for (i in 0..permissDenied.size - 1) {
-                    permissionsRequestRationale.value=permissDenied[i]
-                    if (permissionRationale!!) {
-                        Log.e("TAG","false")
-                        onPermissDenied.add(permissDenied.get(i))
-                    } else {
-                        externalPermissNeed.add(permissDenied.get(i));
-                        Log.e("TAG","ok")
-                    }
-                }
-
-                if (dialogHandler) {
-                    handleOnDeniedDialogs()
-                } else {
-                    permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
-
-                }
-
+                permissionsRequestRationale.value=permissDenied
 
             } else {
                 permissionCallback?.onSuccess()
@@ -186,6 +162,22 @@ open class BaseViewModel @Inject constructor
 
         }
     }
+
+    fun onRequestRationaleResult(permisiDenied : ArrayList<String>,externalPermiss:ArrayList<String>){
+        onPermissDenied.clear()
+        externalPermissNeed.clear()
+        permisiDenied.forEach{onPermissDenied.add(it)}
+        externalPermiss.forEach { externalPermissNeed.add(it)}
+
+        if (dialogHandler) {
+            handleOnDeniedDialogs()
+        } else {
+            permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
+
+        }
+
+    }
+
 
     private fun handleOnDeniedDialogs() {
         if (!externalPermissNeed.isEmpty()) {

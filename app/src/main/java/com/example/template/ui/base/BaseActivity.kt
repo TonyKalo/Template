@@ -96,9 +96,7 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
     }
 
     private fun observePermissionsRationale() {
-        viewModel?.getPermissionRequestRationale()?.observe(this, Observer {
-            viewModel?.requestPermissionRationale(requestPermissionRationale(it))
-        })
+        viewModel?.getPermissionRequestRationale()?.observe(this, Observer { requestPermissionRationale(it) })
     }
 
     private fun observeAppSettingsDialog() {
@@ -141,13 +139,23 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
         }
     }
 
-    override fun requestPermissionRationale(permission: String): Boolean {
+    override fun requestPermissionRationale(permissDenied: ArrayList<String>){
         if (Build.VERSION.SDK_INT >= 23) {
-            return shouldShowRequestPermissionRationale(permission)
-        } else {
-            return false
+            val permDenied = ArrayList<String>()
+            val externalPermiss = ArrayList<String>()
+
+            permissDenied.forEachIndexed { i, s ->
+                if (shouldShowRequestPermissionRationale(permissDenied[i])) {
+                    permDenied.add(permissDenied[i])
+                } else {
+                    externalPermiss.add(permissDenied[i])
+                }
+            }
+
+            viewModel?.onRequestRationaleResult(permDenied,externalPermiss)
         }
     }
+
 
     override fun openAppSettingsDialog(msg: String) {
         appSettingDialog.setTitle(getString(R.string.title_permiss_required))
