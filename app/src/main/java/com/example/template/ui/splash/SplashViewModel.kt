@@ -4,6 +4,7 @@ package com.example.template.ui.splash
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.cyberslabs.bandsbuddy.utils.helpers.SingleLiveEvent
 import com.example.template.data.DataManager
 import com.example.template.di.qualifiers.AppContext
 import com.example.template.ui.base.BaseViewModel
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable) {
 
-    var navigateToNextScreen = MutableLiveData<Boolean>()
+    var navigateToNextScreen = SingleLiveEvent<Any>()
     var a = 0
 
 
@@ -27,7 +28,7 @@ class SplashViewModel @Inject constructor(@AppContext appContext: Context, dataM
              val task2 = async(Dispatchers.IO) { delay(2000) }
              val task3 = async(Dispatchers.IO) { delay(1000) }
              awaitAll(task1, task2, task3)
-             navigateToNextScreen.value = true
+             navigateToNextScreen.call()
          } catch (e: Exception) {
              handleError(e)
          }

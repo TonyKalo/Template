@@ -30,7 +30,7 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         mViewModel.loadData()
-        mViewModel.navigateToNextScreen.observe(viewLifecycleOwner, Observer { if(it) navigateToLogin() })
+        mViewModel.navigateToNextScreen.observe(viewLifecycleOwner, Observer { navigateToLogin() })
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 

@@ -50,9 +50,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToNextScreenObserver(){
-        mViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer {
-            if(it)navigateToMainScreen()
-        })
+        mViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer { navigateToMainScreen() })
     }
     private fun setClickListeners(){
         btnLogin.setOnClickListener {
