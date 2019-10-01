@@ -22,16 +22,6 @@ class ActivityModule(private var activity: Activity) {
     }
 
     @Provides
-    fun provideSchedulerProvider(): SchedulerProvider {
-        return AppSchedulerProvider()
-    }
-
-    @Provides
-    fun provideCompositeDisposable(): CompositeDisposable {
-        return CompositeDisposable()
-    }
-
-    @Provides
     fun provideCustomAlertDialog(): CustomAlertDialog {
         return CustomAlertDialog()
     }

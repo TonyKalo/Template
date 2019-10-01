@@ -8,10 +8,11 @@ import com.example.template.ui.base.BaseViewModel
 import com.example.template.utils.scheduler.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.coroutines.CompletableJob
 import javax.inject.Inject
 
-class MainFragmentViewModel  @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable) {
+class MainFragmentViewModel  @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider,compositeDisposable: CompositeDisposable, coroutineJob: CompletableJob)
+    : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable, coroutineJob) {
 fun a(){
 
 }

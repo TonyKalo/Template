@@ -18,12 +18,17 @@ import com.example.template.utils.BASE_URL
 import com.example.template.utils.CONNECT_TIMEOUT_SECONDS
 import com.example.template.utils.READ_TIMEOUT_SECONDS
 import com.example.template.utils.WRITE_TIMEOUT_SECONDS
+import com.example.template.utils.scheduler.AppSchedulerProvider
+import com.example.template.utils.scheduler.SchedulerProvider
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.SupervisorJob
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import okhttp3.OkHttpClient
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
-import javax.xml.datatype.DatatypeConstants.SECONDS
+
 
 
 
@@ -49,6 +54,24 @@ class AppModule(private var application: Application) {
     @Provides
     fun provideDataManager(appDataManager: AppDataManager): DataManager {
         return appDataManager
+    }
+
+    @Singleton
+    @Provides
+    fun provideSchedulerProvider(): SchedulerProvider {
+        return AppSchedulerProvider()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompositeDisposable(): CompositeDisposable {
+        return CompositeDisposable()
+    }
+
+    @Singleton
+    @Provides
+    fun provideCompletableJob(): CompletableJob {
+        return SupervisorJob()
     }
 
     @Provides

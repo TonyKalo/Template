@@ -15,8 +15,8 @@ import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class SplashViewModel @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
-    : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable) {
+class SplashViewModel @Inject constructor(@AppContext appContext: Context, dataManager: DataManager, schedulerProvider: SchedulerProvider,compositeDisposable: CompositeDisposable, coroutineJob: CompletableJob)
+    : BaseViewModel(appContext,dataManager,schedulerProvider,compositeDisposable, coroutineJob) {
 
     var navigateToNextScreen = SingleLiveEvent<Any>()
     var a = 0
