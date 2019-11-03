@@ -20,12 +20,15 @@ import com.example.template.utils.READ_TIMEOUT_SECONDS
 import com.example.template.utils.WRITE_TIMEOUT_SECONDS
 import com.example.template.utils.scheduler.AppSchedulerProvider
 import com.example.template.utils.scheduler.SchedulerProvider
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.SupervisorJob
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
 
@@ -93,27 +96,44 @@ class AppModule(private var application: Application) {
     }
 
     @Provides
-    fun provideClient(): OkHttpClient {
+    fun provideClient(logInterceptor:HttpLoggingInterceptor): OkHttpClient {
         return OkHttpClient.Builder().connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .addInterceptor(logInterceptor)
             .build()
     }
 
     @Provides
-    fun provideRetrofit(baseURL: String, client: OkHttpClient): Retrofit {
+    @Singleton
+    fun provideGson(): Gson {
+        val gsonBuilder = GsonBuilder()
+        return gsonBuilder.create()
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level=HttpLoggingInterceptor.Level.BODY
+        return interceptor
+    }
+
+    @Provides
+    fun provideRetrofit(baseURL: String, gson: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
 
     @Provides
     fun provideApiService(): ApiService {
-        return provideRetrofit(BASE_URL, provideClient()).create(ApiService::class.java)
+        return provideRetrofit(BASE_URL,provideGson(), provideClient(provideLoggingInterceptor())).create(ApiService::class.java)
     }
 
 }
