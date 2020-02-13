@@ -4,7 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.template.TemplateApp
 import com.example.template.di.components.ActivityComponent
+import com.example.template.di.components.DaggerActivityComponent
+import com.example.template.di.module.ActivityModule
 import com.example.template.di.qualifiers.ViewModelFactory
 import javax.inject.Inject
 
@@ -27,7 +30,11 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityComponent=activity.activityComponent
+        activityComponent = DaggerActivityComponent.builder()
+            .activityModule(ActivityModule(activity))
+            .appComponent((activity.application as TemplateApp).getAppComponent())
+            .build()
+
         baseViewModel = getViewModel()
         activity.setViewModel(baseViewModel!!)
         activity.observeAll()
