@@ -1,29 +1,33 @@
 package com.example.template.ui.splash
 
+import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.HandlerCompat.postDelayed
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.ui.base.BaseFragment
-import com.example.template.ui.login.LoginViewModel
-import kotlinx.android.synthetic.main.fragment_splash.*
 
 
 class SplashFragment : BaseFragment<SplashViewModel>() {
 
-    lateinit var mViewModel: SplashViewModel
+    companion object{
+        var isItInit = false
+    }
+    private val mViewModel by viewModels<SplashViewModel> { viewModelFactory }
 
     override fun getViewModel(): SplashViewModel {
-        activityComponent.inject(this)
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(SplashViewModel::class.java)
+        appComponent.splashComponent().create().inject(this)
         return mViewModel
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        isItInit=true
     }
 
 

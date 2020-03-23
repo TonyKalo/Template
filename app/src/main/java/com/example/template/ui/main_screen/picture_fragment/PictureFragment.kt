@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.template.R
@@ -17,19 +18,12 @@ import javax.inject.Inject
 class PictureFragment :  BaseFragment<PictureViewModel>() {
 
 
-    lateinit var mViewModel: PictureViewModel
-    lateinit var sharedViewModel: MainScreenSharedViewModel
-
-
-    @Inject
-    @field:SharedViewModelFactory
-    lateinit var sharedViewModelFactory: ViewModelProvider.Factory
+    private val mViewModel by viewModels<PictureViewModel> { viewModelFactory }
+    private val sViewModel by viewModels<MainScreenSharedViewModel> { sharedViewModelFactory }
 
 
     override fun getViewModel(): PictureViewModel {
-        activityComponent.inject(this)
-        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(PictureViewModel::class.java)
-        sharedViewModel= ViewModelProviders.of(this, sharedViewModelFactory).get(MainScreenSharedViewModel::class.java)
+        appComponent.pictureComponent().create().inject(this)
         return  mViewModel
     }
 
@@ -42,6 +36,6 @@ class PictureFragment :  BaseFragment<PictureViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tlbFragmentPicture.setOnClickListener({ sharedViewModel.setNavigateToLogin(true) })
+        tlbFragmentPicture.setOnClickListener({ sViewModel.setNavigateToLogin(true) })
     }
 }

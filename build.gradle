@@ -42,7 +42,8 @@ ext {
     espresso_version = '3.2.0'
     dagger_version = "2.26"
     retrofit_version = "2.7.2"
-    room_version = "2.2.4"
+    room_version = "2.2.5"
+    fragmentVersion = '1.2.3'
     nav_fragment_version = "2.2.1"
     live_data_version = "2.2.0"
     rxkotlin_version = "2.4.0"

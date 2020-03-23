@@ -3,12 +3,11 @@ package com.example.template.ui.main_screen
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.template.di.qualifiers.AppContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainScreenSharedViewModel  @Inject constructor(@AppContext appContext: Context) : ViewModel() {
+class MainScreenSharedViewModel  @Inject constructor(appContext: Context) : ViewModel() {
 
     private val navigateToLogin=MutableLiveData<Boolean>()
 

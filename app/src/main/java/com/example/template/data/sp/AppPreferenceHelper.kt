@@ -2,7 +2,6 @@ package com.example.template.data.sp
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.template.di.qualifiers.AppContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +16,7 @@ class AppPreferenceHelper: PreferenceHelper {
     var sp:SharedPreferences? = null
 
     @Inject
-    constructor(@AppContext appContext: Context){
+    constructor(appContext: Context){
         sp=appContext.getSharedPreferences(PREF_FILE_NAME,Context.MODE_PRIVATE)
     }
 

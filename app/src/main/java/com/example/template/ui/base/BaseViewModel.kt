@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.template.R
 import com.example.template.data.DataManager
-import com.example.template.di.qualifiers.AppContext
 import com.example.template.ui.base.callbacks.PermissionCallback
 import com.example.template.utils.NetworkUtil.Companion.isNetworkConnected
 import com.example.template.utils.scheduler.SchedulerProvider
@@ -22,11 +21,10 @@ import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
 
 
-open class BaseViewModel @Inject constructor
-    (@AppContext val appContext: Context, val dataManager: DataManager, val schedulerProvider: SchedulerProvider,  val compositeDisposable: CompositeDisposable,
-     val coroutineJob: CompletableJob
-)
-    : ViewModel() {
+open class BaseViewModel @Inject constructor(val dataManager: DataManager) : ViewModel() {
+
+    @Inject
+    lateinit var appContext:Context
 
     companion object{
         final val PERMISSION_REQUEST_CODE = 101
