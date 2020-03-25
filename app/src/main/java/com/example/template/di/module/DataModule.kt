@@ -1,6 +1,9 @@
 package com.cyberslabs.bandsbuddy.di.module
 
+import android.app.Application
 import android.content.Context
+import android.os.Handler
+import com.example.template.TemplateApp
 import com.example.template.data.AppDataManager
 import com.example.template.data.DataManager
 import com.example.template.data.db.AppDatabase
@@ -16,12 +19,12 @@ import javax.inject.Singleton
 @Module
 object DataModule {
 
+
     @Singleton
     @Provides
     fun provideDataManager(appDataManager: AppDataManager): DataManager {
         return appDataManager
     }
-
 
     @Provides
     @Singleton

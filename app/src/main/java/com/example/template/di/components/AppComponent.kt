@@ -4,12 +4,16 @@ import android.content.Context
 import com.cyberslabs.bandsbuddy.di.module.DataModule
 import com.cyberslabs.bandsbuddy.di.module.NetworkModule
 import com.cyberslabs.bandsbuddy.ui.main_screen.calendar_fragment.di.*
+import com.example.template.TemplateApp
 import com.example.template.di.module.SharedViewModelModule
 import com.example.template.di.module.SubcomponentsModule
 import com.example.template.di.module.ViewModelBindModule
 import com.example.template.ui.registration_login.registration_activity.RegistrationActivity
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
+import dagger.android.ContributesAndroidInjector
 import javax.inject.Singleton
 
 
@@ -37,5 +41,7 @@ interface AppComponent {
     fun loginComponent(): LoginComponent.Factory
 
     fun inject(activity:RegistrationActivity)
+    fun inject(app:TemplateApp)
+
 
 }
