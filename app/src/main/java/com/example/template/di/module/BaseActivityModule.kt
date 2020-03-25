@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-object BaseFragmentModule {
+object BaseActivityModule {
 
     @BaseActivityScope
     @Provides

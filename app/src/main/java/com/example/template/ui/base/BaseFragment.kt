@@ -27,6 +27,9 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    @SharedViewModelFactory
+    lateinit var sharedViewModelFactory: ViewModelProvider.Factory
 
     @Inject
     @SharedViewModelFactory

@@ -6,6 +6,7 @@ import com.example.template.di.components.DaggerAppComponent
 
 class TemplateApp : Application() {
 
+
     private lateinit var appComponent: AppComponent
 
     override fun onCreate() {
