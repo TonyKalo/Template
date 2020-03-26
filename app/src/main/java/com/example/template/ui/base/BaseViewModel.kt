@@ -12,21 +12,17 @@ import com.example.template.R
 import com.example.template.data.DataManager
 import com.example.template.ui.base.callbacks.PermissionCallback
 import com.example.template.utils.extensions.isNetworkConnected
-import com.example.template.utils.scheduler.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
 import com.google.gson.JsonSyntaxException
-import kotlinx.coroutines.CompletableJob
-import retrofit2.HttpException
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
-
+import retrofit2.HttpException
 
 open class BaseViewModel @Inject constructor(val dataManager: DataManager) : ViewModel() {
 
     @Inject
-    lateinit var appContext:Context
+    lateinit var appContext: Context
 
-    companion object{
+    companion object {
         final val PERMISSION_REQUEST_CODE = 101
     }
 
@@ -47,15 +43,13 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
     var permissions: Array<String>? = null
     var dialogHandler: Boolean = true
 
-
-    fun getPermissionRequest()=permissionsRequest
-    fun getPermissionRequestRationale()= permissionsRequestRationale
-    fun getAppSettingsRetryDialog()=openAppSettingsDialog
+    fun getPermissionRequest() = permissionsRequest
+    fun getPermissionRequestRationale() = permissionsRequestRationale
+    fun getAppSettingsRetryDialog() = openAppSettingsDialog
     fun getRetryDialog() = openRetryDialog
-    fun getErrorHandler()=handleErrorString
-    fun getIsLoading()= isLoading
-    fun getIsLoadingNonCancelable()=isLoadingNonCancelable
-
+    fun getErrorHandler() = handleErrorString
+    fun getIsLoading() = isLoading
+    fun getIsLoadingNonCancelable() = isLoadingNonCancelable
 
     fun showLoaderNonCancelable(show: Boolean) {
         isLoadingNonCancelable.value = show
@@ -90,18 +84,16 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
         } else {
             handleErrorString.value = e.localizedMessage
         }
-
     }
 
     @SuppressLint("WrongConstant")
-    fun checkPermissions(permissions: Array<String>):Boolean{
+    fun checkPermissions(permissions: Array<String>): Boolean {
         var permissionGranted = true
         if (Build.VERSION.SDK_INT >= 23) {
 
             permissions.forEach { permission ->
                 if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted) {
                     permissionGranted = false
-
                 }
             }
         }
@@ -115,7 +107,6 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
         this.permissionCallback = permissionCallback
         this.permissions = permissions
         dialogHandler = handleWithDialogs
-
 
         if (permissions.size < 1) {
             Log.e("TAG", "Permission List is Empty")
@@ -133,11 +124,9 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
                 }
                 if (permissionGranted) {
                     permissionCallback.onSuccess()
-
                 } else {
                     permissionsRequest.value = permissionsToCheck.toTypedArray()
                 }
-
             } else {
                 permissionCallback.onSuccess()
             }
@@ -155,90 +144,81 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
             }
 
             if (permissDenied.isNotEmpty()) {
-                permissionsRequestRationale.value=permissDenied
-
+                permissionsRequestRationale.value = permissDenied
             } else {
                 permissionCallback?.onSuccess()
-
             }
-
         }
     }
 
-    fun onRequestRationaleResult(permisiDenied : ArrayList<String>,externalPermiss:ArrayList<String>){
+    fun onRequestRationaleResult(permisiDenied: ArrayList<String>, externalPermiss: ArrayList<String>) {
         onPermissDenied.clear()
         externalPermissNeed.clear()
-        permisiDenied.forEach{onPermissDenied.add(it)}
-        externalPermiss.forEach { externalPermissNeed.add(it)}
+        permisiDenied.forEach { onPermissDenied.add(it) }
+        externalPermiss.forEach { externalPermissNeed.add(it) }
 
         if (dialogHandler) {
             handleOnDeniedDialogs()
         } else {
             permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
-
         }
-
     }
-
 
     private fun handleOnDeniedDialogs() {
         if (!externalPermissNeed.isEmpty()) {
-            openAppSettingsDialog.value=createPermissionDialogMsg(APP_SETTINGS_MSG)
+            openAppSettingsDialog.value = createPermissionDialogMsg(APP_SETTINGS_MSG)
         } else if (!onPermissDenied.isEmpty()) {
-            openRetryDialog.value=createPermissionDialogMsg(RETRY_MSG)
+            openRetryDialog.value = createPermissionDialogMsg(RETRY_MSG)
         } else {
             permissionCallback?.onSuccess()
         }
-
     }
 
-    fun onRetryDialogPositiveBtnClick(){
-        val permissToRequest:ArrayList<String> = ArrayList()
+    fun onRetryDialogPositiveBtnClick() {
+        val permissToRequest: ArrayList<String> = ArrayList()
         permissToRequest.addAll(externalPermissNeed)
         permissToRequest.addAll(onPermissDenied)
-        permissionsRequest.value=permissToRequest.toTypedArray()
+        permissionsRequest.value = permissToRequest.toTypedArray()
     }
 
-    fun onRetryDialogNegativeBtnClick(){
-        permissionCallback?.onFail(onPermissDenied.toTypedArray(),externalPermissNeed.toTypedArray())
+    fun onRetryDialogNegativeBtnClick() {
+        permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
     }
 
-    fun onAppSettingsDialogPositiveBtnClick(){
-        permissionCallback?.onFail(onPermissDenied.toTypedArray(),externalPermissNeed.toTypedArray())
+    fun onAppSettingsDialogPositiveBtnClick() {
+        permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
     }
 
-    fun onAppSettingsDialogNegativeBtnClick(){
-        permissionCallback?.onFail(onPermissDenied.toTypedArray(),externalPermissNeed.toTypedArray())
+    fun onAppSettingsDialogNegativeBtnClick() {
+        permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
     }
 
-    private fun createPermissionDialogMsg(dialogMsg:Int): String {
+    private fun createPermissionDialogMsg(dialogMsg: Int): String {
         val msg = appContext.getString(R.string.msg_allow_access)
         var listOfPermissions = ""
-        val deniedPermiss:ArrayList<String> = ArrayList()
+        val deniedPermiss: ArrayList<String> = ArrayList()
         deniedPermiss.addAll(externalPermissNeed)
         deniedPermiss.addAll(onPermissDenied)
 
-        deniedPermiss.forEach {permiss->
+        deniedPermiss.forEach { permiss ->
             var permissTxt = permiss
             permissTxt = permiss.replace("android.permission.", "")
-            permissTxt =permissTxt.replace("_"," ")
+            permissTxt = permissTxt.replace("_", " ")
 
-            if (permiss.indexOf("STORAGE")>-1 && listOfPermissions.indexOf("STORAGE")<0) {
+            if (permiss.indexOf("STORAGE")> -1 && listOfPermissions.indexOf("STORAGE") <0) {
                 listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_storage)}"
-            }else if(permiss.indexOf("SMS")>-1 && listOfPermissions.indexOf("SMS")<0) {
+            } else if (permiss.indexOf("SMS")> -1 && listOfPermissions.indexOf("SMS") <0) {
                 listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_sms)}"
-            }else if(permiss.indexOf("LOCATION")>-1 && listOfPermissions.indexOf("LOCATION")<0) {
+            } else if (permiss.indexOf("LOCATION")> -1 && listOfPermissions.indexOf("LOCATION") <0) {
                 listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_location)}"
-            }else{
+            } else {
                 listOfPermissions += "\n\u25cf  $permissTxt"
             }
         }
-        var additionalMsg=""
-        if (dialogMsg==RETRY_MSG) additionalMsg=appContext.getString(R.string.msg_permiss_decline)
-        if (dialogMsg==APP_SETTINGS_MSG) additionalMsg= appContext.getString(R.string.msg_permiss_required)
+        var additionalMsg = ""
+        if (dialogMsg == RETRY_MSG) additionalMsg = appContext.getString(R.string.msg_permiss_decline)
+        if (dialogMsg == APP_SETTINGS_MSG) additionalMsg = appContext.getString(R.string.msg_permiss_required)
 
         return "$msg\n$listOfPermissions\n\n$additionalMsg"
-
     }
-
 }

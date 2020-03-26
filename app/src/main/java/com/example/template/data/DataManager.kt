@@ -4,7 +4,7 @@ import com.example.template.data.db.AppDatabase
 import com.example.template.data.network.ApiHelper
 import com.example.template.data.sp.PreferenceHelper
 
-interface DataManager{
+interface DataManager {
 
     fun getDb(): AppDatabase
 

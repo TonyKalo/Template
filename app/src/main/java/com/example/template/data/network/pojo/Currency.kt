@@ -3,8 +3,7 @@ package com.example.template.data.network.pojo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-
-data class Currency (
+data class Currency(
 
     @SerializedName("Broj te\u010dajnice")
     @Expose
@@ -33,5 +32,4 @@ data class Currency (
     @SerializedName("Prodajni za devize")
     @Expose
     var prodajniZaDevize: String? = null
-){
-}
+)

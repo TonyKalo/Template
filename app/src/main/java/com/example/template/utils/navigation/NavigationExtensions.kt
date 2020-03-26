@@ -136,8 +136,8 @@ private fun BottomNavigationView.setupDeepLinks(navGraphIds: List<Int>, fragment
         // Find or create the Navigation host fragment
         val navHostFragment = obtainNavHostFragment(fragmentManager, fragmentTag, navGraphId, containerId)
         // Handle Intent
-        if (navHostFragment.navController.handleDeepLink(intent)
-            && selectedItemId != navHostFragment.navController.graph.id) {
+        if (navHostFragment.navController.handleDeepLink(intent) &&
+            selectedItemId != navHostFragment.navController.graph.id) {
             this.selectedItemId = navHostFragment.navController.graph.id
         }
     }
@@ -171,7 +171,6 @@ private fun attachNavHostFragment(fragmentManager: FragmentManager, navHostFragm
             }
         }
         .commitNow()
-
 }
 
 private fun obtainNavHostFragment(fragmentManager: FragmentManager, fragmentTag: String, navGraphId: Int, containerId: Int): NavHostFragment {

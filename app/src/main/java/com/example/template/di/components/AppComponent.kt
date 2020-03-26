@@ -2,7 +2,13 @@ package com.example.template.di.components
 
 import android.content.Context
 import com.example.template.TemplateApp
-import com.example.template.di.module.*
+import com.example.template.di.module.ActivityBindModule
+import com.example.template.di.module.BaseActivityModule
+import com.example.template.di.module.DataModule
+import com.example.template.di.module.NetworkModule
+import com.example.template.di.module.SharedViewModelModule
+import com.example.template.di.module.SubcomponentsModule
+import com.example.template.di.module.ViewModelBindModule
 import com.example.template.ui.main_screen.main_activity.MainActivity
 import com.example.template.ui.main_screen.permission_fragment.di.PermissionComponent
 import com.example.template.ui.main_screen.picture_fragment.detail_fragment.di.DetailComponent
@@ -14,9 +20,8 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-
 @Singleton
-@Component (
+@Component(
     modules = [
         NetworkModule::class,
         DataModule::class,
@@ -39,9 +44,7 @@ interface AppComponent {
     fun loginComponent(): LoginComponent.Factory
     fun detailComponent(): DetailComponent.Factory
 
-    fun inject(activity:RegistrationActivity)
+    fun inject(activity: RegistrationActivity)
     fun inject(activity: MainActivity)
-    fun inject(app:TemplateApp)
-
-
+    fun inject(app: TemplateApp)
 }

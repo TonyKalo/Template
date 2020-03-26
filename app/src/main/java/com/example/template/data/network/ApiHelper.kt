@@ -5,5 +5,5 @@ import io.reactivex.Single
 
 interface ApiHelper {
 
-    fun getCurrencies():Single<ArrayList<Currency>>
+    fun getCurrencies(): Single<ArrayList<Currency>>
 }

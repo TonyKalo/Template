@@ -1,33 +1,29 @@
 package com.example.template.ui.base
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import com.example.template.TemplateApp
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
 import android.content.Context
-import android.view.MotionEvent
 import android.content.Intent
 import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.Settings
+import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
 import com.cyberslabs.customwidgets.progress_dialog.CustomProgressDialog
 import com.example.template.R
+import com.example.template.TemplateApp
 import com.example.template.di.components.AppComponent
 import com.example.template.di.qualifiers.BaseActivityScope
-import com.example.template.di.qualifiers.SharedViewModelFactory
-
-
+import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 
 abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewInterface {
-
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -44,14 +40,12 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
     lateinit var appComponent: AppComponent
     private var viewModel: BaseViewModel? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        appComponent= (application as TemplateApp).getAppComponent()
+        appComponent = (application as TemplateApp).getAppComponent()
         viewModel = getViewModel()
         observeAll()
-
     }
 
     fun setViewModel(viewModel: BaseViewModel) {
@@ -83,7 +77,6 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
     private fun observeErrorHandler() {
         viewModel?.getErrorHandler()?.observe(this, Observer { error ->
             showSnackbar(error)
-
         })
     }
 
@@ -137,7 +130,7 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
         }
     }
 
-    override fun requestPermissionRationale(permissDenied: ArrayList<String>){
+    override fun requestPermissionRationale(permissDenied: ArrayList<String>) {
         if (Build.VERSION.SDK_INT >= 23) {
             val permDenied = ArrayList<String>()
             val externalPermiss = ArrayList<String>()
@@ -150,10 +143,9 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
                 }
             }
 
-            viewModel?.onRequestRationaleResult(permDenied,externalPermiss)
+            viewModel?.onRequestRationaleResult(permDenied, externalPermiss)
         }
     }
-
 
     override fun openAppSettingsDialog(msg: String) {
         appSettingDialog.setTitle(getString(R.string.title_permiss_required))
@@ -169,14 +161,12 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
                 viewModel?.onAppSettingsDialogPositiveBtnClick()
                 appSettingDialog.dismiss()
             }
-
         })
-        appSettingDialog.setNegativeButton(getString(R.string.btn_cancel),false, object : OnButtonClickListener {
+        appSettingDialog.setNegativeButton(getString(R.string.btn_cancel), false, object : OnButtonClickListener {
             override fun onClick() {
                 viewModel?.onAppSettingsDialogNegativeBtnClick()
                 appSettingDialog.dismiss()
             }
-
         })
         appSettingDialog.show(supportFragmentManager, "appSettingDialog")
     }
@@ -190,14 +180,12 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
                 viewModel?.onRetryDialogPositiveBtnClick()
                 retryDialog.dismiss()
             }
-
         })
-        retryDialog.setNegativeButton(getString(R.string.btn_sure),false, object : OnButtonClickListener {
+        retryDialog.setNegativeButton(getString(R.string.btn_sure), false, object : OnButtonClickListener {
             override fun onClick() {
                 viewModel?.onRetryDialogNegativeBtnClick()
                 retryDialog.dismiss()
             }
-
         })
         retryDialog.show(supportFragmentManager, "retryDialog")
     }
@@ -206,7 +194,6 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         viewModel?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
 

@@ -9,10 +9,11 @@ import com.example.template.di.components.AppComponent
 import com.example.template.di.qualifiers.SharedViewModelFactory
 import javax.inject.Inject
 
-abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
+abstract class BaseFragment<V : BaseViewModel> : Fragment(), BaseViewInterface {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     @SharedViewModelFactory
     lateinit var sharedViewModelFactory: ViewModelProvider.Factory
@@ -23,7 +24,7 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(context is BaseActivity<*>){
+        if (context is BaseActivity<*>) {
             activity = context
         }
     }
@@ -31,23 +32,21 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        appComponent= (requireActivity().application as TemplateApp).getAppComponent()
+        appComponent = (requireActivity().application as TemplateApp).getAppComponent()
         baseViewModel = getViewModel()
         activity.setViewModel(baseViewModel!!)
         activity.observeAll()
-
     }
 
     abstract fun getViewModel(): V
 
+    override fun showCancelableProgress() {
+        activity.showCancelableProgress()
+    }
 
-     override fun showCancelableProgress() {
-         activity.showCancelableProgress()
-     }
-
-     override fun showNonCancelableProgress() {
-         activity.showNonCancelableProgress()
-     }
+    override fun showNonCancelableProgress() {
+        activity.showNonCancelableProgress()
+    }
 
     override fun hideProgress() {
         activity.hideProgress()
@@ -61,7 +60,7 @@ abstract class BaseFragment<V:BaseViewModel>:Fragment(),BaseViewInterface{
         activity.requestPermission(permissions)
     }
 
-    override fun requestPermissionRationale(permission : ArrayList<String>) {
+    override fun requestPermissionRationale(permission: ArrayList<String>) {
         return activity.requestPermissionRationale(permission)
     }
 

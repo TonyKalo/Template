@@ -9,4 +9,3 @@ import android.net.ConnectivityManager
             activeInfo != null && activeInfo.isConnectedOrConnecting
             return activeInfo != null && activeInfo.isConnected
         }
-

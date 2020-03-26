@@ -6,26 +6,23 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AppPreferenceHelper: PreferenceHelper {
-
+class AppPreferenceHelper @Inject constructor(appContext: Context) : PreferenceHelper {
 
     private val PREF_FILE_NAME = "PREF_FILE_NAME"
 
     private val KEY_USER_NAME = "PREF_KEY_USER_NAME"
 
-    var sp:SharedPreferences? = null
+    var sp: SharedPreferences? = null
 
-    @Inject
-    constructor(appContext: Context){
-        sp=appContext.getSharedPreferences(PREF_FILE_NAME,Context.MODE_PRIVATE)
+    init {
+        sp = appContext.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE)
     }
 
     override fun setUsername(username: String) {
-       sp?.edit()?.putString(KEY_USER_NAME,username)?.apply()
+        sp?.edit()?.putString(KEY_USER_NAME, username)?.apply()
     }
 
     override fun getUsername(): String {
-        return sp?.getString(KEY_USER_NAME,"").toString()
+        return sp?.getString(KEY_USER_NAME, "").toString()
     }
-
 }

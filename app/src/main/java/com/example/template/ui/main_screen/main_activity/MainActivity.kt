@@ -1,6 +1,5 @@
 package com.example.template.ui.main_screen.main_activity
 
-
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
@@ -14,9 +13,7 @@ import com.example.template.utils.extensions.makeVisible
 import com.example.template.utils.navigation.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
-
-class MainActivity :  BaseActivity<MainActivityViewModel>() ,NavController.OnDestinationChangedListener{
-
+class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDestinationChangedListener {
 
     private val mViewModel by viewModels<MainActivityViewModel> { viewModelFactory }
     private var currentNavController: LiveData<NavController>? = null
@@ -33,7 +30,6 @@ class MainActivity :  BaseActivity<MainActivityViewModel>() ,NavController.OnDes
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
         }
-
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
@@ -44,13 +40,12 @@ class MainActivity :  BaseActivity<MainActivityViewModel>() ,NavController.OnDes
         setupBottomNavigationBar()
     }
 
-
     /**
      * Called on first creation and when restoring state.
      */
     private fun setupBottomNavigationBar() {
 
-        val navGraphIds = listOf(R.navigation.permission_graph,R.navigation.picture_graph)
+        val navGraphIds = listOf(R.navigation.permission_graph, R.navigation.picture_graph)
 
         val controller = bnvMain.setupWithNavController(navGraphIds = navGraphIds, fragmentManager = supportFragmentManager,
             containerId = R.id.fhMain, intent = intent)
@@ -63,23 +58,17 @@ class MainActivity :  BaseActivity<MainActivityViewModel>() ,NavController.OnDes
         currentNavController = controller
     }
 
-
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         hideBottomNavigation(destination)
     }
 
-    private fun hideBottomNavigation(destination: NavDestination){
-        if(destination.id == R.id.permissionFragment || destination.id == R.id.pictureFragment ){
+    private fun hideBottomNavigation(destination: NavDestination) {
+        if (destination.id == R.id.permissionFragment || destination.id == R.id.pictureFragment) {
             bnvMain.makeVisible()
-        }else bnvMain.makeGone()
-
+        } else bnvMain.makeGone()
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
     }
-
-
-
-
 }

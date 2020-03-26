@@ -5,7 +5,17 @@ import android.animation.AnimatorSet
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.DashPathEffect
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PathMeasure
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.Shader
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -15,7 +25,7 @@ import com.cyberslabs.customwidgets.R
 import kotlin.math.max
 import kotlin.math.min
 
-enum class AnimationType{
+enum class AnimationType {
     SUCCESSFUL,
     FAILED
 }
@@ -24,7 +34,8 @@ enum class AnimationType{
 class LoadingButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyle: Int = 0) : View(context, attrs, defStyle){
+    defStyle: Int = 0
+) : View(context, attrs, defStyle) {
 
     companion object {
         private const val STATE_BUTTON = 0
@@ -41,8 +52,7 @@ class LoadingButton @JvmOverloads constructor(
         private const val DEFAULT_COLOR = Color.BLUE
         private const val DEFAULT_TEXT_COLOR = Color.WHITE
 
-        private var animationInProgress=false
-
+        private var animationInProgress = false
     }
 
     private val mDensity = resources.displayMetrics.density
@@ -58,7 +68,7 @@ class LoadingButton @JvmOverloads constructor(
         }
 
     var rippleColor = Color.BLACK
-        set(value){
+        set(value) {
             ripplePaint.color = value
             field = value
         }
@@ -123,7 +133,6 @@ class LoadingButton @JvmOverloads constructor(
             invalidate()
         }
 
-
     private var mCurrentState = STATE_BUTTON
     private var mMinHeight = defaultMinHeight
 
@@ -146,7 +155,7 @@ class LoadingButton @JvmOverloads constructor(
     private var mScaleHeight = 0
     private var mDegree = 0
     private var mAngle = 0
-    private var mEndAngle= 0
+    private var mEndAngle = 0
 
     private var mButtonCorner = 2 * mDensity
     private var mRadius = 0
@@ -199,7 +208,6 @@ class LoadingButton @JvmOverloads constructor(
             isAntiAlias = true
             color = mColorPrimary
             style = Paint.Style.FILL
-
         }
 
         ripplePaint.apply {
@@ -281,11 +289,10 @@ class LoadingButton @JvmOverloads constructor(
             MotionEvent.ACTION_UP -> if (event.x > mButtonRectF.left && event.x < mButtonRectF.right && event.y > mButtonRectF.top && event.y < mButtonRectF.bottom) {
                 // only register as click if finger is up inside view
                 playRippleAnimation(false)
-
             } else {
                 // if finger is moved outside view and lifted up, reset view
                 mPaint.clearShadowLayer()
-                mPaint.color= mColorPrimary
+                mPaint.color = mColorPrimary
                 mTouchX = 0f
                 mTouchY = 0f
                 mRippleRadius = 0f
@@ -396,15 +403,14 @@ class LoadingButton @JvmOverloads constructor(
     /**
      * reset view to Button with animation
      */
-    fun reset(){
-        when(mCurrentState){
+    fun reset() {
+        when (mCurrentState) {
             STATE_ANIMATION_SUCCESS -> scaleSuccessPath()
             STATE_ANIMATION_FAILED -> scaleFailedPath()
         }
     }
 
-
-    private fun measureTextHeight(paint: Paint): Float{
+    private fun measureTextHeight(paint: Paint): Float {
         val bounds = Rect()
         paint.getTextBounds(mText, 0, mText.length, bounds)
         return bounds.height().toFloat()
@@ -470,45 +476,42 @@ class LoadingButton @JvmOverloads constructor(
         }
 
     private fun updateButtonColor() {
-        if(!animationInProgress) {
+        if (!animationInProgress) {
             mPaint.color = if (isEnabled) mColorPrimary else mDisabledBgColor
             mTextPaint.color = if (isEnabled) mTextColor else mDisabledTextColor
         }
-        if(backgroundShader != null){
-            if(isEnabled) mPaint.shader = backgroundShader else mPaint.shader = null
+        if (backgroundShader != null) {
+            if (isEnabled) mPaint.shader = backgroundShader else mPaint.shader = null
         }
         invalidate()
     }
 
-
     private fun playRippleAnimation(isTouchDown: Boolean) {
 
         ValueAnimator.ofFloat(
-            if (isTouchDown) 0f else (width ).toFloat(),
+            if (isTouchDown) 0f else (width).toFloat(),
             if (isTouchDown) (width).toFloat() else width.toFloat())
             .apply {
                 duration = 240
                 interpolator = AccelerateDecelerateInterpolator()
                 addUpdateListener {
-                    mPaint.color= rippleColor
+                    mPaint.color = rippleColor
                     invalidate()
                 }
-                if(!isTouchDown) doOnEnd {
+                if (!isTouchDown) doOnEnd {
                     performClick()
-                    mPaint.color= mColorPrimary
+                    mPaint.color = mColorPrimary
                     mTouchX = 0f
                     mTouchY = 0f
                     mRippleRadius = 0f
                     invalidate()
                 }
             }.start()
-
-
     }
 
     private fun playStartAnimation(isReverse: Boolean) {
-        isEnabled=false
-        animationInProgress=true
+        isEnabled = false
+        animationInProgress = true
         val viewHeight = max(height, mMinHeight.toInt())
         val animator = ValueAnimator.ofInt(
             if (isReverse) width / 2 - viewHeight / 2 else 0,
@@ -522,8 +525,8 @@ class LoadingButton @JvmOverloads constructor(
                     invalidate()
                 }
                 doOnEnd {
-                    if(isReverse)animationInProgress=false
-                    if(isReverse)isEnabled=true else isEnabled=false
+                    if (isReverse)animationInProgress = false
+                    if (isReverse)isEnabled = true else isEnabled = false
                     mCurrentState = if (isReverse) STATE_BUTTON else STATE_ANIMATION_STEP2
                     if (mCurrentState == STATE_BUTTON) {
 
@@ -645,7 +648,7 @@ class LoadingButton @JvmOverloads constructor(
             doOnEnd {
                 if (resetAfterFailed) {
                     postDelayed({ scaleFailedPath() }, 1000)
-                }else{
+                } else {
                     animationEndAction?.invoke(AnimationType.FAILED)
                 }
             }
@@ -702,7 +705,6 @@ class LoadingButton @JvmOverloads constructor(
                     mFailedPath!!.transform(scaleMatrix)
                     mFailedPath2!!.transform(scaleMatrix)
                     invalidate()
-
                 }
                 doOnEnd {
                     mCurrentState = STATE_ANIMATION_STEP2
@@ -713,18 +715,18 @@ class LoadingButton @JvmOverloads constructor(
 }
 
 private fun Animator.doOnEnd(action: (animator: Animator?) -> Unit) {
-    this.addListener(object : Animator.AnimatorListener{
-        override fun onAnimationRepeat(animation: Animator?){}
+    this.addListener(object : Animator.AnimatorListener {
+        override fun onAnimationRepeat(animation: Animator?) {}
 
         override fun onAnimationEnd(animation: Animator?) = action(animation)
 
-        override fun onAnimationCancel(animation: Animator?){}
+        override fun onAnimationCancel(animation: Animator?) {}
 
-        override fun onAnimationStart(animation: Animator?){}
+        override fun onAnimationStart(animation: Animator?) {}
     })
 }
 
-//private fun Paint.setShadowDepth(context: Context, cornerRadius: Float){
+// private fun Paint.setShadowDepth(context: Context, cornerRadius: Float){
 //    val density = context.resources.displayMetrics.density
 //    this.setShadowLayer(cornerRadius, 0f, 1 * density, 0x1F000000)
-//}
+// }

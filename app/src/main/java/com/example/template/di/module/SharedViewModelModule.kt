@@ -6,7 +6,6 @@ import com.example.template.ui.main_screen.MainScreenSharedViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import javax.inject.Singleton
 
 @Module
 abstract class SharedViewModelModule {
@@ -15,5 +14,4 @@ abstract class SharedViewModelModule {
     @IntoMap
     @ViewModelKey(MainScreenSharedViewModel::class)
     abstract fun bindRegistrationSharedViewModel(registrationSharedViewModel: MainScreenSharedViewModel): ViewModel
-
 }

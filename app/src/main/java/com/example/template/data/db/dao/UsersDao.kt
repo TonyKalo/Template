@@ -8,21 +8,18 @@ import com.example.template.data.db.model.Users
 import io.reactivex.Completable
 import io.reactivex.Single
 
-
-
 @Dao
-interface UsersDao{
+interface UsersDao {
 
     @Query("SELECT * FROM users")
     fun getAllUsers(): Single<List<Users>>
 
     @Insert
-    fun insertUser(users:Users):Completable
+    fun insertUser(users: Users): Completable
 
     @Delete
-    fun deleteUser(user:Users):Completable
+    fun deleteUser(user: Users): Completable
 
     @Query("DELETE FROM users")
-    fun deleteAllUsers():Completable
-
+    fun deleteAllUsers(): Completable
 }

@@ -7,15 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.ui.base.BaseFragment
 
-
 class SplashFragment : BaseFragment<SplashViewModel>() {
 
-    companion object{
+    companion object {
         var isItInit = false
     }
     private val mViewModel by viewModels<SplashViewModel> { viewModelFactory }
@@ -27,9 +25,8 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        isItInit=true
+        isItInit = true
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -42,12 +39,9 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         findNavController().popBackStack()
-
-
-
     }
 
-    private fun navigateToLogin(){
+    private fun navigateToLogin() {
         findNavController().navigate(R.id.loginFragment)
     }
 }

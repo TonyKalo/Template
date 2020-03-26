@@ -2,7 +2,6 @@ package com.example.template.utils.extensions
 
 import android.view.View
 
-
 fun View.makeVisible() {
     visibility = View.VISIBLE
 }
@@ -20,4 +19,3 @@ fun View.isVisibile(): Boolean = visibility == View.VISIBLE
 fun View.isGone(): Boolean = visibility == View.GONE
 
 fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
-

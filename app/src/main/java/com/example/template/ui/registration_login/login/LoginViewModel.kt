@@ -1,21 +1,15 @@
 package com.example.template.ui.registration_login.login
 
-
-import android.content.Context
-import com.example.template.utils.helpers.SingleLiveEvent
 import com.example.template.data.DataManager
 import com.example.template.ui.base.BaseViewModel
-import com.example.template.utils.scheduler.SchedulerProvider
-import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.CompletableJob
+import com.example.template.utils.helpers.SingleLiveEvent
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(dataManager: DataManager) : BaseViewModel(dataManager) {
 
-    private val toNextScreen= SingleLiveEvent<Any>()
+    private val toNextScreen = SingleLiveEvent<Any>()
 
-    fun getNavigateToNextScreen()= toNextScreen
-
+    fun getNavigateToNextScreen() = toNextScreen
 
 //        fun sample (){
 //
@@ -32,11 +26,9 @@ class LoginViewModel @Inject constructor(dataManager: DataManager) : BaseViewMod
 //            }))
 //    }
 
-
-    fun onLoginClick(pin:String){
-        if(pin.length<1) handleErrorString("Please enter any the pin ")else toNextScreen.call()
+    fun onLoginClick(pin: String) {
+        if (pin.length <1) handleErrorString("Please enter any the pin ")else toNextScreen.call()
     }
-
 
     //  sample for check permissions
 //    fun checkPermission (pin:String) {
