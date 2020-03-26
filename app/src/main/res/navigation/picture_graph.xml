@@ -12,6 +12,19 @@
         android:name="com.example.template.ui.main_screen.picture_fragment.PictureFragment"
         android:label="PictureFragment"
         tools:layout="@layout/fragment_picture" >
+        <action
+            android:id="@+id/action_pictureFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.template.ui.main_screen.picture_fragment.detail_fragment.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="detail"
+            app:argType="string" />
     </fragment>
 
 

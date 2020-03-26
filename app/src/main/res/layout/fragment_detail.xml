@@ -5,41 +5,28 @@
               android:layout_width="match_parent" android:layout_height="match_parent"
               tools:context=".ui.main_screen.picture_fragment.PictureFragment" android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnDetails"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/btn_main_big_transparetn"
-        android:padding="16dp"
-        android:text="Details"
-        android:textColor="@color/btn_transparent_txt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivFragmentTwo" />
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tlbFragmentPicture"
+        android:id="@+id/tlbFragmentDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Picture"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="Detail"
         app:titleTextColor="@android:color/background_light">
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/ivFragmentTwo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="50dp"
+    <TextView
+        android:id="@+id/tvDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tlbFragmentPicture"
-        app:srcCompat="@drawable/picture" />
+        app:layout_constraintTop_toBottomOf="@+id/tlbFragmentDetail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

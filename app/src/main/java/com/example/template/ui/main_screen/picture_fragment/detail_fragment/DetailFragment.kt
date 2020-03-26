@@ -1,4 +1,4 @@
-package com.example.template.ui.main_screen.picture_fragment
+package com.example.template.ui.main_screen.picture_fragment.detail_fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,27 +17,27 @@ import kotlinx.android.synthetic.main.fragment_picture.*
 import javax.inject.Inject
 
 
-class PictureFragment :  BaseFragment<PictureViewModel>() {
+class DetailFragment :  BaseFragment<DetailViewModel>() {
 
 
-    private val mViewModel by viewModels<PictureViewModel> { viewModelFactory }
-    private val sViewModel by viewModels<MainScreenSharedViewModel> { sharedViewModelFactory }
+    private val mViewModel by viewModels<DetailViewModel> { viewModelFactory }
 
 
-    override fun getViewModel(): PictureViewModel {
-        appComponent.pictureComponent().create().inject(this)
+
+    override fun getViewModel(): DetailViewModel {
+        appComponent.detailComponent().create().inject(this)
         return  mViewModel
     }
 
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_picture, container, false)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tlbFragmentDetail.setNavigationOnClickListener { findNavController().navigateUp() }
+        tvDetail.text=DetailFragmentArgs.fromBundle(requireArguments()).detail
 
-        btnDetails.setOnClickListener { findNavController().navigate(PictureFragmentDirections.actionPictureFragmentToDetailFragment("This is detail txt")) }
-}
+    }
 }
