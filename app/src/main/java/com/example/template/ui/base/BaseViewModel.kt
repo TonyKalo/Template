@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.example.template.R
 import com.example.template.data.DataManager
 import com.example.template.ui.base.callbacks.PermissionCallback
-import com.example.template.utils.NetworkUtil.Companion.isNetworkConnected
+import com.example.template.utils.extensions.isNetworkConnected
 import com.example.template.utils.scheduler.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import com.google.gson.JsonSyntaxException
@@ -71,7 +71,7 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
 
     fun handleError(e: Throwable) {
         Log.e("TAG", e.localizedMessage)
-        if (!isNetworkConnected(appContext)) {
+        if (!appContext.isNetworkConnected()) {
             handleErrorString.value = appContext.getString(R.string.err_no_net)
         } else if (e is HttpException) {
             when (e.code()) {
