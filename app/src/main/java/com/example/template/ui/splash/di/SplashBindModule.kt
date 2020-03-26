@@ -1,4 +1,4 @@
-package com.cyberslabs.bandsbuddy.ui.main_screen.calendar_fragment.di
+package com.example.template.ui.splash.di
 
 import androidx.lifecycle.ViewModel
 import com.example.template.di.scopes.ViewModelKey

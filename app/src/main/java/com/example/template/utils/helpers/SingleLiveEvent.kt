@@ -1,4 +1,4 @@
-package com.cyberslabs.bandsbuddy.utils.helpers
+package com.example.template.utils.helpers
 
 import android.util.Log
 import androidx.annotation.MainThread

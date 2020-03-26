@@ -1,4 +1,4 @@
-package com.cyberslabs.bandsbuddy.ui.main_screen.calendar_fragment.di
+package com.example.template.ui.registration_login.login.di
 
 import dagger.Module
 

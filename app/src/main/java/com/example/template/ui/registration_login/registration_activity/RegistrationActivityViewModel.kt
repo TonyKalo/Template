@@ -2,7 +2,7 @@ package com.example.template.ui.registration_login.registration_activity
 
 
 import android.content.Context
-import com.cyberslabs.bandsbuddy.utils.helpers.SingleLiveEvent
+import com.example.template.utils.helpers.SingleLiveEvent
 import com.example.template.data.DataManager
 import com.example.template.ui.base.BaseViewModel
 import com.example.template.utils.scheduler.SchedulerProvider

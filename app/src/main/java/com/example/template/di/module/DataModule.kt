@@ -1,4 +1,4 @@
-package com.cyberslabs.bandsbuddy.di.module
+package com.example.template.di.module
 
 import android.app.Application
 import android.content.Context

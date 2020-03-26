@@ -1,4 +1,4 @@
-package com.cyberslabs.bandsbuddy.di.module
+package com.example.template.di.module
 
 
 import com.example.template.data.network.ApiService

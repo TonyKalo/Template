@@ -1,19 +1,15 @@
 package com.example.template.di.components
 
 import android.content.Context
-import com.cyberslabs.bandsbuddy.di.module.DataModule
-import com.cyberslabs.bandsbuddy.di.module.NetworkModule
-import com.cyberslabs.bandsbuddy.ui.main_screen.calendar_fragment.di.*
 import com.example.template.TemplateApp
-import com.example.template.di.module.SharedViewModelModule
-import com.example.template.di.module.SubcomponentsModule
-import com.example.template.di.module.ViewModelBindModule
+import com.example.template.di.module.*
+import com.example.template.ui.main_screen.permission_fragment.di.PermissionComponent
+import com.example.template.ui.main_screen.picture_fragment.di.PictureComponent
+import com.example.template.ui.registration_login.login.di.LoginComponent
 import com.example.template.ui.registration_login.registration_activity.RegistrationActivity
+import com.example.template.ui.splash.di.SplashComponent
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
-import dagger.android.ContributesAndroidInjector
 import javax.inject.Singleton
 
 
