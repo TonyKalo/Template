@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context=".ui.main_screen.permission_fragment.PermissionFragment" android:orientation="vertical">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.main_screen.permission_fragment.PermissionFragment">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/tlbPermissionFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            app:title="Permissions"
-            app:titleTextColor="@android:color/background_light" >
+        android:id="@+id/tlbPermissionFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Permissions"
+        app:titleTextColor="@android:color/background_light">
 
     </androidx.appcompat.widget.Toolbar>
+
     <Button
-            android:text="Check Permissions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnPermission"
-            android:layout_marginTop="200dp"
-            android:background="@drawable/btn_main_big_transparetn"
-            android:textColor="@color/btn_transparent_txt"
-            android:layout_gravity="center_horizontal" android:padding="16dp"/>
+        android:id="@+id/btnPermission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/btn_main_big_transparetn"
+        android:padding="16dp"
+        android:text="Check Permissions"
+        android:textColor="@color/btn_transparent_txt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tlbPermissionFragment" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

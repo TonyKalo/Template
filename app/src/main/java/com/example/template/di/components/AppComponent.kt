@@ -3,6 +3,7 @@ package com.example.template.di.components
 import android.content.Context
 import com.example.template.TemplateApp
 import com.example.template.di.module.*
+import com.example.template.ui.main_screen.main_activity.MainActivity
 import com.example.template.ui.main_screen.permission_fragment.di.PermissionComponent
 import com.example.template.ui.main_screen.picture_fragment.di.PictureComponent
 import com.example.template.ui.registration_login.login.di.LoginComponent
@@ -37,6 +38,7 @@ interface AppComponent {
     fun loginComponent(): LoginComponent.Factory
 
     fun inject(activity:RegistrationActivity)
+    fun inject(activity: MainActivity)
     fun inject(app:TemplateApp)
 
 

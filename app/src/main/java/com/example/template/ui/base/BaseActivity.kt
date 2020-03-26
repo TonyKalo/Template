@@ -23,7 +23,7 @@ import com.example.template.R
 import com.example.template.di.components.AppComponent
 import com.example.template.di.qualifiers.BaseActivityScope
 import com.example.template.di.qualifiers.SharedViewModelFactory
-import dagger.android.support.DaggerAppCompatActivity
+
 
 
 abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewInterface {

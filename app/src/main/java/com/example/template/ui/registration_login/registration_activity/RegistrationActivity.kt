@@ -7,23 +7,18 @@ import androidx.activity.viewModels
 
 import androidx.navigation.findNavController
 import com.example.template.R
-import com.example.template.data.DataManager
 
 import com.example.template.ui.base.BaseActivity
-import javax.inject.Inject
 
 
 class RegistrationActivity :  BaseActivity<RegistrationActivityViewModel>() {
 
-    @Inject
-    lateinit var handler: DataManager
     private val mViewModel by viewModels<RegistrationActivityViewModel> { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_registration)
         findNavController(R.id.fhRegistrationMain)
-        Log.e("TAG",handler.toString())
     }
 
     override fun onSupportNavigateUp(): Boolean {

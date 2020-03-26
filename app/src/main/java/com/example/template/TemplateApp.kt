@@ -7,8 +7,6 @@ import androidx.room.Index
 import com.example.template.data.DataManager
 import com.example.template.di.components.AppComponent
 import com.example.template.di.components.DaggerAppComponent
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
 import java.util.logging.Handler
 import javax.inject.Inject
 

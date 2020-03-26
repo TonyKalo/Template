@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/permissionFragment"
+            android:id="@+id/permission_graph"
             android:icon="@drawable/ic_permiss"
             android:title="Permission"/>
     <item
-            android:id="@+id/pictureFragment"
+            android:id="@+id/picture_graph"
             android:icon="@drawable/ic_picture"
             android:title="Picture"/>
 

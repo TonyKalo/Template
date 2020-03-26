@@ -1,5 +1,6 @@
 package com.example.template.ui.registration_login.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTextInputListener
 import com.example.template.R
 import com.example.template.ui.base.BaseFragment
+import com.example.template.ui.main_screen.main_activity.MainActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -49,7 +51,8 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToNextScreenObserver() {
-        mViewModel.getNavigateToNextScreen().observe(viewLifecycleOwner, Observer { navigateToMainScreen() })
+        mViewModel.getNavigateToNextScreen()
+            .observe(viewLifecycleOwner, Observer { navigateToMainScreen() })
     }
 
     private fun setClickListeners() {
@@ -60,8 +63,8 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToMainScreen() {
-//        findNavController().popBackStack()
-//        findNavController().navigate(R.id.mainFragment)
+        requireActivity().startActivity(Intent(requireContext(), MainActivity::class.java))
+        requireActivity().finish()
     }
 
 
