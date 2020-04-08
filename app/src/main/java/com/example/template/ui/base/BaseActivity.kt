@@ -10,14 +10,12 @@ import android.provider.Settings
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
 import com.cyberslabs.customwidgets.progress_dialog.CustomProgressDialog
 import com.example.template.R
-import com.example.template.TemplateApp
 import com.example.template.di.components.AppComponent
 import com.example.template.di.qualifiers.BaseActivityScope
 import com.google.android.material.snackbar.Snackbar
@@ -130,16 +128,16 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
         }
     }
 
-    override fun requestPermissionRationale(permissDenied: ArrayList<String>) {
+    override fun requestPermissionRationale(permission: ArrayList<String>) {
         if (Build.VERSION.SDK_INT >= 23) {
             val permDenied = ArrayList<String>()
             val externalPermiss = ArrayList<String>()
 
-            permissDenied.forEachIndexed { i, s ->
-                if (shouldShowRequestPermissionRationale(permissDenied[i])) {
-                    permDenied.add(permissDenied[i])
+            permission.forEachIndexed { i, _ ->
+                if (shouldShowRequestPermissionRationale(permission[i])) {
+                    permDenied.add(permission[i])
                 } else {
-                    externalPermiss.add(permissDenied[i])
+                    externalPermiss.add(permission[i])
                 }
             }
 

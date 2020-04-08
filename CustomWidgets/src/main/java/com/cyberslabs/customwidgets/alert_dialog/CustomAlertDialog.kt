@@ -280,7 +280,7 @@ open class CustomAlertDialog : DialogFragment() {
                 tilInput.visibility = View.VISIBLE
                 tilInput.hint = hint
                 onTextInputListener?.getTextInputLayout(tilInput)
-                tilInput.editText?.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) hidekeyboard() }
+                tilInput.editText?.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) hidekeyboard() }
             } else Log.e(
                 "CustomAlertDialog",
                 "Can't use MultiChoice or SingleChoice with TextInput"

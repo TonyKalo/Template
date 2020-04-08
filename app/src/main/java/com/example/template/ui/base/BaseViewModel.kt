@@ -64,7 +64,6 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
     }
 
     fun handleError(e: Throwable) {
-        Log.e("TAG", e.localizedMessage)
         if (!appContext.isNetworkConnected()) {
             handleErrorString.value = appContext.getString(R.string.err_no_net)
         } else if (e is HttpException) {
@@ -201,8 +200,7 @@ open class BaseViewModel @Inject constructor(val dataManager: DataManager) : Vie
         deniedPermiss.addAll(onPermissDenied)
 
         deniedPermiss.forEach { permiss ->
-            var permissTxt = permiss
-            permissTxt = permiss.replace("android.permission.", "")
+            var permissTxt: String = permiss.replace("android.permission.", "")
             permissTxt = permissTxt.replace("_", " ")
 
             if (permiss.indexOf("STORAGE")> -1 && listOfPermissions.indexOf("STORAGE") <0) {

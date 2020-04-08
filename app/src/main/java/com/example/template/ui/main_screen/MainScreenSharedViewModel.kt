@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MainScreenSharedViewModel @Inject constructor(appContext: Context) : ViewModel() {
+class MainScreenSharedViewModel @Inject constructor() : ViewModel() {
 
     private val navigateToLogin = MutableLiveData<Boolean>()
 
