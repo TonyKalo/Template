@@ -45,9 +45,9 @@ object NetworkModule {
     }
 
     @Provides
-    fun provideRetrofit(baseURL: String, gson: Gson, client: OkHttpClient): Retrofit {
+    fun provideRetrofit( gson: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseURL)
+            .baseUrl(BASE_URL)
             .client(client)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -56,6 +56,7 @@ object NetworkModule {
 
     @Provides
     fun provideApiService(): ApiService {
-        return provideRetrofit(BASE_URL, provideGson(), provideClient(provideLoggingInterceptor())).create(ApiService::class.java)
+        return provideRetrofit(
+            provideGson(), provideClient(provideLoggingInterceptor())).create(ApiService::class.java)
     }
 }

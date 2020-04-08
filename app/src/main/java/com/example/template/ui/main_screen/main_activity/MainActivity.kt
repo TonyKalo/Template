@@ -19,7 +19,6 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDest
     private var currentNavController: LiveData<NavController>? = null
 
     override fun getViewModel(): MainActivityViewModel {
-        appComponent.inject(this)
         return mViewModel
     }
 

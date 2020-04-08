@@ -15,29 +15,17 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object DataModule {
-
-    @Singleton
-    @Provides
-    fun provideDataManager(appDataManager: AppDataManager): DataManager {
-        return appDataManager
-    }
+object AppModule {
 
     @Provides
+    @JvmStatic
     @Singleton
-    fun provideAppDatabase(context: Context): AppDatabase {
-        return AppDatabase.getDatabaseInstance(context)
-    }
+    fun provideApplication(app: TemplateApp): Application = app
 
     @Provides
     @Singleton
-    fun provideApiHelper(appApiHelper: AppApiHelper): ApiHelper {
-        return appApiHelper
+    fun provideAppContext(app: Application): Context {
+        return app.applicationContext
     }
 
-    @Provides
-    @Singleton
-    fun provideSPHelper(appPreferenceHelper: AppPreferenceHelper): PreferenceHelper {
-        return appPreferenceHelper
-    }
 }

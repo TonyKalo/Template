@@ -18,7 +18,6 @@ class PictureFragment : BaseFragment<PictureViewModel>() {
     private val sViewModel by viewModels<MainScreenSharedViewModel> { sharedViewModelFactory }
 
     override fun getViewModel(): PictureViewModel {
-        appComponent.pictureComponent().create().inject(this)
         return mViewModel
     }
 

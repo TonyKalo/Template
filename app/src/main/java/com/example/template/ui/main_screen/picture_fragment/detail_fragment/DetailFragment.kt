@@ -16,7 +16,6 @@ class DetailFragment : BaseFragment<DetailViewModel>() {
     private val mViewModel by viewModels<DetailViewModel> { viewModelFactory }
 
     override fun getViewModel(): DetailViewModel {
-        appComponent.detailComponent().create().inject(this)
         return mViewModel
     }
 

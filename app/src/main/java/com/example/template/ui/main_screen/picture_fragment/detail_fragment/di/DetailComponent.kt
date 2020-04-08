@@ -1,15 +1,13 @@
 package com.example.template.ui.main_screen.picture_fragment.detail_fragment.di
 
+import com.example.template.ui.main_screen.permission_fragment.PermissionFragment
 import com.example.template.ui.main_screen.picture_fragment.detail_fragment.DetailFragment
 import dagger.Subcomponent
+import dagger.android.AndroidInjector
 
 @Subcomponent(modules = [DetailModule::class, DetailBindModule::class])
-interface DetailComponent {
+interface DetailComponent : AndroidInjector<DetailFragment> {
 
     @Subcomponent.Factory
-    interface Factory {
-        fun create(): DetailComponent
-    }
-
-    fun inject(fragment: DetailFragment)
+    abstract class Factory : AndroidInjector.Factory<DetailFragment>
 }

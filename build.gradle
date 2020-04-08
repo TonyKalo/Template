@@ -49,6 +49,7 @@ ext {
     junit_version = '4.13'
     espresso_version = '3.2.0'
     dagger_version = "2.26"
+    dagger_android_version = "2.27"
     retrofit_version = "2.7.2"
     room_version = "2.2.5"
     fragmentVersion = '1.2.3'

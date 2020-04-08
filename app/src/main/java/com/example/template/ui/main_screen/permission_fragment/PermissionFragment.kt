@@ -18,7 +18,6 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     private val sViewModel by viewModels<MainScreenSharedViewModel> { sharedViewModelFactory }
 
     override fun getViewModel(): PermissionViewModel {
-        appComponent.permissionComponent().create().inject(this)
         return mViewModel
     }
 

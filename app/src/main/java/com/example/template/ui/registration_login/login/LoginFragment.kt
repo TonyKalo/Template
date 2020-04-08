@@ -2,6 +2,7 @@ package com.example.template.ui.registration_login.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.template.R
 import com.example.template.ui.base.BaseFragment
 import com.example.template.ui.main_screen.main_activity.MainActivity
+import com.example.template.ui.registration_login.registration_activity.RegistrationActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
@@ -17,7 +19,6 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     private val mViewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     override fun getViewModel(): LoginViewModel {
-        appComponent.loginComponent().create().inject(this)
         return mViewModel
     }
 

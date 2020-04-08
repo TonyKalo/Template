@@ -2,6 +2,7 @@ package com.example.template.ui.splash
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.ui.base.BaseFragment
+import javax.inject.Inject
 
 class SplashFragment : BaseFragment<SplashViewModel>() {
 
@@ -19,7 +21,6 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
     private val mViewModel by viewModels<SplashViewModel> { viewModelFactory }
 
     override fun getViewModel(): SplashViewModel {
-        appComponent.splashComponent().create().inject(this)
         return mViewModel
     }
 
@@ -29,7 +30,6 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         mViewModel.loadData()
         mViewModel.navigateToNextScreen.observe(viewLifecycleOwner, Observer { navigateToLogin() })
         return inflater.inflate(R.layout.fragment_splash, container, false)

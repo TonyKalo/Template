@@ -21,9 +21,10 @@ import com.example.template.TemplateApp
 import com.example.template.di.components.AppComponent
 import com.example.template.di.qualifiers.BaseActivityScope
 import com.google.android.material.snackbar.Snackbar
+import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewInterface {
+abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), BaseViewInterface {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -43,7 +44,6 @@ abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewIn
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        appComponent = (application as TemplateApp).getAppComponent()
         viewModel = getViewModel()
         observeAll()
     }

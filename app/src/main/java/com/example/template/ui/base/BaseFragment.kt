@@ -7,9 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.template.TemplateApp
 import com.example.template.di.components.AppComponent
 import com.example.template.di.qualifiers.SharedViewModelFactory
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<V : BaseViewModel> : Fragment(), BaseViewInterface {
+abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInterface {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -32,7 +33,6 @@ abstract class BaseFragment<V : BaseViewModel> : Fragment(), BaseViewInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        appComponent = (requireActivity().application as TemplateApp).getAppComponent()
         baseViewModel = getViewModel()
         activity.setViewModel(baseViewModel!!)
         activity.observeAll()
