@@ -33,4 +33,3 @@ fun Context.isNetworkConnected(): Boolean {
     }
     return result
 }
-

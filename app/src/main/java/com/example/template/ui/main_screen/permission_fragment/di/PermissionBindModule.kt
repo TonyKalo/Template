@@ -1,7 +1,7 @@
 package com.example.template.ui.main_screen.permission_fragment.di
 
 import androidx.lifecycle.ViewModel
-import com.example.template.di.scopes.ViewModelKey
+import com.example.template.core.di.scopes.ViewModelKey
 import com.example.template.ui.main_screen.permission_fragment.PermissionViewModel
 import dagger.Binds
 import dagger.Module

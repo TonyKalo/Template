@@ -2,16 +2,14 @@ package com.example.template.ui.registration_login.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.template.R
-import com.example.template.ui.base.BaseFragment
+import com.example.template.core.base.BaseFragment
 import com.example.template.ui.main_screen.main_activity.MainActivity
-import com.example.template.ui.registration_login.registration_activity.RegistrationActivity
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment<LoginViewModel>() {
@@ -38,9 +36,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToNextScreenObserver() {
-        mViewModel.getNavigateToNextScreen()
-            .observe(viewLifecycleOwner, Observer { navigateToMainScreen() })
-    }
+        mViewModel.toNextScreen.observe(viewLifecycleOwner, Observer { navigateToMainScreen() }) }
 
     private fun setClickListeners() {
         btnLogin.setOnClickListener {

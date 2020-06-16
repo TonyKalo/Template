@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
-import com.example.template.ui.base.BaseFragment
+import com.example.template.core.base.BaseFragment
 import com.example.template.ui.main_screen.MainScreenSharedViewModel
-import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_picture.*
 
 class PictureFragment : BaseFragment<PictureViewModel>() {

@@ -10,6 +10,4 @@ interface MainActivityComponent : AndroidInjector<MainActivity> {
 
     @Subcomponent.Factory
     abstract class Factory : AndroidInjector.Factory<MainActivity>
-
 }
-

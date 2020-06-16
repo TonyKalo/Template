@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-object RegistrationActivityModule{
+object RegistrationActivityModule {
 
     @Provides
     fun provideGson(): String {

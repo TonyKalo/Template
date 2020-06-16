@@ -1,18 +1,15 @@
 package com.example.template.ui.main_screen.permission_fragment
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.template.data.DataManager
-import com.example.template.ui.base.BaseViewModel
-import com.example.template.ui.base.callbacks.PermissionCallback
+import com.example.template.core.base.BaseViewModel
+import com.example.template.core.base.callbacks.PermissionCallback
 import javax.inject.Inject
 
-class PermissionViewModel @Inject constructor(dataManager: DataManager) : BaseViewModel(dataManager) {
+class PermissionViewModel @Inject constructor() : BaseViewModel() {
 
-    private val msgToShow = MutableLiveData<String>()
-
-    fun getMsgToShow(): MutableLiveData<String> {
-        return msgToShow
-    }
+    private val _msgToShow = MutableLiveData<String>()
+    val msgToShow: LiveData<String> = _msgToShow
 
     fun checkPermissions() {
         val permissions = arrayOf(
@@ -21,7 +18,7 @@ class PermissionViewModel @Inject constructor(dataManager: DataManager) : BaseVi
 
         checkAndRequestPermissions(permissions, true, object : PermissionCallback {
             override fun onSuccess() {
-                msgToShow.value = "All permission granted"
+                _msgToShow.value = "All permission granted"
             }
 
             override fun onFail(deniedPermiss: Array<String>, needExternalPermiss: Array<String>) {

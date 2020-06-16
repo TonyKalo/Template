@@ -1,6 +1,5 @@
 package com.example.template.ui.splash.di
 
-import com.example.template.ui.registration_login.login.LoginFragment
 import com.example.template.ui.splash.SplashFragment
 import dagger.Subcomponent
 import dagger.android.AndroidInjector

@@ -1,7 +1,6 @@
 package com.example.template.ui.main_screen.picture_fragment.di
 
 import com.example.template.ui.main_screen.picture_fragment.PictureFragment
-import com.example.template.ui.main_screen.picture_fragment.detail_fragment.DetailFragment
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 

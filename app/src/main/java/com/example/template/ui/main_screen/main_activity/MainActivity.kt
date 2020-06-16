@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.example.template.R
-import com.example.template.ui.base.BaseActivity
+import com.example.template.core.base.BaseActivity
 import com.example.template.utils.extensions.makeGone
 import com.example.template.utils.extensions.makeVisible
 import com.example.template.utils.navigation.setupWithNavController

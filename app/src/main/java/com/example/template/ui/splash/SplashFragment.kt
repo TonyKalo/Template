@@ -2,7 +2,6 @@ package com.example.template.ui.splash
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
-import com.example.template.ui.base.BaseFragment
-import javax.inject.Inject
+import com.example.template.core.base.BaseFragment
 
 class SplashFragment : BaseFragment<SplashViewModel>() {
 

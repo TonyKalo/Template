@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.template.R
-import com.example.template.ui.base.BaseFragment
+import com.example.template.core.base.BaseFragment
 import com.example.template.ui.main_screen.MainScreenSharedViewModel
 import kotlinx.android.synthetic.main.fragment_permission.*
 
@@ -37,14 +37,13 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun showMsgObserver() {
-        mViewModel.getMsgToShow().observe(viewLifecycleOwner, Observer { msg ->
+        mViewModel.msgToShow.observe(viewLifecycleOwner, Observer { msg ->
             showMsg(msg)
         })
     }
 
     private fun setClickListeners() {
         btnPermission.setOnClickListener { mViewModel.checkPermissions() }
-        tlbPermissionFragment.setOnClickListener({ sViewModel.setNavigateToLogin(true) })
     }
 
     private fun showMsg(msg: String) {
