@@ -11,5 +11,5 @@ class AppSharedPreferenceImpl @Inject constructor(private val sp: SharedPreferen
 
     override var username: String
         get() = sp.getString(KEY_USER_NAME, "")!!
-        set(username) {sp.edit().putString(KEY_USER_NAME, username).apply()}
+        set(username) { sp.edit().putString(KEY_USER_NAME, username).apply() }
 }
