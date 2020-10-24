@@ -25,23 +25,32 @@ android {
 
 }
 
+repositories {
+    mavenCentral()
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-
-    implementation "androidx.legacy:legacy-support-v4:$legacy_support_v4_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    //APP DEPENDENCIES
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
     implementation "com.google.android.material:material:$material_version"
 
-    //tests
+
+    //TESTS
+    //junit
     testImplementation "junit:junit:$junit_version"
+    //espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
+
+    //ANDROIDX VIEW
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+    
+    //KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-}
-repositories {
-    mavenCentral()
 }

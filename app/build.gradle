@@ -33,54 +33,67 @@ android {
 
 dependencies {
 
+
+    //APP DEPENDENCIES
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "com.google.android.material:material:$material_version"
 
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
-    implementation "androidx.legacy:legacy-support-v4:$legacy_support_v4_version"
 
-    //tests
+    //TESTS
+    //junit
     testImplementation "junit:junit:$junit_version"
+    //espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
-    //Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    //Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    //DEBUG
+    //Facebook Stetho
+    implementation "com.facebook.stetho:stetho:$stetho_version"
 
-    //Live Data
-    implementation "androidx.lifecycle:lifecycle-extensions:$live_data_version"
 
-    //Dagger 2
-    implementation "com.google.dagger:dagger:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger_android_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_android_version"
+    //ANDROIDX VIEW
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
 
+
+    //NETWORK & DB
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2_version"
+    // okhttp-logging-interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version")
     //Room
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
 
+    //KOTLIN
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+
+    //BINDING
+    //Dagger 2
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+
+    //MVVM
+    //Live Data
+    implementation "androidx.lifecycle:lifecycle-extensions:$live_data_version"
     //androidX fragment
-    implementation "androidx.fragment:fragment:$fragmentVersion"
-
-    //retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-
-
-    // okhttp-logging-interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:$logging_interceptor")
-
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
     //Navigation Component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_fragment_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_fragment_version"
 
-    //Facebook Stetho
-    implementation "com.facebook.stetho:stetho:$stetho_version"
+
 
     //Internal Libraries
     implementation project(path: ':CustomWidgets')

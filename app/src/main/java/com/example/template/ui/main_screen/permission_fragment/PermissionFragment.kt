@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
-import com.example.template.ui.main_screen.MainScreenSharedViewModel
 import kotlinx.android.synthetic.main.fragment_permission.*
 
 class PermissionFragment : BaseFragment<PermissionViewModel>() {
 
+
     private val mViewModel by viewModels<PermissionViewModel> { viewModelFactory }
-    private val sViewModel by viewModels<MainScreenSharedViewModel> { sharedViewModelFactory }
 
     override fun getViewModel(): PermissionViewModel {
         return mViewModel
@@ -43,7 +43,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun setClickListeners() {
-        btnPermission.setOnClickListener { mViewModel.checkPermissions() }
+        btnPermission.setOnClickListener { findNavController().navigate(PermissionFragmentDirections.actionPermissionFragmentToDetailFragment2("message to detail fragment"))}
     }
 
     private fun showMsg(msg: String) {

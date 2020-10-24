@@ -4,13 +4,15 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.widget.Toast
 
 @Suppress("DEPRECATION")
+
 fun Context.isNetworkConnected(): Boolean {
     var result = false
-    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        cm?.run {
+        cm.run {
             cm.getNetworkCapabilities(cm.activeNetwork)?.run {
                 result = when {
                     hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
@@ -21,7 +23,7 @@ fun Context.isNetworkConnected(): Boolean {
             }
         }
     } else {
-        cm?.run {
+        cm.run {
             cm.activeNetworkInfo?.run {
                 if (type == ConnectivityManager.TYPE_WIFI) {
                     result = true
@@ -33,3 +35,5 @@ fun Context.isNetworkConnected(): Boolean {
     }
     return result
 }
+
+fun Context.toast(message: CharSequence) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

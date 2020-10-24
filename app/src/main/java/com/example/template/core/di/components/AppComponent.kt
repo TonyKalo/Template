@@ -5,7 +5,6 @@ import com.example.template.core.di.module.AppModule
 import com.example.template.core.di.module.BaseActivityModule
 import com.example.template.core.di.module.DataModule
 import com.example.template.core.di.module.NetworkModule
-import com.example.template.core.di.module.SharedViewModelModule
 import com.example.template.core.di.module.SubcomponentsModule
 import com.example.template.core.di.module.ViewModelBindModule
 import dagger.BindsInstance
@@ -22,7 +21,6 @@ import javax.inject.Singleton
         NetworkModule::class,
         DataModule::class,
         SubcomponentsModule::class,
-        SharedViewModelModule::class,
         ViewModelBindModule::class,
         BaseActivityModule::class
     ])

@@ -10,5 +10,17 @@
         android:id="@+id/permissionFragment"
         android:name="com.example.template.ui.main_screen.permission_fragment.PermissionFragment"
         android:label="PermissionFragment"
-        tools:layout="@layout/fragment_permission"/>
+        tools:layout="@layout/fragment_permission">
+        <action
+            android:id="@+id/action_permissionFragment_to_detailFragment2"
+            app:destination="@id/detailFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment2"
+        android:name="com.example.template.ui.main_screen.picture_fragment.detail_fragment.DetailFragment"
+        android:label="DetailFragment" >
+    <argument
+        android:name="detail"
+        app:argType="string" />
+    </fragment>
 </navigation>

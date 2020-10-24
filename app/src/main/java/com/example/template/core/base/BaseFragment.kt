@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.template.core.di.components.AppComponent
-import com.example.template.core.di.qualifiers.SharedViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -13,9 +12,6 @@ abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInter
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    @SharedViewModelFactory
-    lateinit var sharedViewModelFactory: ViewModelProvider.Factory
 
     lateinit var activity: BaseActivity<*>
     lateinit var appComponent: AppComponent
