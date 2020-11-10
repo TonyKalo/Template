@@ -1,11 +1,11 @@
-package com.example.template.ui.splash.data.db.dao
+package com.example.template.core.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import com.example.template.core.data.db.entity.Users
 
 @Dao
-interface SplashDao {
+interface UsersDao {
 
     @Query("SELECT * FROM users")
     suspend fun getAllUsers(): List<Users>

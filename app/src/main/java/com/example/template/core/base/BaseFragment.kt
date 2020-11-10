@@ -12,7 +12,6 @@ abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInter
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-
     lateinit var activity: BaseActivity<*>
     lateinit var appComponent: AppComponent
     private var baseViewModel: V? = null

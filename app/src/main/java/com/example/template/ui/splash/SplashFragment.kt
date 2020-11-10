@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
-import com.example.template.ui.main_screen.main_activity.MainActivityViewModel
 import com.example.template.ui.registration_login.registration_activity.RegistrationActivityViewModel
 
 class SplashFragment : BaseFragment<SplashViewModel>() {

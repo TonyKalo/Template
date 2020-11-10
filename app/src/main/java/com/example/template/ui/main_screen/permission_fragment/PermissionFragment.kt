@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.fragment_permission.*
 
 class PermissionFragment : BaseFragment<PermissionViewModel>() {
 
-
     private val mViewModel by viewModels<PermissionViewModel> { viewModelFactory }
 
     override fun getViewModel(): PermissionViewModel {
@@ -43,7 +42,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun setClickListeners() {
-        btnPermission.setOnClickListener { findNavController().navigate(PermissionFragmentDirections.actionPermissionFragmentToDetailFragment2("message to detail fragment"))}
+        btnPermission.setOnClickListener { findNavController().navigate(PermissionFragmentDirections.actionPermissionFragmentToDetailFragment2("message to detail fragment")) }
     }
 
     private fun showMsg(msg: String) {

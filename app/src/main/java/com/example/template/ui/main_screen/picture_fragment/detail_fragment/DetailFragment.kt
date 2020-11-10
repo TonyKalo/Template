@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
-import com.example.template.utils.extensions.setNavigationResult
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : BaseFragment<DetailViewModel>() {
