@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.cyberslabs.customwidgets.dx_loading_button
 
 import android.animation.Animator
@@ -526,7 +528,7 @@ class LoadingButton @JvmOverloads constructor(
                 }
                 doOnEnd {
                     if (isReverse)animationInProgress = false
-                    if (isReverse)isEnabled = true else isEnabled = false
+                    isEnabled = isReverse
                     mCurrentState = if (isReverse) STATE_BUTTON else STATE_ANIMATION_STEP2
                     if (mCurrentState == STATE_BUTTON) {
 

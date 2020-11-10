@@ -10,7 +10,6 @@ import android.provider.Settings
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
@@ -64,38 +63,38 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
 
     private fun observeLoadingNonCancelable() {
         viewModel?.getIsLoadingNonCancelable()
-            ?.observe(this, Observer { isShowing -> if (isShowing) showNonCancelableProgress() else hideProgress() })
+            ?.observe(this, { isShowing -> if (isShowing) showNonCancelableProgress() else hideProgress() })
     }
 
     private fun observeLoadingCancelable() {
         viewModel?.getIsLoading()
-            ?.observe(this, Observer { isShowing -> if (isShowing) showCancelableProgress() else hideProgress() })
+            ?.observe(this, { isShowing -> if (isShowing) showCancelableProgress() else hideProgress() })
     }
 
     private fun observeErrorHandler() {
-        viewModel?.getErrorHandler()?.observe(this, Observer { error ->
+        viewModel?.getErrorHandler()?.observe(this, { error ->
             showSnackbar(error)
         })
     }
 
     private fun observePermissions() {
-        viewModel?.getPermissionRequest()?.observe(this, Observer {
+        viewModel?.getPermissionRequest()?.observe(this, {
             requestPermission(it)
         })
     }
 
     private fun observePermissionsRationale() {
-        viewModel?.getPermissionRequestRationale()?.observe(this, Observer { requestPermissionRationale(it) })
+        viewModel?.getPermissionRequestRationale()?.observe(this, { requestPermissionRationale(it) })
     }
 
     private fun observeAppSettingsDialog() {
-        viewModel?.getAppSettingsRetryDialog()?.observe(this, Observer {
+        viewModel?.getAppSettingsRetryDialog()?.observe(this, {
             openAppSettingsDialog(it)
         })
     }
 
     private fun observeRetryDialog() {
-        viewModel?.getRetryDialog()?.observe(this, Observer {
+        viewModel?.getRetryDialog()?.observe(this, {
             openRetryDialog(it)
         })
     }
@@ -196,12 +195,12 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
 
         @Suppress("IMPLICIT_BOXING_IN_IDENTITY_EQUALS")
-        if (ev?.getAction() === MotionEvent.ACTION_DOWN) {
+        if (ev?.action === MotionEvent.ACTION_DOWN) {
             val v = currentFocus
             if (v is EditText) {
                 val outRect = Rect()
                 v.getGlobalVisibleRect(outRect)
-                if (!outRect.contains(ev.getRawX().toInt(), ev.getRawY().toInt())) {
+                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
                     v.isFocusableInTouchMode = false
                     v.clearFocus()
                     v.isFocusableInTouchMode = true

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
 import com.example.template.ui.main_screen.main_activity.MainActivity
@@ -36,7 +35,7 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToNextScreenObserver() {
-        mViewModel.toNextScreen.observe(viewLifecycleOwner, Observer { navigateToMainScreen() }) }
+        mViewModel.toNextScreen.observe(viewLifecycleOwner, { navigateToMainScreen() }) }
 
     private fun setClickListeners() {
         btnLogin.setOnClickListener {

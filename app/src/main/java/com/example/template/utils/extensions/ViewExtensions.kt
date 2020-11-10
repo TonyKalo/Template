@@ -1,5 +1,5 @@
 @file:Suppress("unused")
-package com.cyberslabs.bandsbuddy.utils.extensions
+package com.example.template.utils.extensions
 
 import android.view.View
 

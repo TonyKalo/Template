@@ -1,9 +1,15 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.cyberslabs.customwidgets.alert_dialog.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMaxReached
@@ -25,16 +31,13 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
         this.onMaxReached = maxListener
     }
 
-    init {
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(R.layout.multichoice_row, parent, false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.setText(itemList[position])
+        holder.name.text = itemList[position]
 
         if (maxCheck> 0) {
             initIfMaxCheckedIsInitialized(holder, position)
@@ -61,7 +64,7 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
 
         if (!checkList.isNullOrEmpty()) {
             if (checkList.size == itemList.size) {
-                if (checkList[position] == true) holder.checkBox.isChecked = true
+                if (checkList[position]) holder.checkBox.isChecked = true
             } else {
                 Log.e("CustomAlertDialog", "Item size and checkList size must be the same")
             }
@@ -115,9 +118,9 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.tvItem
-        val icon = itemView.ivIcon
-        val checkBox = itemView.cbItem
-        val llRow = itemView.llMultichoiceRow
+        val name: TextView = itemView.tvItem
+        val icon: ImageView = itemView.ivIcon
+        val checkBox: CheckBox = itemView.cbItem
+        val llRow: LinearLayout = itemView.llMultichoiceRow
     }
 }

@@ -1,14 +1,19 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.cyberslabs.customwidgets.alert_dialog.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSingleChoiceClickListener
 import java.lang.Exception
-import kotlinx.android.synthetic.main.multichoice_row.view.*
 import kotlinx.android.synthetic.main.multichoice_row.view.ivIcon
 import kotlinx.android.synthetic.main.multichoice_row.view.tvItem
 import kotlinx.android.synthetic.main.singlechoice_row.view.*
@@ -26,12 +31,12 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.apply {
-            name.setText(itemList[position])
-            if (defaultCheck == position) checkRadio.isChecked = true else checkRadio.isChecked = false
+            name.text = itemList[position]
+            checkRadio.isChecked = defaultCheck == position
 
             holder.llRow.setOnClickListener {
                 defaultCheck = position
-                if (checkRadio.isChecked != true) checkRadio.isChecked = true
+                if (!checkRadio.isChecked) checkRadio.isChecked = true
                 notifyDataSetChanged()
                 listener.onClick(position)
             }
@@ -72,9 +77,9 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.tvItem
-        val icon = itemView.ivIcon
-        val checkRadio = itemView.rbItem
-        val llRow = itemView.llSinglechoiceRow
+        val name: TextView = itemView.tvItem
+        val icon: ImageView = itemView.ivIcon
+        val checkRadio: RadioButton = itemView.rbItem
+        val llRow: LinearLayout = itemView.llSinglechoiceRow
     }
 }

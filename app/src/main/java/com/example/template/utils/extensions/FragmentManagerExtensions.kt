@@ -1,4 +1,4 @@
-package com.cyberslabs.bandsbuddy.utils.extensions
+package com.example.template.utils.extensions
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

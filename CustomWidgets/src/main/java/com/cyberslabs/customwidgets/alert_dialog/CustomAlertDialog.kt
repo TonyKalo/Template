@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.cyberslabs.customwidgets.alert_dialog
 
 import android.annotation.SuppressLint
@@ -17,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.DialogFragment
@@ -347,9 +350,9 @@ open class CustomAlertDialog : DialogFragment() {
     private fun setTitleColor() {
         if (coloredTitle) {
             llTitleHolder.background =
-                ResourcesCompat.getDrawable(getResources(), R.drawable.title_background, null)
+                ResourcesCompat.getDrawable(resources, R.drawable.title_background, null)
             tvTitle.apply {
-                setTextColor(ContextCompat.getColor(context!!, titleColor!!))
+                setTextColor(ContextCompat.getColor(requireContext(), titleColor!!))
                 textSize = 24f
                 setTypeface(null, Typeface.ITALIC)
             }
@@ -380,7 +383,7 @@ open class CustomAlertDialog : DialogFragment() {
     private fun setupPositiveButton() {
         if (!positiveBtnInFocus) {
             btnPositive.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
-            btnPositive.setTextColor(resources.getColorStateList(R.drawable.btn_transparent_out_focus_color_selector))
+            btnPositive.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
         }
         btnPositive.text = positiveBtnText
         btnPositive.setOnClickListener {
@@ -393,7 +396,7 @@ open class CustomAlertDialog : DialogFragment() {
     private fun setupNegativeButton() {
         if (!negativeBtnInFocus) {
             btnNegative.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
-            btnNegative.setTextColor(resources.getColorStateList(R.drawable.btn_transparent_out_focus_color_selector))
+            btnNegative.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
         }
         btnNegative.text = negativeBtnText
         btnNegative.setOnClickListener {
@@ -533,7 +536,7 @@ open class CustomAlertDialog : DialogFragment() {
 
     private fun hidekeyboard() {
         try {
-            val windowToken = dialog?.window?.getDecorView()?.getRootView()
+            val windowToken = dialog?.window?.decorView?.rootView
             val inputMethodManager =
                 dialog?.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(windowToken?.windowToken, 0)

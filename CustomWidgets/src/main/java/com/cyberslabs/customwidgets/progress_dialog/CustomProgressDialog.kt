@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.cyberslabs.customwidgets.R
-import kotlinx.android.synthetic.main.dialog_alert_custom.*
 
 class CustomProgressDialog : DialogFragment() {
 

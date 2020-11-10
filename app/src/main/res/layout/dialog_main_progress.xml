@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:background="@color/colorTransparent" android:padding="16dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
 
     <ProgressBar
-            android:id="@+id/pd_dialog_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyle"
-            android:indeterminateTint="@color/progressMain"/>
+        android:id="@+id/pd_dialog_main"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/progressMain" />
+
     <TextView
-            android:id="@+id/tvLoadingMsg"
-            android:text="Loading..."
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|center_vertical"
-            android:paddingStart="24dp" android:textColor="@color/txtGrey" android:layout_gravity="center"/>
+        android:id="@+id/tvLoadingMsg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:gravity="center|center_vertical"
+        android:text="Loading..."
+        android:textColor="@color/txtGrey" />
 </LinearLayout>

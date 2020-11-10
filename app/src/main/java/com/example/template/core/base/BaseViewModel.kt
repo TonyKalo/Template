@@ -22,7 +22,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     lateinit var appContext: Context
 
     companion object {
-        final val PERMISSION_REQUEST_CODE = 101
+        const val PERMISSION_REQUEST_CODE = 101
     }
 
     private val RETRY_MSG = 1
@@ -38,9 +38,9 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
 
     private var externalPermissNeed: ArrayList<String> = ArrayList()
     private var onPermissDenied: ArrayList<String> = ArrayList()
-    var permissionCallback: PermissionCallback? = null
-    var permissions: Array<String>? = null
-    var dialogHandler: Boolean = true
+    private var permissionCallback: PermissionCallback? = null
+    private var permissions: Array<String>? = null
+    private var dialogHandler: Boolean = true
 
     fun getPermissionRequest() = permissionsRequest
     fun getPermissionRequestRationale() = permissionsRequestRationale
@@ -106,13 +106,13 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
         this.permissions = permissions
         dialogHandler = handleWithDialogs
 
-        if (permissions.size < 1) {
+        if (permissions.isEmpty()) {
             Log.e("TAG", "Permission List is Empty")
             permissionCallback.onSuccess()
         } else {
 
             if (Build.VERSION.SDK_INT >= 23) {
-                var permissionGranted: Boolean = true
+                var permissionGranted = true
 
                 permissions.forEach { permission ->
                     if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -135,7 +135,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             val permissDenied = ArrayList<String>()
 
-            for (i in 0..permissions.size - 1) {
+            for (i in permissions.indices) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
                     permissDenied.add(permissions[i])
                 }
@@ -163,12 +163,16 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun handleOnDeniedDialogs() {
-        if (!externalPermissNeed.isEmpty()) {
-            openAppSettingsDialog.value = createPermissionDialogMsg(APP_SETTINGS_MSG)
-        } else if (!onPermissDenied.isEmpty()) {
-            openRetryDialog.value = createPermissionDialogMsg(RETRY_MSG)
-        } else {
-            permissionCallback?.onSuccess()
+        when {
+            externalPermissNeed.isNotEmpty() -> {
+                openAppSettingsDialog.value = createPermissionDialogMsg(APP_SETTINGS_MSG)
+            }
+            onPermissDenied.isNotEmpty() -> {
+                openRetryDialog.value = createPermissionDialogMsg(RETRY_MSG)
+            }
+            else -> {
+                permissionCallback?.onSuccess()
+            }
         }
     }
 
@@ -202,14 +206,14 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             var permissTxt: String = permiss.replace("android.permission.", "")
             permissTxt = permissTxt.replace("_", " ")
 
-            if (permiss.indexOf("STORAGE")> -1 && listOfPermissions.indexOf("STORAGE") <0) {
-                listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_storage)}"
-            } else if (permiss.indexOf("SMS")> -1 && listOfPermissions.indexOf("SMS") <0) {
-                listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_sms)}"
-            } else if (permiss.indexOf("LOCATION")> -1 && listOfPermissions.indexOf("LOCATION") <0) {
-                listOfPermissions += "\n\u25cf  ${appContext.getString(R.string.tv_location)}"
+            listOfPermissions += if (permiss.indexOf("STORAGE") > -1 && listOfPermissions.indexOf("STORAGE") < 0) {
+                "\n\u25cf  ${appContext.getString(R.string.tv_storage)}"
+            } else if (permiss.indexOf("SMS") > -1 && listOfPermissions.indexOf("SMS") < 0) {
+                "\n\u25cf  ${appContext.getString(R.string.tv_sms)}"
+            } else if (permiss.indexOf("LOCATION") > -1 && listOfPermissions.indexOf("LOCATION") < 0) {
+                "\n\u25cf  ${appContext.getString(R.string.tv_location)}"
             } else {
-                listOfPermissions += "\n\u25cf  $permissTxt"
+                "\n\u25cf  $permissTxt"
             }
         }
         var additionalMsg = ""

@@ -12,7 +12,7 @@ abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInter
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var activity: BaseActivity<*>
+    private var activity: BaseActivity<*>? = null
     lateinit var appComponent: AppComponent
     private var baseViewModel: V? = null
 
@@ -27,41 +27,41 @@ abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInter
         super.onCreate(savedInstanceState)
 
         baseViewModel = getViewModel()
-        activity.setViewModel(baseViewModel!!)
-        activity.observeAll()
+        activity?.setViewModel(baseViewModel!!)
+        activity?.observeAll()
     }
 
     abstract fun getViewModel(): V
 
     override fun showCancelableProgress() {
-        activity.showCancelableProgress()
+        activity?.showCancelableProgress()
     }
 
     override fun showNonCancelableProgress() {
-        activity.showNonCancelableProgress()
+        activity?.showNonCancelableProgress()
     }
 
     override fun hideProgress() {
-        activity.hideProgress()
+        activity?.hideProgress()
     }
 
     override fun showSnackbar(msg: String) {
-        activity.showSnackbar(msg)
+        activity?.showSnackbar(msg)
     }
 
     override fun requestPermission(permissions: Array<String>) {
-        activity.requestPermission(permissions)
+        activity?.requestPermission(permissions)
     }
 
-    override fun requestPermissionRationale(permission: ArrayList<String>) {
-        return activity.requestPermissionRationale(permission)
+    override fun requestPermissionRationale(permission: ArrayList<String>): Unit? {
+        return activity?.requestPermissionRationale(permission)
     }
 
-    override fun openRetryDialog(msg: String) {
-        return activity.openRetryDialog(msg)
+    override fun openRetryDialog(msg: String): Unit? {
+        return activity?.openRetryDialog(msg)
     }
 
-    override fun openAppSettingsDialog(msg: String) {
-        return activity.openAppSettingsDialog(msg)
+    override fun openAppSettingsDialog(msg: String): Unit? {
+        return activity?.openAppSettingsDialog(msg)
     }
 }

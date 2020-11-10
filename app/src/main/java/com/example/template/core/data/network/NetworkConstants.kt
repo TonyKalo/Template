@@ -1,7 +1,7 @@
 package com.example.template.core.data.network
 
-val BASE_URL = "http://api.hnb.hr/"
+const val BASE_URL = "http://api.hnb.hr/"
 
-val CONNECT_TIMEOUT_SECONDS = 30L
-val READ_TIMEOUT_SECONDS = 30L
-val WRITE_TIMEOUT_SECONDS = 30L
+const val CONNECT_TIMEOUT_SECONDS = 30L
+const val READ_TIMEOUT_SECONDS = 30L
+const val WRITE_TIMEOUT_SECONDS = 30L

@@ -13,7 +13,7 @@ class PermissionViewModel @Inject constructor() : BaseViewModel() {
 
     fun checkPermissions() {
         val permissions = arrayOf(
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
+            android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
         )
 
         checkAndRequestPermissions(permissions, true, object : PermissionCallback {

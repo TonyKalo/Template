@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
@@ -36,7 +35,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun showMsgObserver() {
-        mViewModel.msgToShow.observe(viewLifecycleOwner, Observer { msg ->
+        mViewModel.msgToShow.observe(viewLifecycleOwner, { msg ->
             showMsg(msg)
         })
     }

@@ -53,7 +53,7 @@ ext {
     stetho_version = '1.5.1'
 
     //ANDROIDX VIEW
-    constraint_layout_version = '2.0.2'
+    constraint_layout_version = '2.0.4'
     recyclerview_version = '1.1.0'
     swiperefreshlayout_version = '1.1.0'
 
