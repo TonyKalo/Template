@@ -7,7 +7,7 @@ import com.example.template.core.di.components.AppComponent
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInterface {
+abstract class BaseFragment<V : BaseViewModel> constructor(layout: Int) : DaggerFragment(layout), BaseViewInterface {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

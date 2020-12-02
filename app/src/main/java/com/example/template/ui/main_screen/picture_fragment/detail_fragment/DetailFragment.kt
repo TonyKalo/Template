@@ -8,10 +8,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_detail.*
+import com.example.template.databinding.FragmentDetailBinding
+import com.example.template.utils.helpers.viewBinding.viewBinding
 
-class DetailFragment : BaseFragment<DetailViewModel>() {
+class DetailFragment : BaseFragment<DetailViewModel>(R.layout.fragment_detail) {
 
+    private val binding: FragmentDetailBinding by viewBinding()
     private val mViewModel by viewModels<DetailViewModel> { viewModelFactory }
 
     override fun getViewModel(): DetailViewModel {
@@ -24,7 +26,7 @@ class DetailFragment : BaseFragment<DetailViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tlbFragmentDetail.setNavigationOnClickListener { findNavController().navigateUp() }
-        tvDetail.text = DetailFragmentArgs.fromBundle(requireArguments()).detail
+        binding.tlbFragmentDetail.setNavigationOnClickListener { findNavController().navigateUp() }
+        binding.tvDetail.text = DetailFragmentArgs.fromBundle(requireArguments()).detail
     }
 }

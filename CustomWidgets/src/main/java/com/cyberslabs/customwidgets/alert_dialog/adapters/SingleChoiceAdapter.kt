@@ -11,12 +11,9 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSingleChoiceClickListener
+import com.cyberslabs.customwidgets.databinding.SinglechoiceRowBinding
 import java.lang.Exception
-import kotlinx.android.synthetic.main.multichoice_row.view.ivIcon
-import kotlinx.android.synthetic.main.multichoice_row.view.tvItem
-import kotlinx.android.synthetic.main.singlechoice_row.view.*
 
 class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int, val listener: OnSingleChoiceClickListener) : RecyclerView.Adapter<SingleChoiceAdapter.ViewHolder>() {
 
@@ -25,7 +22,7 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
     fun setIconList(iconList: ArrayList<Int>) { this.iconList = iconList }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.singlechoice_row, parent, false)
+        val v = SinglechoiceRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(v)
     }
 
@@ -54,14 +51,6 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
                 Log.e("CustomAlertDialog", "Item size and iconList size must be the same")
             }
         }
-//
-//        if(!checkList.isNullOrEmpty()){
-//            if(checkList.size==itemList.size) {
-//                if (checkList[position] == true) holder.checkBox.isChecked = true
-//            }else{
-//                Log.e("CustomAlertDialog", "Item size and checkList size must be the same")
-//            }
-//        }
     }
 
     override fun getItemCount(): Int {
@@ -76,10 +65,10 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
         return position
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.tvItem
-        val icon: ImageView = itemView.ivIcon
-        val checkRadio: RadioButton = itemView.rbItem
-        val llRow: LinearLayout = itemView.llSinglechoiceRow
+    class ViewHolder(cadViewBinding: SinglechoiceRowBinding) : RecyclerView.ViewHolder(cadViewBinding.root) {
+        val name: TextView = cadViewBinding.tvItem
+        val icon: ImageView = cadViewBinding.ivIcon
+        val checkRadio: RadioButton = cadViewBinding.rbItem
+        val llRow: LinearLayout = cadViewBinding.llSinglechoiceRow
     }
 }

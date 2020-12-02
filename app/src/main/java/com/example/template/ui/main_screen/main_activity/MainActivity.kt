@@ -7,13 +7,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.example.template.R
 import com.example.template.core.base.BaseActivity
+import com.example.template.databinding.ActivityMainBinding
 import com.example.template.utils.extensions.makeGone
 import com.example.template.utils.extensions.makeVisible
-import com.example.template.utils.navigation.setupWithNavController
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.template.utils.helpers.setupWithNavController
+import com.example.template.utils.helpers.viewBinding.viewBinding
 
 class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDestinationChangedListener {
 
+    private val binding: ActivityMainBinding by viewBinding()
     private val mViewModel by viewModels<MainActivityViewModel> { viewModelFactory }
     private var currentNavController: LiveData<NavController>? = null
 
@@ -23,7 +25,6 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -45,7 +46,7 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDest
 
         val navGraphIds = listOf(R.navigation.permission_graph, R.navigation.picture_graph)
 
-        val controller = bnvMain.setupWithNavController(navGraphIds = navGraphIds, fragmentManager = supportFragmentManager,
+        val controller = binding.bnvMain.setupWithNavController(navGraphIds = navGraphIds, fragmentManager = supportFragmentManager,
             containerId = R.id.fhMain, intent = intent)
 
         controller.observe(this, {
@@ -62,8 +63,8 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDest
 
     private fun hideBottomNavigation(destination: NavDestination) {
         if (destination.id == R.id.permissionFragment || destination.id == R.id.pictureFragment) {
-            bnvMain.makeVisible()
-        } else bnvMain.makeGone()
+            binding.bnvMain.makeVisible()
+        } else binding.bnvMain.makeGone()
     }
 
     override fun onSupportNavigateUp(): Boolean {

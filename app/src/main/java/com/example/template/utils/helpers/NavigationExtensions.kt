@@ -1,4 +1,4 @@
-package com.example.template.utils.navigation
+package com.example.template.utils.helpers
 
 import android.content.Intent
 import android.util.SparseArray

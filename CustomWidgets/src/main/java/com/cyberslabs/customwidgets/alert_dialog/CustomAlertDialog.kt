@@ -35,11 +35,12 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSpannerClickListene
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTextInputListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnThreeSpannerClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTwoSpannerClickListener
+import com.cyberslabs.customwidgets.dataBinding.viewBinding
+import com.cyberslabs.customwidgets.databinding.DialogAlertCustomBinding
 import java.lang.Exception
-import kotlinx.android.synthetic.main.dialog_alert_custom.*
 
 open class CustomAlertDialog : DialogFragment() {
-
+    private val cadViewBinding: DialogAlertCustomBinding by viewBinding()
     private var title: String? = null
     private var msg: String? = null
     private var inCenter = false
@@ -265,25 +266,25 @@ open class CustomAlertDialog : DialogFragment() {
     private fun setTextInputLayout() {
         if (hint != null) {
             if (tilIcon != null) {
-                ivTilIcon.visibility = View.VISIBLE
+                cadViewBinding.ivTilIcon.visibility = View.VISIBLE
                 try {
-                    ivTilIcon.setBackgroundResource(tilIcon!!)
-                    ivTilIcon.visibility = View.VISIBLE
+                    cadViewBinding.ivTilIcon.setBackgroundResource(tilIcon!!)
+                    cadViewBinding.ivTilIcon.visibility = View.VISIBLE
                 } catch (e: Exception) {
-                    ivTilIcon.visibility = View.GONE
+                    cadViewBinding.ivTilIcon.visibility = View.GONE
                     Log.e(
                         "CustomAlertDialog",
                         "Wrong format of picture (format: R.drawable.ic_....."
                     )
                 }
             }
-            if (scvList.visibility != View.VISIBLE) {
+            if (cadViewBinding.scvList.visibility != View.VISIBLE) {
 
-                llTextInput.visibility = View.VISIBLE
-                tilInput.visibility = View.VISIBLE
-                tilInput.hint = hint
-                onTextInputListener?.getTextInputLayout(tilInput)
-                tilInput.editText?.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) hidekeyboard() }
+                cadViewBinding.llTextInput.visibility = View.VISIBLE
+                cadViewBinding.tilInput.visibility = View.VISIBLE
+                cadViewBinding.tilInput.hint = hint
+                onTextInputListener?.getTextInputLayout(cadViewBinding.tilInput)
+                cadViewBinding.tilInput.editText?.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) hidekeyboard() }
             } else Log.e(
                 "CustomAlertDialog",
                 "Can't use MultiChoice or SingleChoice with TextInput"
@@ -301,7 +302,7 @@ open class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setMultiChoiceLayout() {
-        scvList.visibility = View.VISIBLE
+        cadViewBinding.scvList.visibility = View.VISIBLE
         var setMaxCheck = false
 
         if (maxChecked > 0 && defaultChecked < maxChecked) setMaxCheck = true else Log.e(
@@ -313,7 +314,7 @@ open class CustomAlertDialog : DialogFragment() {
             val adapterMulti = MultiChoiceAdapter(itemList!!, checkList!!, onMultiChoicelistener!!)
             if (!iconList.isNullOrEmpty()) adapterMulti.setIconList(iconList!!)
             if (setMaxCheck) adapterMulti.setMaxCheck(maxChecked, defaultChecked, maxListener!!)
-            rvChoiceView.apply {
+            cadViewBinding.rvChoiceView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = adapterMulti
                 setHasFixedSize(true)
@@ -324,12 +325,12 @@ open class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setSingleChoiceLayout() {
-        scvList.visibility = View.VISIBLE
+        cadViewBinding.scvList.visibility = View.VISIBLE
         if (!itemList.isNullOrEmpty()) {
             val adapterSingle =
                 SingleChoiceAdapter(itemList!!, singleCheckedDefault, onSingleChoiceClickListener!!)
             if (!iconList.isNullOrEmpty()) adapterSingle.setIconList(iconList!!)
-            rvChoiceView.apply {
+            cadViewBinding.rvChoiceView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = adapterSingle
                 setHasFixedSize(true)
@@ -340,38 +341,38 @@ open class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setIconLayout() {
-        if (icon != null) ivIcon.setImageResource(icon!!) else ivIcon.visibility = View.GONE
+        if (icon != null) cadViewBinding.ivIcon.setImageResource(icon!!) else cadViewBinding.ivIcon.visibility = View.GONE
     }
 
     private fun setTitleLayout() {
-        if (!title.isNullOrEmpty()) tvTitle.text = title else tvTitle.visibility = View.GONE
+        if (!title.isNullOrEmpty()) cadViewBinding.tvTitle.text = title else cadViewBinding.tvTitle.visibility = View.GONE
     }
 
     private fun setTitleColor() {
         if (coloredTitle) {
-            llTitleHolder.background =
+            cadViewBinding.llTitleHolder.background =
                 ResourcesCompat.getDrawable(resources, R.drawable.title_background, null)
-            tvTitle.apply {
+            cadViewBinding.tvTitle.apply {
                 setTextColor(ContextCompat.getColor(requireContext(), titleColor!!))
                 textSize = 24f
                 setTypeface(null, Typeface.ITALIC)
             }
-            flTitleBottomMargine.visibility = View.VISIBLE
+            cadViewBinding.flTitleBottomMargine.visibility = View.VISIBLE
         }
     }
 
     private fun setMsgLayout() {
-        if (msg != null) tvMsg.text = msg else tvMsg.visibility = View.GONE
-        if (inCenter) tvMsg.gravity = Gravity.CENTER
+        if (msg != null) cadViewBinding.tvMsg.text = msg else cadViewBinding.tvMsg.visibility = View.GONE
+        if (inCenter) cadViewBinding.tvMsg.gravity = Gravity.CENTER
     }
 
     private fun setButtonLayout() {
         if (positiveBtnText == null && negativeBtnText == null) {
-            llButtonLayout.visibility = View.GONE
+            cadViewBinding.llButtonLayout.visibility = View.GONE
         } else {
-            if (positiveBtnText != null && negativeBtnText == null) btnNegative.visibility =
+            if (positiveBtnText != null && negativeBtnText == null) cadViewBinding.btnNegative.visibility =
                 View.INVISIBLE
-            if (positiveBtnText == null && negativeBtnText != null) btnPositive.visibility =
+            if (positiveBtnText == null && negativeBtnText != null) cadViewBinding.btnPositive.visibility =
                 View.INVISIBLE
             if (positiveBtnText != null) setupPositiveButton()
             if (negativeBtnText != null) setupNegativeButton()
@@ -382,11 +383,11 @@ open class CustomAlertDialog : DialogFragment() {
     @SuppressLint("ResourceType")
     private fun setupPositiveButton() {
         if (!positiveBtnInFocus) {
-            btnPositive.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
-            btnPositive.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
+            cadViewBinding.btnPositive.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
+            cadViewBinding.btnPositive.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
         }
-        btnPositive.text = positiveBtnText
-        btnPositive.setOnClickListener {
+        cadViewBinding.btnPositive.text = positiveBtnText
+        cadViewBinding.btnPositive.setOnClickListener {
             positiveBtnListener?.onClick()
         }
     }
@@ -395,11 +396,11 @@ open class CustomAlertDialog : DialogFragment() {
     @SuppressLint("ResourceType")
     private fun setupNegativeButton() {
         if (!negativeBtnInFocus) {
-            btnNegative.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
-            btnNegative.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
+            cadViewBinding.btnNegative.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
+            cadViewBinding.btnNegative.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
         }
-        btnNegative.text = negativeBtnText
-        btnNegative.setOnClickListener {
+        cadViewBinding.btnNegative.text = negativeBtnText
+        cadViewBinding.btnNegative.setOnClickListener {
             negativeBtnListener?.onClick()
         }
     }
@@ -526,12 +527,12 @@ open class CustomAlertDialog : DialogFragment() {
                     Spanned.SPAN_INCLUSIVE_INCLUSIVE
                 )
             }
-            tvMsg.text = spannableString
+            cadViewBinding.tvMsg.text = spannableString
         }
     }
 
     private fun setMsgClickable() {
-        tvMsg.movementMethod = LinkMovementMethod.getInstance()
+        cadViewBinding.tvMsg.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun hidekeyboard() {

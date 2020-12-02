@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -14,6 +13,11 @@ android {
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -87,6 +91,7 @@ dependencies {
     //MVVM
     //Live Data
     implementation "androidx.lifecycle:lifecycle-extensions:$live_data_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$live_data_version"
     //androidX fragment
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     //Navigation Component

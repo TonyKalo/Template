@@ -1,31 +1,26 @@
 package com.example.template.ui.main_screen.permission_fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_permission.*
+import com.example.template.databinding.FragmentPermissionBinding
+import com.example.template.utils.helpers.viewBinding.viewBinding
 
-class PermissionFragment : BaseFragment<PermissionViewModel>() {
+class PermissionFragment : BaseFragment<PermissionViewModel>(R.layout.fragment_permission) {
 
+    private val binding: FragmentPermissionBinding by viewBinding()
     private val mViewModel by viewModels<PermissionViewModel> { viewModelFactory }
 
     override fun getViewModel(): PermissionViewModel {
         return mViewModel
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_permission, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setClickListeners()
         setObservers()
     }
@@ -41,7 +36,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun setClickListeners() {
-        btnPermission.setOnClickListener { findNavController().navigate(PermissionFragmentDirections.actionPermissionFragmentToDetailFragment2("message to detail fragment")) }
+        binding.btnPermission.setOnClickListener { findNavController().navigate(PermissionFragmentDirections.actionPermissionFragmentToDetailFragment2("message to detail fragment")) }
     }
 
     private fun showMsg(msg: String) {

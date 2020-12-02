@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -23,6 +22,9 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 repositories {
@@ -52,5 +54,11 @@ dependencies {
     
     //KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+    //MVVM
+    //Live Data
+    implementation "androidx.lifecycle:lifecycle-extensions:$live_data_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$live_data_version"
 
 }

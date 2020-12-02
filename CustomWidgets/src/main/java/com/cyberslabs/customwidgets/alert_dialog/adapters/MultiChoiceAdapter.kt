@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMaxReached
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMultiChoiceClickListener
+import com.cyberslabs.customwidgets.databinding.MultichoiceRowBinding
 import java.lang.Exception
-import kotlinx.android.synthetic.main.multichoice_row.view.*
 
 class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayList<Boolean>, val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultiChoiceAdapter.ViewHolder>() {
 
@@ -32,7 +32,7 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.multichoice_row, parent, false)
+        val v = MultichoiceRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(v)
     }
 
@@ -117,10 +117,11 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
         return position
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.tvItem
-        val icon: ImageView = itemView.ivIcon
-        val checkBox: CheckBox = itemView.cbItem
-        val llRow: LinearLayout = itemView.llMultichoiceRow
+    class ViewHolder(cadViewBinding: MultichoiceRowBinding) : RecyclerView.ViewHolder(cadViewBinding.root) {
+
+        val name: TextView = cadViewBinding.tvItem
+        val icon: ImageView = cadViewBinding.ivIcon
+        val checkBox: CheckBox = cadViewBinding.cbItem
+        val llRow: LinearLayout = cadViewBinding.llMultichoiceRow
     }
 }
