@@ -106,6 +106,7 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
     override fun showNonCancelableProgress() {
         progressDialog.isCancelable = false
         if (!progressDialog.isAdded) progressDialog.show(supportFragmentManager, "progressDialogMain")
+        supportFragmentManager.executePendingTransactions()
     }
 
     override fun showCancelableProgress() {
@@ -116,7 +117,6 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
 
     override fun hideProgress() {
         progressDialog.dismiss()
-        supportFragmentManager.executePendingTransactions()
     }
 
     override fun showSnackbar(msg: String) {
