@@ -41,7 +41,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun setClickListeners() {
-        btnPermission.setOnClickListener { findNavController().navigate(PermissionFragmentDirections.actionPermissionFragmentToDetailFragment2("message to detail fragment")) }
+        btnPermission.setOnClickListener { mViewModel.checkPermissions() }
     }
 
     private fun showMsg(msg: String) {

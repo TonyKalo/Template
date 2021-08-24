@@ -78,7 +78,7 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
     }
 
     private fun observePermissions() {
-        viewModel?.getPermissionRequest()?.observe(this, {
+        viewModel?.getPermissionForRequest()?.observe(this, {
             requestPermission(it)
         })
     }

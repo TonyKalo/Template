@@ -1,7 +1,7 @@
 package com.example.template.core.base
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Application
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -9,7 +9,6 @@ import androidx.core.content.PermissionChecker
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.template.R
-import com.example.template.core.base.callbacks.PermissionCallback
 import com.example.template.utils.extensions.isNetworkConnected
 import com.google.gson.JsonSyntaxException
 import javax.inject.Inject
@@ -19,7 +18,7 @@ import retrofit2.HttpException
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
     @Inject
-    lateinit var appContext: Context
+    lateinit var app: Application
 
     companion object {
         const val PERMISSION_REQUEST_CODE = 101
@@ -30,19 +29,24 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
 
     private val isLoading = MutableLiveData<Boolean>()
     private val isLoadingNonCancelable = MutableLiveData<Boolean>()
+    
     private val handleErrorString = MutableLiveData<String>()
-    private val permissionsRequest = MutableLiveData<Array<String>>()
+    
     private val permissionsRequestRationale = MutableLiveData<ArrayList<String>>()
     private val openRetryDialog = MutableLiveData<String>()
     private val openAppSettingsDialog = MutableLiveData<String>()
 
     private var externalPermissNeed: ArrayList<String> = ArrayList()
     private var onPermissDenied: ArrayList<String> = ArrayList()
-    private var permissionCallback: PermissionCallback? = null
+    
+    private var permissionSuccess:  (()->Unit)? = null
+    private var permissionFail: ((deniedPermissions: Array<String>, needExternalPermissions: Array<String>) -> Unit)? = null
     private var permissions: Array<String>? = null
-    private var dialogHandler: Boolean = true
+    private var handlePermissWithDialog: Boolean = true
 
-    fun getPermissionRequest() = permissionsRequest
+    private val permissionsForRequest = MutableLiveData<Array<String>>()
+
+    fun getPermissionForRequest() = permissionsForRequest
     fun getPermissionRequestRationale() = permissionsRequestRationale
     fun getAppSettingsRetryDialog() = openAppSettingsDialog
     fun getRetryDialog() = openRetryDialog
@@ -63,22 +67,22 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     fun handleError(e: Throwable) {
-        if (!appContext.isNetworkConnected()) {
-            handleErrorString.value = appContext.getString(R.string.err_no_net)
+        if (!app.applicationContext.isNetworkConnected()) {
+            handleErrorString.value = app.applicationContext.getString(R.string.err_no_net)
         } else if (e is HttpException) {
             when (e.code()) {
                 HttpsURLConnection.HTTP_UNAUTHORIZED -> handleErrorString.value =
-                    appContext.getString(R.string.err_unauthorised)
+                    app.applicationContext.getString(R.string.err_unauthorised)
                 HttpsURLConnection.HTTP_FORBIDDEN -> handleErrorString.value =
-                    appContext.getString(R.string.err_forbidden)
+                    app.applicationContext.getString(R.string.err_forbidden)
                 HttpsURLConnection.HTTP_INTERNAL_ERROR -> handleErrorString.value =
-                    appContext.getString(R.string.err_internal_server)
+                    app.applicationContext.getString(R.string.err_internal_server)
                 HttpsURLConnection.HTTP_BAD_REQUEST -> handleErrorString.value =
-                    appContext.getString(R.string.err_bad_request)
+                    app.applicationContext.getString(R.string.err_bad_request)
                 else -> handleErrorString.value = e.localizedMessage
             }
         } else if (e is JsonSyntaxException) {
-            handleErrorString.value = appContext.getString(R.string.err_not_responding)
+            handleErrorString.value = app.applicationContext.getString(R.string.err_not_responding)
         } else {
             handleErrorString.value = e.localizedMessage
         }
@@ -88,9 +92,8 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     fun checkPermissions(permissions: Array<String>): Boolean {
         var permissionGranted = true
         if (Build.VERSION.SDK_INT >= 23) {
-
             permissions.forEach { permission ->
-                if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted) {
+                if (PermissionChecker.checkSelfPermission(app.applicationContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted) {
                     permissionGranted = false
                 }
             }
@@ -99,34 +102,33 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     @SuppressLint("WrongConstant")
-    fun checkAndRequestPermissions(permissions: Array<String>, handleWithDialogs: Boolean, permissionCallback: PermissionCallback) {
+    fun checkAndRequestPermissions(permissions: Array<String>, handleWithDialogs: Boolean, success: ()->Unit, fail: (deniedPermissions: Array<String>, needExternalPermissions: Array<String>) -> Unit ) {
 
         val permissionsToCheck: ArrayList<String> = ArrayList()
-        this.permissionCallback = permissionCallback
+        this.permissionSuccess = success
+        this.permissionFail = fail
         this.permissions = permissions
-        dialogHandler = handleWithDialogs
+        this.handlePermissWithDialog = handleWithDialogs
 
         if (permissions.isEmpty()) {
             Log.e("TAG", "Permission List is Empty")
-            permissionCallback.onSuccess()
+            success.invoke()
         } else {
-
             if (Build.VERSION.SDK_INT >= 23) {
                 var permissionGranted = true
-
                 permissions.forEach { permission ->
-                    if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
+                    if (PermissionChecker.checkSelfPermission(app.applicationContext, permission) != PackageManager.PERMISSION_GRANTED) {
                         permissionGranted = false
                         permissionsToCheck.add(permission)
                     }
                 }
                 if (permissionGranted) {
-                    permissionCallback.onSuccess()
+                    success.invoke()
                 } else {
-                    permissionsRequest.value = permissionsToCheck.toTypedArray()
+                    permissionsForRequest.value = permissionsToCheck.toTypedArray()
                 }
             } else {
-                permissionCallback.onSuccess()
+                success.invoke()
             }
         }
     }
@@ -144,21 +146,21 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             if (permissDenied.isNotEmpty()) {
                 permissionsRequestRationale.value = permissDenied
             } else {
-                permissionCallback?.onSuccess()
+                permissionSuccess?.invoke()
             }
         }
     }
 
-    fun onRequestRationaleResult(permisiDenied: ArrayList<String>, externalPermiss: ArrayList<String>) {
+    fun onRequestRationaleResult(permissDenied: ArrayList<String>, externalPermiss: ArrayList<String>) {
         onPermissDenied.clear()
         externalPermissNeed.clear()
-        permisiDenied.forEach { onPermissDenied.add(it) }
+        permissDenied.forEach { onPermissDenied.add(it) }
         externalPermiss.forEach { externalPermissNeed.add(it) }
 
-        if (dialogHandler) {
+        if (handlePermissWithDialog) {
             handleOnDeniedDialogs()
         } else {
-            permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
+            permissionFail?.invoke(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
         }
     }
 
@@ -171,7 +173,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
                 openRetryDialog.value = createPermissionDialogMsg(RETRY_MSG)
             }
             else -> {
-                permissionCallback?.onSuccess()
+                permissionSuccess?.invoke()
             }
         }
     }
@@ -180,23 +182,23 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
         val permissToRequest: ArrayList<String> = ArrayList()
         permissToRequest.addAll(externalPermissNeed)
         permissToRequest.addAll(onPermissDenied)
-        permissionsRequest.value = permissToRequest.toTypedArray()
+        permissionsForRequest.value = permissToRequest.toTypedArray()
     }
 
     fun onRetryDialogNegativeBtnClick() {
-        permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
+        permissionFail?.invoke(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
     }
 
     fun onAppSettingsDialogPositiveBtnClick() {
-        permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
+        permissionFail?.invoke(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
     }
 
     fun onAppSettingsDialogNegativeBtnClick() {
-        permissionCallback?.onFail(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
+        permissionFail?.invoke(onPermissDenied.toTypedArray(), externalPermissNeed.toTypedArray())
     }
 
     private fun createPermissionDialogMsg(dialogMsg: Int): String {
-        val msg = appContext.getString(R.string.msg_allow_access)
+        val msg = app.applicationContext.getString(R.string.msg_allow_access)
         var listOfPermissions = ""
         val deniedPermiss: ArrayList<String> = ArrayList()
         deniedPermiss.addAll(externalPermissNeed)
@@ -207,18 +209,18 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             permissTxt = permissTxt.replace("_", " ")
 
             listOfPermissions += if (permiss.indexOf("STORAGE") > -1 && listOfPermissions.indexOf("STORAGE") < 0) {
-                "\n\u25cf  ${appContext.getString(R.string.tv_storage)}"
+                "\n\u25cf  ${app.applicationContext.getString(R.string.tv_storage)}"
             } else if (permiss.indexOf("SMS") > -1 && listOfPermissions.indexOf("SMS") < 0) {
-                "\n\u25cf  ${appContext.getString(R.string.tv_sms)}"
+                "\n\u25cf  ${app.applicationContext.getString(R.string.tv_sms)}"
             } else if (permiss.indexOf("LOCATION") > -1 && listOfPermissions.indexOf("LOCATION") < 0) {
-                "\n\u25cf  ${appContext.getString(R.string.tv_location)}"
+                "\n\u25cf  ${app.applicationContext.getString(R.string.tv_location)}"
             } else {
                 "\n\u25cf  $permissTxt"
             }
         }
         var additionalMsg = ""
-        if (dialogMsg == RETRY_MSG) additionalMsg = appContext.getString(R.string.msg_permiss_decline)
-        if (dialogMsg == APP_SETTINGS_MSG) additionalMsg = appContext.getString(R.string.msg_permiss_required)
+        if (dialogMsg == RETRY_MSG) additionalMsg = app.applicationContext.getString(R.string.msg_permiss_decline)
+        if (dialogMsg == APP_SETTINGS_MSG) additionalMsg = app.applicationContext.getString(R.string.msg_permiss_required)
 
         return "$msg\n$listOfPermissions\n\n$additionalMsg"
     }
