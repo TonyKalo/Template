@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
+import com.example.template.ui.registration_login.registration_activity.RegistrationActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,7 +20,7 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
         var isItInit = false
     }
     private val mViewModel: SplashViewModel by viewModels()
-//    private val activityViewModel by lazy { ViewModelProvider(requireActivity()).get(RegistrationActivityViewModel::class.java) }
+    private val activityViewModel: RegistrationActivityViewModel by activityViewModels()
 
     override fun getViewModel(): SplashViewModel {
         return mViewModel
@@ -36,6 +38,7 @@ class SplashFragment : BaseFragment<SplashViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityViewModel.showLoadingMessage()
         mViewModel.navigateToNextScreen.observe(viewLifecycleOwner, { navigateToLogin() })
         findNavController().popBackStack()
     }
