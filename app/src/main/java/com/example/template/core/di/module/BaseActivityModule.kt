@@ -5,8 +5,11 @@ import com.cyberslabs.customwidgets.progress_dialog.CustomProgressDialog
 import com.example.template.core.di.qualifiers.BaseActivityScope
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 
 @Module
+@InstallIn(ActivityComponent::class)
 object BaseActivityModule {
 
     @BaseActivityScope

@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.example.template.core.base
 
 import android.annotation.SuppressLint
@@ -11,10 +13,12 @@ import androidx.lifecycle.ViewModel
 import com.example.template.R
 import com.example.template.utils.extensions.isNetworkConnected
 import com.google.gson.JsonSyntaxException
+import dagger.hilt.android.lifecycle.HiltViewModel
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
-import retrofit2.HttpException
 
+@HiltViewModel
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
     @Inject
@@ -29,17 +33,17 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
 
     private val isLoading = MutableLiveData<Boolean>()
     private val isLoadingNonCancelable = MutableLiveData<Boolean>()
-    
+
     private val handleErrorString = MutableLiveData<String>()
-    
+
     private val permissionsRequestRationale = MutableLiveData<ArrayList<String>>()
     private val openRetryDialog = MutableLiveData<String>()
     private val openAppSettingsDialog = MutableLiveData<String>()
 
     private var externalPermissNeed: ArrayList<String> = ArrayList()
     private var onPermissDenied: ArrayList<String> = ArrayList()
-    
-    private var permissionSuccess:  (()->Unit)? = null
+
+    private var permissionSuccess: (() -> Unit)? = null
     private var permissionFail: ((deniedPermissions: Array<String>, needExternalPermissions: Array<String>) -> Unit)? = null
     private var permissions: Array<String>? = null
     private var handlePermissWithDialog: Boolean = true
@@ -71,14 +75,18 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             handleErrorString.value = app.applicationContext.getString(R.string.err_no_net)
         } else if (e is HttpException) {
             when (e.code()) {
-                HttpsURLConnection.HTTP_UNAUTHORIZED -> handleErrorString.value =
-                    app.applicationContext.getString(R.string.err_unauthorised)
-                HttpsURLConnection.HTTP_FORBIDDEN -> handleErrorString.value =
-                    app.applicationContext.getString(R.string.err_forbidden)
-                HttpsURLConnection.HTTP_INTERNAL_ERROR -> handleErrorString.value =
-                    app.applicationContext.getString(R.string.err_internal_server)
-                HttpsURLConnection.HTTP_BAD_REQUEST -> handleErrorString.value =
-                    app.applicationContext.getString(R.string.err_bad_request)
+                HttpsURLConnection.HTTP_UNAUTHORIZED ->
+                    handleErrorString.value =
+                        app.applicationContext.getString(R.string.err_unauthorised)
+                HttpsURLConnection.HTTP_FORBIDDEN ->
+                    handleErrorString.value =
+                        app.applicationContext.getString(R.string.err_forbidden)
+                HttpsURLConnection.HTTP_INTERNAL_ERROR ->
+                    handleErrorString.value =
+                        app.applicationContext.getString(R.string.err_internal_server)
+                HttpsURLConnection.HTTP_BAD_REQUEST ->
+                    handleErrorString.value =
+                        app.applicationContext.getString(R.string.err_bad_request)
                 else -> handleErrorString.value = e.localizedMessage
             }
         } else if (e is JsonSyntaxException) {
@@ -102,7 +110,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     @SuppressLint("WrongConstant")
-    fun checkAndRequestPermissions(permissions: Array<String>, handleWithDialogs: Boolean, success: ()->Unit, fail: (deniedPermissions: Array<String>, needExternalPermissions: Array<String>) -> Unit ) {
+    fun checkAndRequestPermissions(permissions: Array<String>, handleWithDialogs: Boolean, success: () -> Unit, fail: (deniedPermissions: Array<String>, needExternalPermissions: Array<String>) -> Unit) {
 
         val permissionsToCheck: ArrayList<String> = ArrayList()
         this.permissionSuccess = success

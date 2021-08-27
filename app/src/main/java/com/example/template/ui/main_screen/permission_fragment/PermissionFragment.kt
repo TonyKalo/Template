@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_permission.*
 
+@AndroidEntryPoint
 class PermissionFragment : BaseFragment<PermissionViewModel>() {
 
-    private val mViewModel by viewModels<PermissionViewModel> { viewModelFactory }
+    private val mViewModel: PermissionViewModel by viewModels()
 
     override fun getViewModel(): PermissionViewModel {
         return mViewModel
@@ -35,9 +36,12 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun showMsgObserver() {
-        mViewModel.msgToShow.observe(viewLifecycleOwner, { msg ->
-            showMsg(msg)
-        })
+        mViewModel.msgToShow.observe(
+            viewLifecycleOwner,
+            { msg ->
+                showMsg(msg)
+            }
+        )
     }
 
     private fun setClickListeners() {

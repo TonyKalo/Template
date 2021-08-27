@@ -10,21 +10,17 @@ import android.provider.Settings
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.cyberslabs.customwidgets.alert_dialog.CustomAlertDialog
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnButtonClickListener
 import com.cyberslabs.customwidgets.progress_dialog.CustomProgressDialog
 import com.example.template.R
-import com.example.template.core.di.components.AppComponent
 import com.example.template.core.di.qualifiers.BaseActivityScope
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), BaseViewInterface {
+abstract class BaseActivity<V : BaseViewModel> : AppCompatActivity(), BaseViewInterface {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject
     @BaseActivityScope
     lateinit var progressDialog: CustomProgressDialog
@@ -35,7 +31,6 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
     @BaseActivityScope
     lateinit var appSettingDialog: CustomAlertDialog
 
-    lateinit var appComponent: AppComponent
     private var viewModel: BaseViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,15 +67,21 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
     }
 
     private fun observeErrorHandler() {
-        viewModel?.getErrorHandler()?.observe(this, { error ->
-            showSnackbar(error)
-        })
+        viewModel?.getErrorHandler()?.observe(
+            this,
+            { error ->
+                showSnackbar(error)
+            }
+        )
     }
 
     private fun observePermissions() {
-        viewModel?.getPermissionForRequest()?.observe(this, {
-            requestPermission(it)
-        })
+        viewModel?.getPermissionForRequest()?.observe(
+            this,
+            {
+                requestPermission(it)
+            }
+        )
     }
 
     private fun observePermissionsRationale() {
@@ -88,15 +89,21 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
     }
 
     private fun observeAppSettingsDialog() {
-        viewModel?.getAppSettingsRetryDialog()?.observe(this, {
-            openAppSettingsDialog(it)
-        })
+        viewModel?.getAppSettingsRetryDialog()?.observe(
+            this,
+            {
+                openAppSettingsDialog(it)
+            }
+        )
     }
 
     private fun observeRetryDialog() {
-        viewModel?.getRetryDialog()?.observe(this, {
-            openRetryDialog(it)
-        })
+        viewModel?.getRetryDialog()?.observe(
+            this,
+            {
+                openRetryDialog(it)
+            }
+        )
     }
 
     /**
@@ -150,23 +157,29 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
         appSettingDialog.setTitle(getString(R.string.title_permiss_required))
         appSettingDialog.setMessage(msg)
         appSettingDialog.isCancelable = false
-        appSettingDialog.setPositiveButton(getString(R.string.btn_app_settings), object : OnButtonClickListener {
-            override fun onClick() {
-                val intent = Intent()
-                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                val uri = Uri.fromParts("package", applicationContext.packageName, null)
-                intent.data = uri
-                startActivity(intent)
-                viewModel?.onAppSettingsDialogPositiveBtnClick()
-                appSettingDialog.dismiss()
+        appSettingDialog.setPositiveButton(
+            getString(R.string.btn_app_settings),
+            object : OnButtonClickListener {
+                override fun onClick() {
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts("package", applicationContext.packageName, null)
+                    intent.data = uri
+                    startActivity(intent)
+                    viewModel?.onAppSettingsDialogPositiveBtnClick()
+                    appSettingDialog.dismiss()
+                }
             }
-        })
-        appSettingDialog.setNegativeButton(getString(R.string.btn_cancel), false, object : OnButtonClickListener {
-            override fun onClick() {
-                viewModel?.onAppSettingsDialogNegativeBtnClick()
-                appSettingDialog.dismiss()
+        )
+        appSettingDialog.setNegativeButton(
+            getString(R.string.btn_cancel), false,
+            object : OnButtonClickListener {
+                override fun onClick() {
+                    viewModel?.onAppSettingsDialogNegativeBtnClick()
+                    appSettingDialog.dismiss()
+                }
             }
-        })
+        )
         appSettingDialog.show(supportFragmentManager, "appSettingDialog")
     }
 
@@ -174,18 +187,24 @@ abstract class BaseActivity<V : BaseViewModel> : DaggerAppCompatActivity(), Base
         retryDialog.setTitle(getString(R.string.title_permiss_decline))
         retryDialog.setMessage(msg)
         retryDialog.isCancelable = false
-        retryDialog.setPositiveButton(getString(R.string.btn_retry), object : OnButtonClickListener {
-            override fun onClick() {
-                viewModel?.onRetryDialogPositiveBtnClick()
-                retryDialog.dismiss()
+        retryDialog.setPositiveButton(
+            getString(R.string.btn_retry),
+            object : OnButtonClickListener {
+                override fun onClick() {
+                    viewModel?.onRetryDialogPositiveBtnClick()
+                    retryDialog.dismiss()
+                }
             }
-        })
-        retryDialog.setNegativeButton(getString(R.string.btn_sure), false, object : OnButtonClickListener {
-            override fun onClick() {
-                viewModel?.onRetryDialogNegativeBtnClick()
-                retryDialog.dismiss()
+        )
+        retryDialog.setNegativeButton(
+            getString(R.string.btn_sure), false,
+            object : OnButtonClickListener {
+                override fun onClick() {
+                    viewModel?.onRetryDialogNegativeBtnClick()
+                    retryDialog.dismiss()
+                }
             }
-        })
+        )
         retryDialog.show(supportFragmentManager, "retryDialog")
     }
 

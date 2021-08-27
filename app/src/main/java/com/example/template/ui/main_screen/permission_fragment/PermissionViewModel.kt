@@ -15,11 +15,13 @@ class PermissionViewModel @Inject constructor() : BaseViewModel() {
             android.Manifest.permission.SEND_SMS, android.Manifest.permission.CAMERA
         )
 
-        checkAndRequestPermissions(permissions, true,{
-            _msgToShow.value = "All permission granted"
-        },{_, _ ->
-
-        })
-
+        checkAndRequestPermissions(
+            permissions, true,
+            {
+                _msgToShow.value = "All permission granted"
+            },
+            { _, _ ->
+            }
+        )
     }
 }

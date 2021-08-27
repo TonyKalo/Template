@@ -2,24 +2,17 @@ package com.example.template.core.base
 
 import android.content.Context
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import com.example.template.core.di.components.AppComponent
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInterface {
+abstract class BaseFragment<V : BaseViewModel> : Fragment(), BaseViewInterface {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private var activity: BaseActivity<*>? = null
-    lateinit var appComponent: AppComponent
+    lateinit var baseActivity: BaseActivity<*>
     private var baseViewModel: V? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is BaseActivity<*>) {
-            activity = context
+            baseActivity = context
         }
     }
 
@@ -27,41 +20,41 @@ abstract class BaseFragment<V : BaseViewModel> : DaggerFragment(), BaseViewInter
         super.onCreate(savedInstanceState)
 
         baseViewModel = getViewModel()
-        activity?.setViewModel(baseViewModel!!)
-        activity?.observeAll()
+        baseActivity.setViewModel(baseViewModel!!)
+        baseActivity.observeAll()
     }
 
     abstract fun getViewModel(): V
 
     override fun showCancelableProgress() {
-        activity?.showCancelableProgress()
+        baseActivity.showCancelableProgress()
     }
 
     override fun showNonCancelableProgress() {
-        activity?.showNonCancelableProgress()
+        baseActivity.showNonCancelableProgress()
     }
 
     override fun hideProgress() {
-        activity?.hideProgress()
+        baseActivity.hideProgress()
     }
 
     override fun showSnackbar(msg: String) {
-        activity?.showSnackbar(msg)
+        baseActivity.showSnackbar(msg)
     }
 
     override fun requestPermission(permissions: Array<String>) {
-        activity?.requestPermission(permissions)
+        baseActivity.requestPermission(permissions)
     }
 
-    override fun requestPermissionRationale(permission: ArrayList<String>): Unit? {
-        return activity?.requestPermissionRationale(permission)
+    override fun requestPermissionRationale(permission: ArrayList<String>) {
+        return baseActivity.requestPermissionRationale(permission)
     }
 
-    override fun openRetryDialog(msg: String): Unit? {
-        return activity?.openRetryDialog(msg)
+    override fun openRetryDialog(msg: String) {
+        return baseActivity.openRetryDialog(msg)
     }
 
-    override fun openAppSettingsDialog(msg: String): Unit? {
-        return activity?.openAppSettingsDialog(msg)
+    override fun openAppSettingsDialog(msg: String) {
+        return baseActivity.openAppSettingsDialog(msg)
     }
 }

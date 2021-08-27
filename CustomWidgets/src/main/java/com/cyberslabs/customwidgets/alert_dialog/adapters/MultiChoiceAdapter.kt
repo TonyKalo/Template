@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMaxReached
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMultiChoiceClickListener
-import java.lang.Exception
 import kotlinx.android.synthetic.main.multichoice_row.view.*
+import java.lang.Exception
 
 class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayList<Boolean>, val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultiChoiceAdapter.ViewHolder>() {
 

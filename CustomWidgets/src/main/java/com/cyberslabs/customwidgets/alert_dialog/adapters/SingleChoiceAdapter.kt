@@ -13,10 +13,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSingleChoiceClickListener
-import java.lang.Exception
 import kotlinx.android.synthetic.main.multichoice_row.view.ivIcon
 import kotlinx.android.synthetic.main.multichoice_row.view.tvItem
 import kotlinx.android.synthetic.main.singlechoice_row.view.*
+import java.lang.Exception
 
 class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int, val listener: OnSingleChoiceClickListener) : RecyclerView.Adapter<SingleChoiceAdapter.ViewHolder>() {
 

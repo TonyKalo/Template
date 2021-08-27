@@ -10,11 +10,13 @@ import com.example.template.core.base.BaseActivity
 import com.example.template.utils.extensions.makeGone
 import com.example.template.utils.extensions.makeVisible
 import com.example.template.utils.navigation.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDestinationChangedListener {
 
-    private val mViewModel by viewModels<MainActivityViewModel> { viewModelFactory }
+    private val mViewModel: MainActivityViewModel by viewModels()
     private var currentNavController: LiveData<NavController>? = null
 
     override fun getViewModel(): MainActivityViewModel {
@@ -45,13 +47,18 @@ class MainActivity : BaseActivity<MainActivityViewModel>(), NavController.OnDest
 
         val navGraphIds = listOf(R.navigation.permission_graph, R.navigation.picture_graph)
 
-        val controller = bnvMain.setupWithNavController(navGraphIds = navGraphIds, fragmentManager = supportFragmentManager,
-            containerId = R.id.fhMain, intent = intent)
+        val controller = bnvMain.setupWithNavController(
+            navGraphIds = navGraphIds, fragmentManager = supportFragmentManager,
+            containerId = R.id.fhMain, intent = intent
+        )
 
-        controller.observe(this, {
-            it.removeOnDestinationChangedListener(this)
-            it.addOnDestinationChangedListener(this)
-        })
+        controller.observe(
+            this,
+            {
+                it.removeOnDestinationChangedListener(this)
+                it.addOnDestinationChangedListener(this)
+            }
+        )
 
         currentNavController = controller
     }

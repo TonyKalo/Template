@@ -6,10 +6,12 @@ import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationActivity : BaseActivity<RegistrationActivityViewModel>() {
 
-    private val mViewModel by viewModels<RegistrationActivityViewModel> { viewModelFactory }
+    private val mViewModel: RegistrationActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

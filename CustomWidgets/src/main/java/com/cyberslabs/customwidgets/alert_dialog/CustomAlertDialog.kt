@@ -35,8 +35,8 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSpannerClickListene
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTextInputListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnThreeSpannerClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTwoSpannerClickListener
-import java.lang.Exception
 import kotlinx.android.synthetic.main.dialog_alert_custom.*
+import java.lang.Exception
 
 open class CustomAlertDialog : DialogFragment() {
 

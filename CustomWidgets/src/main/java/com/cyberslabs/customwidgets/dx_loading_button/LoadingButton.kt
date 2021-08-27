@@ -255,7 +255,8 @@ class LoadingButton @JvmOverloads constructor(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(
             measureDimension((DEFAULT_WIDTH * mDensity).toInt(), widthMeasureSpec),
-            measureDimension((DEFAULT_HEIGHT * mDensity).toInt(), heightMeasureSpec))
+            measureDimension((DEFAULT_HEIGHT * mDensity).toInt(), heightMeasureSpec)
+        )
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -492,7 +493,8 @@ class LoadingButton @JvmOverloads constructor(
 
         ValueAnimator.ofFloat(
             if (isTouchDown) 0f else (width).toFloat(),
-            if (isTouchDown) (width).toFloat() else width.toFloat())
+            if (isTouchDown) (width).toFloat() else width.toFloat()
+        )
             .apply {
                 duration = 240
                 interpolator = AccelerateDecelerateInterpolator()
@@ -517,7 +519,8 @@ class LoadingButton @JvmOverloads constructor(
         val viewHeight = max(height, mMinHeight.toInt())
         val animator = ValueAnimator.ofInt(
             if (isReverse) width / 2 - viewHeight / 2 else 0,
-            if (isReverse) 0 else width / 2 - viewHeight / 2)
+            if (isReverse) 0 else width / 2 - viewHeight / 2
+        )
             .apply {
                 duration = 400
                 interpolator = AccelerateDecelerateInterpolator()

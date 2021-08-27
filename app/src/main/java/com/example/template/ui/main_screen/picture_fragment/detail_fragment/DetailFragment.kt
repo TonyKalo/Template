@@ -8,11 +8,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_detail.*
 
+@AndroidEntryPoint
 class DetailFragment : BaseFragment<DetailViewModel>() {
 
-    private val mViewModel by viewModels<DetailViewModel> { viewModelFactory }
+    private val mViewModel: DetailViewModel by viewModels()
 
     override fun getViewModel(): DetailViewModel {
         return mViewModel

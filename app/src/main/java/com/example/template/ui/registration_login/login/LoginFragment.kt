@@ -9,11 +9,13 @@ import androidx.fragment.app.viewModels
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
 import com.example.template.ui.main_screen.main_activity.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel>() {
 
-    private val mViewModel by viewModels<LoginViewModel> { viewModelFactory }
+    private val mViewModel: LoginViewModel by viewModels()
 
     override fun getViewModel(): LoginViewModel {
         return mViewModel
@@ -35,7 +37,8 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
     }
 
     private fun navigateToNextScreenObserver() {
-        mViewModel.toNextScreen.observe(viewLifecycleOwner, { navigateToMainScreen() }) }
+        mViewModel.toNextScreen.observe(viewLifecycleOwner, { navigateToMainScreen() })
+    }
 
     private fun setClickListeners() {
         btnLogin.setOnClickListener {
