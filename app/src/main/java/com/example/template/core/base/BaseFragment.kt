@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 
 abstract class BaseFragment<V : BaseViewModel> : Fragment(), BaseViewInterface {
 
-    lateinit var baseActivity: BaseActivity<*>
+    private lateinit var baseActivity: BaseActivity<*>
     private var baseViewModel: V? = null
 
     override fun onAttach(context: Context) {
