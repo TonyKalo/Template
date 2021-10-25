@@ -1,5 +1,3 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
-
 package com.cyberslabs.customwidgets.alert_dialog.adapters
 
 import android.util.Log
@@ -14,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMaxReached
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnMultiChoiceClickListener
-import kotlinx.android.synthetic.main.multichoice_row.view.*
+import com.cyberslabs.customwidgets.databinding.MultichoiceRowBinding
 import java.lang.Exception
 
-class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayList<Boolean>, val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultiChoiceAdapter.ViewHolder>() {
+class MultiChoiceAdapter(private val itemList: ArrayList<String>, private val checkList: ArrayList<Boolean>, private val listener: OnMultiChoiceClickListener) : RecyclerView.Adapter<MultiChoiceAdapter.ViewHolder>() {
 
     private var iconList = ArrayList<Int>()
     private var maxCheck = 0
@@ -32,8 +30,7 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.multichoice_row, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(MultichoiceRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -117,10 +114,10 @@ class MultiChoiceAdapter(val itemList: ArrayList<String>, val checkList: ArrayLi
         return position
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.tvItem
-        val icon: ImageView = itemView.ivIcon
-        val checkBox: CheckBox = itemView.cbItem
-        val llRow: LinearLayout = itemView.llMultichoiceRow
+    class ViewHolder(binding: MultichoiceRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        val name: TextView = binding.tvItem
+        val icon: ImageView = binding.ivIcon
+        val checkBox: CheckBox = binding.cbItem
+        val llRow: LinearLayout = binding.llMultichoiceRow
     }
 }

@@ -2,9 +2,10 @@ package com.example.template.core.base
 
 import android.content.Context
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment<V : BaseViewModel> : Fragment(), BaseViewInterface {
+abstract class BaseFragment<V : BaseViewModel>(@LayoutRes layout: Int) : Fragment(layout), BaseViewInterface {
 
     private lateinit var baseActivity: BaseActivity<*>
     private var baseViewModel: V? = null

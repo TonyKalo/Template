@@ -4,6 +4,7 @@ package com.example.template.core.base
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -14,15 +15,18 @@ import com.example.template.R
 import com.example.template.utils.extensions.isNetworkConnected
 import com.google.gson.JsonSyntaxException
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.HttpException
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
 
-@HiltViewModel
 open class BaseViewModel @Inject constructor() : ViewModel() {
 
+    @SuppressLint("StaticFieldLeak")
     @Inject
-    lateinit var app: Application
+    @ApplicationContext
+    lateinit var appContext: Context
+
 
     companion object {
         const val PERMISSION_REQUEST_CODE = 101
@@ -71,26 +75,26 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     fun handleError(e: Throwable) {
-        if (!app.applicationContext.isNetworkConnected()) {
-            handleErrorString.value = app.applicationContext.getString(R.string.err_no_net)
+        if (!appContext.isNetworkConnected()) {
+            handleErrorString.value = appContext.getString(R.string.err_no_net)
         } else if (e is HttpException) {
             when (e.code()) {
                 HttpsURLConnection.HTTP_UNAUTHORIZED ->
                     handleErrorString.value =
-                        app.applicationContext.getString(R.string.err_unauthorised)
+                        appContext.getString(R.string.err_unauthorised)
                 HttpsURLConnection.HTTP_FORBIDDEN ->
                     handleErrorString.value =
-                        app.applicationContext.getString(R.string.err_forbidden)
+                        appContext.getString(R.string.err_forbidden)
                 HttpsURLConnection.HTTP_INTERNAL_ERROR ->
                     handleErrorString.value =
-                        app.applicationContext.getString(R.string.err_internal_server)
+                        appContext.getString(R.string.err_internal_server)
                 HttpsURLConnection.HTTP_BAD_REQUEST ->
                     handleErrorString.value =
-                        app.applicationContext.getString(R.string.err_bad_request)
+                        appContext.getString(R.string.err_bad_request)
                 else -> handleErrorString.value = e.localizedMessage
             }
         } else if (e is JsonSyntaxException) {
-            handleErrorString.value = app.applicationContext.getString(R.string.err_not_responding)
+            handleErrorString.value = appContext.getString(R.string.err_not_responding)
         } else {
             handleErrorString.value = e.localizedMessage
         }
@@ -101,7 +105,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
         var permissionGranted = true
         if (Build.VERSION.SDK_INT >= 23) {
             permissions.forEach { permission ->
-                if (PermissionChecker.checkSelfPermission(app.applicationContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted) {
+                if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED && permissionGranted) {
                     permissionGranted = false
                 }
             }
@@ -125,7 +129,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             if (Build.VERSION.SDK_INT >= 23) {
                 var permissionGranted = true
                 permissions.forEach { permission ->
-                    if (PermissionChecker.checkSelfPermission(app.applicationContext, permission) != PackageManager.PERMISSION_GRANTED) {
+                    if (PermissionChecker.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
                         permissionGranted = false
                         permissionsToCheck.add(permission)
                     }
@@ -206,7 +210,7 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun createPermissionDialogMsg(dialogMsg: Int): String {
-        val msg = app.applicationContext.getString(R.string.msg_allow_access)
+        val msg = appContext.getString(R.string.msg_allow_access)
         var listOfPermissions = ""
         val deniedPermiss: ArrayList<String> = ArrayList()
         deniedPermiss.addAll(externalPermissNeed)
@@ -217,18 +221,18 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
             permissTxt = permissTxt.replace("_", " ")
 
             listOfPermissions += if (permiss.indexOf("STORAGE") > -1 && listOfPermissions.indexOf("STORAGE") < 0) {
-                "\n\u25cf  ${app.applicationContext.getString(R.string.tv_storage)}"
+                "\n\u25cf  ${appContext.getString(R.string.tv_storage)}"
             } else if (permiss.indexOf("SMS") > -1 && listOfPermissions.indexOf("SMS") < 0) {
-                "\n\u25cf  ${app.applicationContext.getString(R.string.tv_sms)}"
+                "\n\u25cf  ${appContext.getString(R.string.tv_sms)}"
             } else if (permiss.indexOf("LOCATION") > -1 && listOfPermissions.indexOf("LOCATION") < 0) {
-                "\n\u25cf  ${app.applicationContext.getString(R.string.tv_location)}"
+                "\n\u25cf  ${appContext.getString(R.string.tv_location)}"
             } else {
                 "\n\u25cf  $permissTxt"
             }
         }
         var additionalMsg = ""
-        if (dialogMsg == RETRY_MSG) additionalMsg = app.applicationContext.getString(R.string.msg_permiss_decline)
-        if (dialogMsg == APP_SETTINGS_MSG) additionalMsg = app.applicationContext.getString(R.string.msg_permiss_required)
+        if (dialogMsg == RETRY_MSG) additionalMsg = appContext.getString(R.string.msg_permiss_decline)
+        if (dialogMsg == APP_SETTINGS_MSG) additionalMsg = appContext.getString(R.string.msg_permiss_required)
 
         return "$msg\n$listOfPermissions\n\n$additionalMsg"
     }

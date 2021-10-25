@@ -3,8 +3,10 @@ package com.example.template.ui.main_screen.permission_fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.template.core.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class PermissionViewModel @Inject constructor() : BaseViewModel() {
 
     private val _msgToShow = MutableLiveData<String>()

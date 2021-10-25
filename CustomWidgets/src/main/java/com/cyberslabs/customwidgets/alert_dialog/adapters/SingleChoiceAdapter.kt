@@ -1,5 +1,3 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
-
 package com.cyberslabs.customwidgets.alert_dialog.adapters
 
 import android.util.Log
@@ -11,22 +9,18 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.cyberslabs.customwidgets.R
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSingleChoiceClickListener
-import kotlinx.android.synthetic.main.multichoice_row.view.ivIcon
-import kotlinx.android.synthetic.main.multichoice_row.view.tvItem
-import kotlinx.android.synthetic.main.singlechoice_row.view.*
+import com.cyberslabs.customwidgets.databinding.SinglechoiceRowBinding
 import java.lang.Exception
 
-class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int, val listener: OnSingleChoiceClickListener) : RecyclerView.Adapter<SingleChoiceAdapter.ViewHolder>() {
+class SingleChoiceAdapter(private val itemList: ArrayList<String>, private var defaultCheck: Int, private val listener: OnSingleChoiceClickListener) : RecyclerView.Adapter<SingleChoiceAdapter.ViewHolder>() {
 
     private var iconList = ArrayList<Int>()
 
     fun setIconList(iconList: ArrayList<Int>) { this.iconList = iconList }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.singlechoice_row, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(SinglechoiceRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -54,14 +48,6 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
                 Log.e("CustomAlertDialog", "Item size and iconList size must be the same")
             }
         }
-//
-//        if(!checkList.isNullOrEmpty()){
-//            if(checkList.size==itemList.size) {
-//                if (checkList[position] == true) holder.checkBox.isChecked = true
-//            }else{
-//                Log.e("CustomAlertDialog", "Item size and checkList size must be the same")
-//            }
-//        }
     }
 
     override fun getItemCount(): Int {
@@ -76,10 +62,10 @@ class SingleChoiceAdapter(val itemList: ArrayList<String>, var defaultCheck: Int
         return position
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.tvItem
-        val icon: ImageView = itemView.ivIcon
-        val checkRadio: RadioButton = itemView.rbItem
-        val llRow: LinearLayout = itemView.llSinglechoiceRow
+    class ViewHolder(binding: SinglechoiceRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        val name: TextView = binding.tvItem
+        val icon: ImageView = binding.ivIcon
+        val checkRadio: RadioButton = binding.rbItem
+        val llRow: LinearLayout = binding.llSinglechoiceRow
     }
 }

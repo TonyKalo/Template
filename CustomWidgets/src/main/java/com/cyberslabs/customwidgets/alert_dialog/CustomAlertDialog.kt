@@ -1,9 +1,10 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
+@file:Suppress("unused")
 
 package com.cyberslabs.customwidgets.alert_dialog
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -35,10 +36,13 @@ import com.cyberslabs.customwidgets.alert_dialog.listeners.OnSpannerClickListene
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTextInputListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnThreeSpannerClickListener
 import com.cyberslabs.customwidgets.alert_dialog.listeners.OnTwoSpannerClickListener
-import kotlinx.android.synthetic.main.dialog_alert_custom.*
+import com.cyberslabs.customwidgets.databinding.DialogAlertCustomBinding
+import com.cyberslabs.customwidgets.viewBinding
 import java.lang.Exception
 
 open class CustomAlertDialog : DialogFragment() {
+
+    private val binding: DialogAlertCustomBinding by viewBinding()
 
     private var title: String? = null
     private var msg: String? = null
@@ -72,9 +76,14 @@ open class CustomAlertDialog : DialogFragment() {
     private var defaultChecked = 0
     private var hint: String? = null
     private var tilIcon: Int? = null
+    private var onDismissListener: (() -> Unit)? = null
 
     fun setTitle(title: String) {
         this.title = title
+    }
+
+    fun setOnDismissListener(onDismiss: () -> Unit) {
+        onDismissListener = onDismiss
     }
 
     fun setTitle(title: String, coloredTitle: Boolean, titleColorId: Int) {
@@ -106,21 +115,13 @@ open class CustomAlertDialog : DialogFragment() {
         negativeBtnListener = onButtonClickListener
     }
 
-    fun setPositiveButton(
-        btnText: String,
-        inFocus: Boolean,
-        onButtonClickListener: OnButtonClickListener
-    ) {
+    fun setPositiveButton(btnText: String, inFocus: Boolean, onButtonClickListener: OnButtonClickListener) {
         positiveBtnText = btnText
         positiveBtnInFocus = inFocus
         positiveBtnListener = onButtonClickListener
     }
 
-    fun setNegativeButton(
-        btnText: String,
-        inFocus: Boolean,
-        onButtonClickListener: OnButtonClickListener
-    ) {
+    fun setNegativeButton(btnText: String, inFocus: Boolean, onButtonClickListener: OnButtonClickListener) {
         negativeBtnText = btnText
         negativeBtnInFocus = inFocus
         negativeBtnListener = onButtonClickListener
@@ -131,45 +132,27 @@ open class CustomAlertDialog : DialogFragment() {
         this.spanCallback = spinnerCallback
     }
 
-    fun setSpannable(
-        textFromMsg: String,
-        textFromMsgTwo: String,
-        spinnerCallback: OnTwoSpannerClickListener
-    ) {
+    fun setSpannable(textFromMsg: String, textFromMsgTwo: String, spinnerCallback: OnTwoSpannerClickListener) {
         this.spannableText = textFromMsg
         this.spannableTextTwo = textFromMsgTwo
         this.spanTwoCallback = spinnerCallback
     }
 
-    fun setSpannable(
-        textFromMsg: String,
-        textFromMsgTwo: String,
-        textFromMsgThree: String,
-        spinnerCallback: OnThreeSpannerClickListener
-    ) {
+    fun setSpannable(textFromMsg: String, textFromMsgTwo: String, textFromMsgThree: String, spinnerCallback: OnThreeSpannerClickListener) {
         this.spannableText = textFromMsg
         this.spannableTextTwo = textFromMsgTwo
         this.spannableTextThree = textFromMsgThree
         this.spanThreeCallback = spinnerCallback
     }
 
-    fun setMultiChoiceItems(
-        itemList: ArrayList<String>,
-        checkList: ArrayList<Boolean>,
-        listener: OnMultiChoiceClickListener
-    ) {
+    fun setMultiChoiceItems(itemList: ArrayList<String>, checkList: ArrayList<Boolean>, listener: OnMultiChoiceClickListener) {
         this.itemList = itemList
         this.checkList = checkList
         this.onMultiChoicelistener = listener
         fromMultiChoice = true
     }
 
-    fun setMultiChoiceItems(
-        itemList: ArrayList<String>,
-        checkList: ArrayList<Boolean>,
-        iconIdList: ArrayList<Int>,
-        listener: OnMultiChoiceClickListener
-    ) {
+    fun setMultiChoiceItems(itemList: ArrayList<String>, checkList: ArrayList<Boolean>, iconIdList: ArrayList<Int>, listener: OnMultiChoiceClickListener) {
         this.itemList = itemList
         this.checkList = checkList
         this.iconList = iconIdList
@@ -187,30 +170,18 @@ open class CustomAlertDialog : DialogFragment() {
         if (!checkList.isNullOrEmpty()) {
             checkList?.forEach { if (it) defaultChecked++ }
         } else {
-            Log.e(
-                "CustomAlertDialog",
-                "To setMaxCheckedForMultichoice you must initialize setMultiChoiceItems"
-            )
+            Log.e("CustomAlertDialog", "To setMaxCheckedForMultichoice you must initialize setMultiChoiceItems")
         }
     }
 
-    fun setSingleChoiceItems(
-        itemList: ArrayList<String>,
-        checkedDefault: Int,
-        listener: OnSingleChoiceClickListener
-    ) {
+    fun setSingleChoiceItems(itemList: ArrayList<String>, checkedDefault: Int, listener: OnSingleChoiceClickListener) {
         this.itemList = itemList
         this.singleCheckedDefault = checkedDefault
         this.onSingleChoiceClickListener = listener
         fromSingleChoice = true
     }
 
-    fun setSingleChoiceItems(
-        itemList: ArrayList<String>,
-        iconIdList: ArrayList<Int>,
-        checkedDefault: Int,
-        listener: OnSingleChoiceClickListener
-    ) {
+    fun setSingleChoiceItems(itemList: ArrayList<String>, iconIdList: ArrayList<Int>, checkedDefault: Int, listener: OnSingleChoiceClickListener) {
         this.itemList = itemList
         this.iconList = iconIdList
         this.singleCheckedDefault = checkedDefault
@@ -234,16 +205,12 @@ open class CustomAlertDialog : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.DialogCustomAlertStyle)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val view = inflater.inflate(R.layout.dialog_alert_custom, container, false)
+
         // clear edit text in android 6.0.1 without click listener don't work
-        view.setOnClickListener {}
-        return view
+        binding.root.setOnClickListener {}
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -265,55 +232,43 @@ open class CustomAlertDialog : DialogFragment() {
     private fun setTextInputLayout() {
         if (hint != null) {
             if (tilIcon != null) {
-                ivTilIcon.visibility = View.VISIBLE
+                binding.ivTilIcon.visibility = View.VISIBLE
                 try {
-                    ivTilIcon.setBackgroundResource(tilIcon!!)
-                    ivTilIcon.visibility = View.VISIBLE
+                    binding.ivTilIcon.setBackgroundResource(tilIcon!!)
+                    binding.ivTilIcon.visibility = View.VISIBLE
                 } catch (e: Exception) {
-                    ivTilIcon.visibility = View.GONE
-                    Log.e(
-                        "CustomAlertDialog",
-                        "Wrong format of picture (format: R.drawable.ic_....."
-                    )
+                    binding.ivTilIcon.visibility = View.GONE
+                    Log.e("CustomAlertDialog", "Wrong format of picture (format: R.drawable.ic_.....")
                 }
             }
-            if (scvList.visibility != View.VISIBLE) {
+            if (binding.scvList.visibility != View.VISIBLE) {
 
-                llTextInput.visibility = View.VISIBLE
-                tilInput.visibility = View.VISIBLE
-                tilInput.hint = hint
-                onTextInputListener?.getTextInputLayout(tilInput)
-                tilInput.editText?.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) hidekeyboard() }
-            } else Log.e(
-                "CustomAlertDialog",
-                "Can't use MultiChoice or SingleChoice with TextInput"
-            )
+                binding.llTextInput.visibility = View.VISIBLE
+                binding.tilInput.visibility = View.VISIBLE
+                binding.tilInput.hint = hint
+                onTextInputListener?.getTextInputLayout(binding.tilInput)
+                binding.tilInput.editText?.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) hidekeyboard() }
+            } else Log.e("CustomAlertDialog", "Can't use MultiChoice or SingleChoice with TextInput")
         }
     }
 
     private fun setChoiceLayout() {
         if (fromMultiChoice && !fromSingleChoice) setMultiChoiceLayout()
         if (!fromMultiChoice && fromSingleChoice) setSingleChoiceLayout()
-        if (fromMultiChoice && fromSingleChoice) Log.e(
-            "CustomAlertDialog",
-            "Can't use MultiChoice and SingleChoice at same time"
-        )
+        if (fromMultiChoice && fromSingleChoice) Log.e("CustomAlertDialog", "Can't use MultiChoice and SingleChoice at same time")
     }
 
     private fun setMultiChoiceLayout() {
-        scvList.visibility = View.VISIBLE
+        binding.scvList.visibility = View.VISIBLE
         var setMaxCheck = false
 
-        if (maxChecked > 0 && defaultChecked < maxChecked) setMaxCheck = true else Log.e(
-            "CustomAlertDialog",
-            "MaxChecked value must be the bigger than checked values"
-        )
+        if (maxChecked > 0 && defaultChecked < maxChecked) setMaxCheck = true else Log.e("CustomAlertDialog", "MaxChecked value must be the bigger than checked values")
 
         if (!itemList.isNullOrEmpty() && !checkList.isNullOrEmpty()) {
             val adapterMulti = MultiChoiceAdapter(itemList!!, checkList!!, onMultiChoicelistener!!)
             if (!iconList.isNullOrEmpty()) adapterMulti.setIconList(iconList!!)
             if (setMaxCheck) adapterMulti.setMaxCheck(maxChecked, defaultChecked, maxListener!!)
-            rvChoiceView.apply {
+            binding.rvChoiceView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = adapterMulti
                 setHasFixedSize(true)
@@ -324,12 +279,11 @@ open class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setSingleChoiceLayout() {
-        scvList.visibility = View.VISIBLE
+        binding.scvList.visibility = View.VISIBLE
         if (!itemList.isNullOrEmpty()) {
-            val adapterSingle =
-                SingleChoiceAdapter(itemList!!, singleCheckedDefault, onSingleChoiceClickListener!!)
+            val adapterSingle = SingleChoiceAdapter(itemList!!, singleCheckedDefault, onSingleChoiceClickListener!!)
             if (!iconList.isNullOrEmpty()) adapterSingle.setIconList(iconList!!)
-            rvChoiceView.apply {
+            binding.rvChoiceView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = adapterSingle
                 setHasFixedSize(true)
@@ -340,66 +294,62 @@ open class CustomAlertDialog : DialogFragment() {
     }
 
     private fun setIconLayout() {
-        if (icon != null) ivIcon.setImageResource(icon!!) else ivIcon.visibility = View.GONE
+        if (icon != null) binding.ivIcon.setImageResource(icon!!) else binding.ivIcon.visibility = View.GONE
     }
 
     private fun setTitleLayout() {
-        if (!title.isNullOrEmpty()) tvTitle.text = title else tvTitle.visibility = View.GONE
+        if (!title.isNullOrEmpty()) binding.tvTitle.text = title else binding.tvTitle.visibility = View.GONE
     }
 
     private fun setTitleColor() {
         if (coloredTitle) {
-            llTitleHolder.background =
+            binding.llTitleHolder.background =
                 ResourcesCompat.getDrawable(resources, R.drawable.title_background, null)
-            tvTitle.apply {
+            binding.tvTitle.apply {
                 setTextColor(ContextCompat.getColor(requireContext(), titleColor!!))
                 textSize = 24f
                 setTypeface(null, Typeface.ITALIC)
             }
-            flTitleBottomMargine.visibility = View.VISIBLE
+            binding.flTitleBottomMargine.visibility = View.VISIBLE
         }
     }
 
     private fun setMsgLayout() {
-        if (msg != null) tvMsg.text = msg else tvMsg.visibility = View.GONE
-        if (inCenter) tvMsg.gravity = Gravity.CENTER
+        if (msg != null) binding.tvMsg.text = msg else binding.tvMsg.visibility = View.GONE
+        if (inCenter) binding.tvMsg.gravity = Gravity.CENTER
     }
 
     private fun setButtonLayout() {
         if (positiveBtnText == null && negativeBtnText == null) {
-            llButtonLayout.visibility = View.GONE
+            binding.llButtonLayout.visibility = View.GONE
         } else {
-            if (positiveBtnText != null && negativeBtnText == null) btnNegative.visibility =
-                View.INVISIBLE
-            if (positiveBtnText == null && negativeBtnText != null) btnPositive.visibility =
-                View.INVISIBLE
+            if (positiveBtnText != null && negativeBtnText == null) binding.btnNegative.visibility = View.INVISIBLE
+            if (positiveBtnText == null && negativeBtnText != null) binding.btnPositive.visibility = View.INVISIBLE
             if (positiveBtnText != null) setupPositiveButton()
             if (negativeBtnText != null) setupNegativeButton()
         }
     }
 
-    @Suppress("DEPRECATION")
     @SuppressLint("ResourceType")
     private fun setupPositiveButton() {
         if (!positiveBtnInFocus) {
-            btnPositive.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
-            btnPositive.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
+            binding.btnPositive.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
+            binding.btnPositive.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
         }
-        btnPositive.text = positiveBtnText
-        btnPositive.setOnClickListener {
+        binding.btnPositive.text = positiveBtnText
+        binding.btnPositive.setOnClickListener {
             positiveBtnListener?.onClick()
         }
     }
 
-    @Suppress("DEPRECATION")
     @SuppressLint("ResourceType")
     private fun setupNegativeButton() {
         if (!negativeBtnInFocus) {
-            btnNegative.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
-            btnNegative.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
+            binding.btnNegative.setBackgroundResource(R.drawable.dialog_btn_out_focus_transparetn)
+            binding.btnNegative.setTextColor(AppCompatResources.getColorStateList(requireContext(), R.drawable.btn_transparent_out_focus_color_selector))
         }
-        btnNegative.text = negativeBtnText
-        btnNegative.setOnClickListener {
+        binding.btnNegative.text = negativeBtnText
+        binding.btnNegative.setOnClickListener {
             negativeBtnListener?.onClick()
         }
     }
@@ -436,7 +386,7 @@ open class CustomAlertDialog : DialogFragment() {
         }
     }
 
-    fun setTwoSpan() {
+    private fun setTwoSpan() {
         if (msg != null) {
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(textView: View) {
@@ -458,17 +408,13 @@ open class CustomAlertDialog : DialogFragment() {
                     ds.isUnderlineText = true
                 }
             }
-            makeLinks(
-                msg!!,
-                arrayOf(spannableText!!, spannableTextTwo!!),
-                arrayOf(clickableSpan, clickableSpan2)
-            )
+            makeLinks(msg!!, arrayOf(spannableText!!, spannableTextTwo!!), arrayOf(clickableSpan, clickableSpan2))
         } else {
             Log.e("CustomAlertDialog", "No Message Set")
         }
     }
 
-    fun setThreeSpan() {
+    private fun setThreeSpan() {
         if (msg != null) {
             val clickableSpan = object : ClickableSpan() {
                 override fun onClick(textView: View) {
@@ -526,21 +472,25 @@ open class CustomAlertDialog : DialogFragment() {
                     Spanned.SPAN_INCLUSIVE_INCLUSIVE
                 )
             }
-            tvMsg.text = spannableString
+            binding.tvMsg.text = spannableString
         }
     }
 
     private fun setMsgClickable() {
-        tvMsg.movementMethod = LinkMovementMethod.getInstance()
+        binding.tvMsg.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun hidekeyboard() {
         try {
             val windowToken = dialog?.window?.decorView?.rootView
-            val inputMethodManager =
-                dialog?.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager = dialog?.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(windowToken?.windowToken, 0)
         } catch (e: Exception) {
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissListener?.invoke()
     }
 }

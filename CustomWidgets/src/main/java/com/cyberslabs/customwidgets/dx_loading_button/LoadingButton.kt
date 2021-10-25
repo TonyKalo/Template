@@ -1,5 +1,3 @@
-@file:Suppress("MemberVisibilityCanBePrivate")
-
 package com.cyberslabs.customwidgets.dx_loading_button
 
 import android.animation.Animator
@@ -63,13 +61,13 @@ class LoadingButton @JvmOverloads constructor(
 
     var animationEndAction: ((AnimationType) -> Unit)? = null
 
-    var rippleEnable = true
+    private var rippleEnable = true
         set(value) {
             invalidate()
             field = value
         }
 
-    var rippleColor = Color.BLACK
+    private var rippleColor = Color.BLACK
         set(value) {
             ripplePaint.color = value
             field = value
@@ -120,12 +118,12 @@ class LoadingButton @JvmOverloads constructor(
         }
 
     /** while loading data failed, reset view to normal state */
-    var resetAfterFailed = true
+    private var resetAfterFailed = true
 
     /**
      * set button background as shader paint
      */
-    var backgroundShader: Shader?
+    private var backgroundShader: Shader?
         get() = mStrokePaint.shader
         set(value) {
             mPaint.shader = value
@@ -390,7 +388,7 @@ class LoadingButton @JvmOverloads constructor(
      */
     fun loadingFailed() {
         if (mLoadingAnimatorSet != null && mLoadingAnimatorSet!!.isStarted) {
-            mLoadingAnimatorSet!!.end()
+            mLoadingAnimatorSet?.end()
             mCurrentState = STATE_STOP_LOADING
             playFailedAnimation()
         }
@@ -524,7 +522,7 @@ class LoadingButton @JvmOverloads constructor(
             .apply {
                 duration = 400
                 interpolator = AccelerateDecelerateInterpolator()
-                startDelay = 100
+//                startDelay = 100
                 addUpdateListener { valueAnimator ->
                     mScaleWidth = valueAnimator.animatedValue as Int
                     invalidate()
@@ -698,6 +696,7 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun scaleFailedPath() {
+
         val scaleMatrix = Matrix()
         val viewHeight = max(height, mMinHeight.toInt())
         ValueAnimator.ofFloat(1.0f, 0.0f)

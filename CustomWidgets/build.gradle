@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -19,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
 }
@@ -50,5 +53,10 @@ dependencies {
     
     //KOTLIN
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //MVVM
+    //Live Data
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_extensions_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_common_java8_version"
 
 }

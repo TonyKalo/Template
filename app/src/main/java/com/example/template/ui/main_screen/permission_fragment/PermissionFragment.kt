@@ -1,27 +1,22 @@
 package com.example.template.ui.main_screen.permission_fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
+import com.example.template.databinding.FragmentPermissionBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_permission.*
 
 @AndroidEntryPoint
-class PermissionFragment : BaseFragment<PermissionViewModel>() {
+class PermissionFragment : BaseFragment<PermissionViewModel>(R.layout.fragment_permission) {
 
+    private val binding: FragmentPermissionBinding by viewBinding()
     private val mViewModel: PermissionViewModel by viewModels()
 
     override fun getViewModel(): PermissionViewModel {
         return mViewModel
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_permission, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +40,7 @@ class PermissionFragment : BaseFragment<PermissionViewModel>() {
     }
 
     private fun setClickListeners() {
-        btnPermission.setOnClickListener { mViewModel.checkPermissions() }
+        binding.btnPermission.setOnClickListener { mViewModel.checkPermissions() }
     }
 
     private fun showMsg(msg: String) {
