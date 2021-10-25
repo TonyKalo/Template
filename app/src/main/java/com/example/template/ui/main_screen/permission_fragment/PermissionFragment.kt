@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
 import com.example.template.databinding.FragmentPermissionBinding
+import com.example.template.utils.viewBinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,8 +1,9 @@
 package com.example.template.ui.splash.data
 
 import com.example.template.core.data.Result
+import kotlinx.coroutines.flow.Flow
 
 interface SplashRepo {
 
-    suspend fun getData(): Result<String>
+   fun getData(): Flow<Result<String>>
 }

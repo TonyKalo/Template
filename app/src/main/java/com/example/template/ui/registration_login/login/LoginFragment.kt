@@ -8,6 +8,7 @@ import com.example.template.R
 import com.example.template.core.base.BaseFragment
 import com.example.template.databinding.FragmentLoginBinding
 import com.example.template.ui.main_screen.main_activity.MainActivity
+import com.example.template.utils.viewBinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

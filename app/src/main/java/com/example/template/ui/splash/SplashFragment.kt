@@ -10,6 +10,7 @@ import com.example.template.R
 import com.example.template.core.base.BaseFragment
 import com.example.template.databinding.FragmentSplashBinding
 import com.example.template.ui.registration_login.registration_activity.RegistrationActivityViewModel
+import com.example.template.utils.viewBinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

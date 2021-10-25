@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.template.R
 import com.example.template.core.base.BaseFragment
 import com.example.template.databinding.FragmentPictureBinding
+import com.example.template.utils.viewBinding.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
