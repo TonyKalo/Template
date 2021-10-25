@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
 
-        <activity android:name="com.example.template.ui.registration_login.registration_activity.RegistrationActivity">
+        <activity android:name="com.example.template.ui.registration_login.registration_activity.RegistrationActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
